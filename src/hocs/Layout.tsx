@@ -7,12 +7,12 @@ import Footer from "../components/navigation/Footer";
 type Props = {
   children: JSX.Element;
 };
-const Layout: FC<Props> = ({ children }) => {
+const Layout: FC<Props> = (props) => {
   return (
     <div>
       <Navbar />
       <ToastContainer autoClose={5000} />
-      {children}
+      {props.children}
       <Footer />
     </div>
   );

@@ -8,6 +8,7 @@ import {
   REMOVE_AUTH_LOADING,
 } from "./types";
 import { AUTH_USERS_URL, ACTIVATE_USER_URL } from "./urlsApi";
+import { setAlert } from "./alert";
 const URL_BASE = process.env.REACT_APP_API_URL;
 
 export const signup =
@@ -43,14 +44,24 @@ export const signup =
       );
       if (res.status === 201) {
         dispatch({ type: SIGNUP_SUCCESS });
+        dispatch(
+          setAlert(
+            "Te enviamos un correo, por favor activa tu cuenta. Revisa",
+            "green"
+          )
+        );
+        console.log("Cuenta registrada correctmente");
       } else {
         dispatch({ type: SIGNUP_FAIL });
+        dispatch(setAlert("Error al activar la cuenta", "red"));
       }
 
       dispatch({ type: REMOVE_AUTH_LOADING });
     } catch (err: any) {
       dispatch({ type: SIGNUP_FAIL });
       dispatch({ type: REMOVE_AUTH_LOADING });
+
+      dispatch(setAlert("Error al conectar con el servidor", "red"));
     }
   };
 
@@ -76,13 +87,18 @@ export const activate =
       );
       if (res.status === 204) {
         dispatch({ type: ACTIVATION_SUCCESS });
+
+        dispatch(setAlert("Cuenta activada correctamente", "green"));
       } else {
         dispatch({ type: ACTIVATION_FAIL });
+
+        dispatch(setAlert("Error al activar la cuenta", "red"));
       }
 
       dispatch({ type: REMOVE_AUTH_LOADING });
     } catch (err: any) {
       dispatch({ type: ACTIVATION_FAIL });
       dispatch({ type: REMOVE_AUTH_LOADING });
+      dispatch(setAlert("Error conectando con el servidor", "red"));
     }
   };

@@ -2,7 +2,8 @@ import React, { FC, useEffect, useState } from "react";
 import Layout from "../../hocs/Layout";
 import { connect } from "react-redux";
 import { signup } from "../../redux/actions/auth";
-import { StateTypesAuth } from "../../redux/reducers/authReducer";
+import { ReducersStateType } from "../../redux/reducers";
+
 type FormDataType = {
   first_name: string;
   last_name: string;
@@ -255,7 +256,7 @@ const Signup: FC<SignupProps> = ({ signup }) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: ReducersStateType) => ({});
 
 export default connect(mapStateToProps, {
   signup,

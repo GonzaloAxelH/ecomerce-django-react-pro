@@ -3,22 +3,22 @@ from pathlib import Path
 import os
 import environ
 env = environ.Env()
-environ.Env.read_env() 
+environ.Env.read_env()
 ENVIRONMENT = env
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY=os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["¨*"]
 ALLOWED_HOSTS = [
-    
+
     "127.0.0.1",
     "localhost",
-    ]
+]
 
 
 # Application definition
@@ -26,18 +26,18 @@ ALLOWED_HOSTS = [
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    
+
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
 
-PROJECT_APPS =[
+PROJECT_APPS = [
     "apps.user"
 ]
-ECOMMERCE_APPS=[]
-THIRD_PARTY_APPS =[
+ECOMMERCE_APPS = []
+THIRD_PARTY_APPS = [
     "corsheaders",
     "rest_framework",
     "djoser",
@@ -48,7 +48,7 @@ THIRD_PARTY_APPS =[
     "ckeditor_uploader"
 ]
 
-INSTALLED_APPS =DJANGO_APPS + PROJECT_APPS + ECOMMERCE_APPS + THIRD_PARTY_APPS
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + ECOMMERCE_APPS + THIRD_PARTY_APPS
 
 
 CKEDITOR_CONFIGS = {
@@ -105,7 +105,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
-    
+
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -152,8 +152,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
@@ -182,11 +180,11 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES":("JWT",),
-    "ACCESS_TOKEN_LIFETIME":timedelta(minutes=10080),
-    "REFRESH_TOKEN_LIFETIME":timedelta(days=30),
-    "ROTATE_REFRESH_TOKEN":True,
-    "AUTH_TOKEN_CLASES":(
+    "AUTH_HEADER_TYPES": ("JWT",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10080),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ROTATE_REFRESH_TOKEN": True,
+    "AUTH_TOKEN_CLASES": (
         "rest_framework_simplejwt.tokens.AccessToken"
     )
 }
@@ -216,19 +214,18 @@ DJOSER = {
 }
 
 
-
 AUTH_USER_MODEL = "user.UserAccount"
 
 
 # conectart el envio de correos electronicos
-EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 mode_development = DEBUG
 if not mode_development:
-    DEFAULT_FROM_EMAIL ="Ecomerce - Plataforma de cursos <gonzaloaxelh@gmail.com>"    
-    EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST=env("EMAIL_HOST")
-    EMAIL_HOST_USER=env("EMAIL_HOST_USER")
-    EMAIL_HOST=PASSWORD =env("EMAIL_HOST_PASSWORD")
-    EMAIL_PORT=env("EMAIL_POST")
+    DEFAULT_FROM_EMAIL = "Ecomerce - Plataforma de cursos <gonzaloaxelh@gmail.com>"
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env("EMAIL_HOST")
+    EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+    EMAIL_HOST = PASSWORD = env("EMAIL_HOST_PASSWORD")
+    EMAIL_PORT = env("EMAIL_POST")
     EMAIL_USE_TLS = env("EMAIL_USE_TLS")

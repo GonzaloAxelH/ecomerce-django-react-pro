@@ -6,20 +6,8 @@ import {
   REMOVE_AUTH_LOADING,
   SET_AUTH_LOADING,
 } from "../actions/types";
-
-export type ActionType = {
-  payload?: any;
-  type: string;
-};
-
-export interface StateTypesAuth {
-  access: any;
-  refresh: any;
-  isAuthenticated: Boolean | any;
-  user: any;
-  loading: boolean;
-}
-
+import { ActionType } from "../../interfaces";
+import { StateTypesAuth } from "../../interfaces/Auth";
 const initialState: StateTypesAuth = {
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
@@ -29,7 +17,7 @@ const initialState: StateTypesAuth = {
 };
 
 export default function Auth(
-  state = initialState,
+  state: StateTypesAuth = initialState,
   action: ActionType
 ): StateTypesAuth {
   const { type, payload } = action;
