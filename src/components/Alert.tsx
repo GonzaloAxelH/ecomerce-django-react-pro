@@ -39,4 +39,4 @@ const mapStateToProps = (state: ReducersStateType) => ({
   alert: state.Alert.alert,
 });
 
-export default connect(mapStateToProps)(Alert);
+export default connect(mapStateToProps, null)(Alert);

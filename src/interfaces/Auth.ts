@@ -8,3 +8,5 @@ export interface StateTypesAuth {
   user: any;
   loading: boolean;
 }
+
+export interface User {}

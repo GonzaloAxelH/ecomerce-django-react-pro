@@ -6,14 +6,14 @@ import { activate } from "../../redux/actions/auth";
 import { Navigate } from "react-router";
 import Loader from "react-loader-spinner";
 interface Props {
-  activate: Function;
-  loading: boolean;
+  activate?: Function;
+  loading?: boolean;
 }
 const Activate: FC<Props> = ({ activate, loading }) => {
   const { uid, token } = useParams();
   const [activated, setActivated] = useState<boolean>(false);
   const activateAccount = () => {
-    activate(uid, token);
+    activate && activate(uid, token);
     setActivated(true);
   };
 
