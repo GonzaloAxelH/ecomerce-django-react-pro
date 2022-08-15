@@ -15,6 +15,9 @@ import {
   REFRESH_FAIl,
   REFRESH_SUCCESS,
   RESET_PASSWORD_CONFIRM_FAIl,
+  RESET_PASSWORD_CONFIRM_SUCCESS,
+  RESET_PASSWORD_FAIL,
+  RESET_PASSWORD_SUCCESS,
   LOGOUT,
 } from "./types";
 
@@ -25,14 +28,14 @@ import {
   GET_USER_URL,
   AUTH_VERIFY_URL,
   REFRESH_TOKEN_URL,
-  RESET_PASWWORD_URL,
+  RESET_PASSWORD_SEND_URL,
+  RESET_PASSWORD_CONFIRM_URL,
+  URL_BASE,
 } from "./urlsApi";
 import { setAlert } from "./alert";
 import { Dispatch } from "redux";
 
 import { ActionType } from "../../interfaces";
-import { stringify } from "querystring";
-const URL_BASE = process.env.REACT_APP_API_URL;
 
 export const check_authenticated =
   () => async (dispatch: Dispatch<ActionType | any>) => {
@@ -271,37 +274,54 @@ export const refresh = () => async (dispatch: Dispatch<ActionType | any>) => {
 
 export const reset_password_confirm =
   (uid: string, token: string, new_password: string, re_new_password: string) =>
-  async (dispatch: Dispatch<ActionType>) => {
+  async (dispatch: Dispatch<ActionType | any>) => {
     dispatch({
       type: SET_AUTH_LOADING,
     });
 
     const config = {
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const body = JSON.stringify({
-      refresh: localStorage.getItem("refresh"),
+      uid,
+      token,
+      new_password,
+      re_new_password,
     });
-    try {
-      const res = await axios.post(
-        `${URL_BASE}/${REFRESH_TOKEN_URL}`,
-        body,
-        config
-      );
+    if (re_new_password === new_password) {
+      try {
+        const res = await axios.post(
+          `${URL_BASE}/${RESET_PASSWORD_CONFIRM_URL}`,
+          body,
+          config
+        );
 
-      if (res.status === 200) {
+        if (res.status === 204) {
+          dispatch({
+            type: RESET_PASSWORD_CONFIRM_SUCCESS,
+          });
+          dispatch({ type: REMOVE_AUTH_LOADING });
+
+          dispatch(setAlert("Password cambiado correcramente", "green"));
+        } else {
+          dispatch({
+            type: RESET_PASSWORD_CONFIRM_FAIl,
+          });
+
+          dispatch({ type: REMOVE_AUTH_LOADING });
+          dispatch(setAlert("Hubo un error al cambiar la contraseña", "red"));
+        }
+      } catch (error) {
         dispatch({
-          type: REFRESH_SUCCESS,
-          payload: res.data,
+          type: RESET_PASSWORD_CONFIRM_FAIl,
         });
+        dispatch({ type: REMOVE_AUTH_LOADING });
+        dispatch(setAlert("Error conectando con el servidor ", "red"));
       }
-    } catch (error) {
-      dispatch({
-        type: REFRESH_FAIl,
-      });
+    } else {
+      dispatch(setAlert("Las contraseñas no son iguales ", "red"));
     }
   };
 
@@ -311,3 +331,49 @@ export const logout = () => async (dispatch: Dispatch<ActionType | any>) => {
   });
   dispatch(setAlert("Session terminada con exito", "green"));
 };
+
+export const reset_password =
+  (email: string) => async (dispatch: Dispatch<ActionType | any>) => {
+    dispatch({
+      type: SET_AUTH_LOADING,
+    });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({ email });
+    try {
+      const res = await axios.post(
+        `${URL_BASE}/${RESET_PASSWORD_SEND_URL}`,
+        body,
+        config
+      );
+      if (res.status == 204) {
+        dispatch({
+          type: RESET_PASSWORD_SUCCESS,
+        });
+        dispatch({
+          type: REMOVE_AUTH_LOADING,
+        });
+        dispatch(setAlert("Password reset email send", "green"));
+      } else {
+        dispatch({
+          type: RESET_PASSWORD_FAIL,
+        });
+        dispatch({
+          type: REMOVE_AUTH_LOADING,
+        });
+        dispatch(setAlert("Error sending password reset email", "green"));
+      }
+    } catch (error) {
+      dispatch({
+        type: RESET_PASSWORD_FAIL,
+      });
+      dispatch({
+        type: REMOVE_AUTH_LOADING,
+      });
+
+      dispatch(setAlert("Error conectando con el servidor", "green"));
+    }
+  };

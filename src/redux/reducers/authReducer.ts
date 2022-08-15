@@ -14,9 +14,21 @@ import {
   AUTHENTICATED_FAIl,
   AUTHENTICATED_SUCCESS,
   LOGOUT,
+  RESET_PASSWORD_CONFIRM_FAIl,
+  RESET_PASSWORD_CONFIRM_SUCCESS,
+  RESET_PASSWORD_FAIL,
+  RESET_PASSWORD_SUCCESS,
 } from "../actions/types";
 import { ActionType } from "../../interfaces";
-import { StateTypesAuth } from "../../interfaces/Auth";
+
+export interface StateTypesAuth {
+  access: any;
+  refresh: any;
+  isAuthenticated: Boolean | any;
+  user: any;
+  loading: boolean;
+}
+
 const initialState: StateTypesAuth = {
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
@@ -78,6 +90,10 @@ export default function Auth(
       };
     case ACTIVATION_SUCCESS:
     case ACTIVATION_FAIL:
+    case RESET_PASSWORD_CONFIRM_FAIl:
+    case RESET_PASSWORD_CONFIRM_SUCCESS:
+    case RESET_PASSWORD_FAIL:
+    case RESET_PASSWORD_SUCCESS:
       return { ...state };
     case REFRESH_SUCCESS:
       localStorage.setItem("access", payload.access);

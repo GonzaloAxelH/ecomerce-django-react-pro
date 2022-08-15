@@ -1,10 +1,11 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, ReactNode, useEffect } from "react";
 import Navbar from "../components/navigation/Navbar";
 import Footer from "../components/navigation/Footer";
 import { connect } from "react-redux";
 import { check_authenticated, load_user, refresh } from "../redux/actions/auth";
+import Alert from "../components/Alert";
 type Props = {
-  children: JSX.Element;
+  children: JSX.Element | ReactNode;
   check_authenticated?: Function;
   load_user?: Function;
   refresh?: Function;
@@ -25,7 +26,7 @@ const Layout: FC<Props> = ({
   return (
     <div>
       <Navbar />
-
+      <Alert />
       {children}
       <Footer />
     </div>

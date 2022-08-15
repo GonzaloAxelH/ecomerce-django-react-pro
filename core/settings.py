@@ -26,7 +26,6 @@ ALLOWED_HOSTS = [
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -36,7 +35,10 @@ DJANGO_APPS = [
 PROJECT_APPS = [
     "apps.user"
 ]
-ECOMMERCE_APPS = []
+ECOMMERCE_APPS = [
+    "apps.category",
+    "apps.product"
+]
 THIRD_PARTY_APPS = [
     "corsheaders",
     "rest_framework",
@@ -165,7 +167,7 @@ STATICFILES_DIRS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',

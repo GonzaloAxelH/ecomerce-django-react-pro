@@ -1,11 +1,49 @@
-import React from "react";
+import React, { FC, useEffect } from "react";
 import Layout from "../hocs/Layout";
-const Home = () => {
+import { ProductType } from "../redux/reducers/productsReducer";
+import { connect } from "react-redux";
+import { ReducersStateType } from "../redux/reducers";
+import Banner from "../components/home/Banner";
+import {
+  get_products_by_arrival,
+  get_products_by_sold,
+} from "../redux/actions/product";
+import ProductsArrival from "../components/home/ProductsArrival";
+import ProductsSold from "../components/home/ProductsSold";
+interface Props {
+  get_products_by_arrival?: Function;
+  get_products_by_sold?: Function;
+  products_sold?: ProductType[] | null;
+  products_arrival?: ProductType[] | null;
+}
+
+const Home: FC<Props> = ({
+  get_products_by_arrival,
+  get_products_by_sold,
+  products_sold,
+  products_arrival,
+}) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    get_products_by_arrival && get_products_by_arrival();
+    get_products_by_sold && get_products_by_sold();
+  }, []);
   return (
     <Layout>
-      <h1>home</h1>
+      <Banner />
+
+      <ProductsArrival products_arrival={products_arrival} />
+
+      <ProductsSold products_sold={products_sold} />
     </Layout>
   );
 };
 
-export default Home;
+const mapStateToProps = (state: ReducersStateType) => ({
+  products_arrival: state.Products.products_arrival,
+  products_by_sold: state.Products.products_sold,
+});
+export default connect(mapStateToProps, {
+  get_products_by_arrival,
+  get_products_by_sold,
+})(Home);

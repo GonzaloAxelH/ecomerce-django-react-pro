@@ -1,24 +1,23 @@
 import React, { FC, useEffect, useState } from "react";
 import Layout from "../../hocs/Layout";
 import { connect } from "react-redux";
-import { login } from "../../redux/actions/auth";
+import { reset_password } from "../../redux/actions/auth";
 import { ReducersStateType } from "../../redux/reducers";
-import { Link } from "react-router-dom";
-
+import { Navigate } from "react-router-dom";
 type FormDataType = {
   email: string;
 };
 
 type SignupProps = {
-  login?: Function;
+  reset_password?: Function;
   loading?: boolean | null;
 };
 
-const ResetPassword: FC<SignupProps> = ({ login, loading }) => {
+const ResetPassword: FC<SignupProps> = ({ reset_password, loading }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  const [requestSend, setRequestSend] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({
     email: "",
   });
@@ -28,8 +27,12 @@ const ResetPassword: FC<SignupProps> = ({ login, loading }) => {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    login && login(email, email);
+    reset_password && reset_password(email);
+    setRequestSend(true);
   };
+  if (!loading && requestSend) {
+    return <Navigate to="/" />;
+  }
   return (
     <Layout>
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -40,7 +43,7 @@ const ResetPassword: FC<SignupProps> = ({ login, loading }) => {
             alt="Workflow"
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Reover You Password
+            Recover You Password by Email
           </h2>
         </div>
 
@@ -68,12 +71,23 @@ const ResetPassword: FC<SignupProps> = ({ login, loading }) => {
               </div>
 
               <div>
-                <button
-                  type="submit"
-                  className="relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <span>Send Email</span>
-                </button>
+                {loading ? (
+                  <button
+                    type="submit"
+                    className="relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    <span>
+                      <div id="circle5"></div>
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    <span>Send Email</span>
+                  </button>
+                )}
               </div>
             </form>
           </div>
@@ -88,5 +102,5 @@ const mapStateToProps = (state: ReducersStateType) => ({
 });
 
 export default connect(mapStateToProps, {
-  login,
+  reset_password,
 })(ResetPassword);

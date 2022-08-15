@@ -3,7 +3,7 @@ import Layout from "../../hocs/Layout";
 import { connect } from "react-redux";
 import { login } from "../../redux/actions/auth";
 import { ReducersStateType } from "../../redux/reducers";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 type FormDataType = {
   email: string;
@@ -13,9 +13,10 @@ type FormDataType = {
 type SignupProps = {
   login?: Function;
   loading?: boolean | null;
+  isAuthenticated?: boolean | null;
 };
 
-const Login: FC<SignupProps> = ({ login, loading }) => {
+const Login: FC<SignupProps> = ({ login, loading, isAuthenticated }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -24,6 +25,7 @@ const Login: FC<SignupProps> = ({ login, loading }) => {
     email: "",
     password: "",
   });
+  const [logged, setLogged] = useState<boolean>(false);
   const { email, password } = formData;
   const onChange = (e: any) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +33,10 @@ const Login: FC<SignupProps> = ({ login, loading }) => {
   const onSubmit = (e: any) => {
     e.preventDefault();
     login && login(email, password);
+    setLogged(true);
   };
+
+  if (logged && !loading && isAuthenticated) return <Navigate to="/" />;
   return (
     <Layout>
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -213,6 +218,7 @@ const Login: FC<SignupProps> = ({ login, loading }) => {
 
 const mapStateToProps = (state: ReducersStateType) => ({
   loading: state.Auth.loading,
+  isAuthenticated: state.Auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {

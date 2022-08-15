@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { signup } from "../../redux/actions/auth";
 import { ReducersStateType } from "../../redux/reducers";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 type FormDataType = {
   first_name: string;
   last_name: string;
@@ -15,9 +15,10 @@ type FormDataType = {
 
 type SignupProps = {
   signup?: Function;
+  loading?: boolean;
 };
 
-const Signup: FC<SignupProps> = ({ signup }) => {
+const Signup: FC<SignupProps> = ({ signup, loading }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -36,7 +37,11 @@ const Signup: FC<SignupProps> = ({ signup }) => {
   const onSubmit = (e: any) => {
     e.preventDefault();
     signup && signup(first_name, last_name, email, password, re_password);
+    setAccountCreated(true);
   };
+  if (!loading && accountCreated) {
+    return <Navigate to="/login" />;
+  }
   return (
     <Layout>
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -154,24 +159,25 @@ const Signup: FC<SignupProps> = ({ signup }) => {
                   />
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="text-sm">
-                  <Link
-                    to="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Olvido su contraseña ?
-                  </Link>
-                </div>
-              </div>
 
               <div>
-                <button
-                  type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Registrarme
-                </button>
+                {loading ? (
+                  <button
+                    type="submit"
+                    className="relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    <span>
+                      <div id="circle5"></div>
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    <span>Register</span>
+                  </button>
+                )}
               </div>
             </form>
 
@@ -257,7 +263,9 @@ const Signup: FC<SignupProps> = ({ signup }) => {
   );
 };
 
-const mapStateToProps = (state: ReducersStateType) => ({});
+const mapStateToProps = (state: ReducersStateType) => ({
+  loading: state.Auth.loading,
+});
 
 export default connect(mapStateToProps, {
   signup,

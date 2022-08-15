@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
 import Layout from "../../hocs/Layout";
 import { connect } from "react-redux";
-import { login } from "../../redux/actions/auth";
+import { reset_password_confirm } from "../../redux/actions/auth";
 import { ReducersStateType } from "../../redux/reducers";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 
 type FormDataType = {
   re_password: string;
@@ -11,15 +11,19 @@ type FormDataType = {
 };
 
 type SignupProps = {
-  login?: Function;
+  reset_password_confirm?: Function;
   loading?: boolean | null;
 };
 
-const ResetPasswordConfirm: FC<SignupProps> = ({ login, loading }) => {
+const ResetPasswordConfirm: FC<SignupProps> = ({
+  reset_password_confirm,
+  loading,
+}) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  const { uid, token } = useParams();
+  const [isResetPassword, setIsResetPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormDataType>({
     re_password: "",
     password: "",
@@ -30,8 +34,13 @@ const ResetPasswordConfirm: FC<SignupProps> = ({ login, loading }) => {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    login && login(password, re_password);
+    reset_password_confirm &&
+      reset_password_confirm(uid, token, password, re_password);
+    setIsResetPassword(true);
   };
+  if (!loading && isResetPassword) {
+    return <Navigate to="/login" />;
+  }
   return (
     <Layout>
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -42,17 +51,8 @@ const ResetPasswordConfirm: FC<SignupProps> = ({ login, loading }) => {
             alt="Workflow"
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Login
+            Registrando nuevo password
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
-            <Link
-              to="/signup"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              Register
-            </Link>
-          </p>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -97,12 +97,23 @@ const ResetPasswordConfirm: FC<SignupProps> = ({ login, loading }) => {
               </div>
 
               <div>
-                <button
-                  type="submit"
-                  className="relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <span>Reset Password</span>
-                </button>
+                {loading ? (
+                  <button
+                    type="submit"
+                    className="relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    <span>
+                      <div id="circle5"></div>
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    <span>Reset Password</span>
+                  </button>
+                )}
               </div>
             </form>
           </div>
@@ -117,5 +128,5 @@ const mapStateToProps = (state: ReducersStateType) => ({
 });
 
 export default connect(mapStateToProps, {
-  login,
+  reset_password_confirm,
 })(ResetPasswordConfirm);

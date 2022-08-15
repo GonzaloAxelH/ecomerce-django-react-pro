@@ -1,6 +1,6 @@
 import { Fragment, FC, useState } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
-import Alert from "../Alert";
+
 import { connect } from "react-redux";
 import { logout } from "../../redux/actions/auth";
 import {
@@ -107,20 +107,17 @@ const Navbar: FC<Props> = ({ isAuthenticated, user, logout }) => {
     setRedirect(true);
   };
   if (redirect) {
-    return <Navigate to="/" />;
+    window.location.href = "/login";
   }
   const authLinks = (
     <Menu as="div" className="relative inline-block text-left ">
       <div>
         <Menu.Button className=" inline-flex justify-center w-full rounded-full  text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
           <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
-            <svg
-              className="h-full w-full text-gray-300"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/002/567/996/non_2x/3d-figure-designer-flat-style-icon-free-vector.jpg"
+              alt="User-Profile"
+            />
           </span>
         </Menu.Button>
       </div>
@@ -205,7 +202,7 @@ const Navbar: FC<Props> = ({ isAuthenticated, user, logout }) => {
                 <span className="sr-only">Workflow</span>
                 <img
                   className="h-8 w-auto sm:h-10"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                  src="https://static.vecteezy.com/system/resources/previews/002/567/996/non_2x/3d-figure-designer-flat-style-icon-free-vector.jpg"
                   alt=""
                 />
               </Link>
@@ -305,10 +302,10 @@ const Navbar: FC<Props> = ({ isAuthenticated, user, logout }) => {
                   )}
                 </Popover>
                 <Link
-                  to="#"
+                  to="/shop"
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
-                  Pricing
+                  Store
                 </Link>
                 <Link
                   to="#"
@@ -567,7 +564,6 @@ const Navbar: FC<Props> = ({ isAuthenticated, user, logout }) => {
           </Popover.Panel>
         </Transition>
       </Popover>
-      <Alert />
     </>
   );
 };
