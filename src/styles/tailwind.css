@@ -14,7 +14,18 @@
   -webkit-animation: spin5 0.4s infinite linear;
           animation: spin5 0.4s infinite linear;
 }
-
+#circle5big {
+  display: block;
+  height: 80px;
+  width: 80px;
+  border: 2px rgba(0, 0, 0, 0.25) solid;
+  border-top: 2px #fff solid;
+  border-right: 2px #fff solid;
+  border-bottom: 2px transparent solid;
+  border-radius: 50%;
+  -webkit-animation: spin5 0.4s infinite linear;
+          animation: spin5 0.4s infinite linear;
+}
 @-webkit-keyframes spin5 {
   from {
     -webkit-transform: rotate(0deg);
@@ -40,3 +51,12 @@
   }
 }
 /** END of circle5 */
+
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}

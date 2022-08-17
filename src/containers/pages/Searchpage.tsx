@@ -1,19 +1,22 @@
-import React, { FC, useEffect } from "react";
-import Layout from "../hocs/Layout";
-import { Fragment, useState } from "react";
+import React, { FC, useEffect, Fragment, useState } from "react";
+import Layout from "../../hocs/Layout";
+import { connect } from "react-redux";
+import { ReducersStateType } from "../../redux/reducers";
+import { ProductType } from "../../redux/reducers/productsReducer";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { get_categories } from "../redux/actions/caegories";
-import { get_products, get_filter_products } from "../redux/actions/product";
-import { connect } from "react-redux";
 import { FilterIcon, MinusSmIcon, PlusSmIcon } from "@heroicons/react/solid";
-import { CategoryType } from "../redux/reducers/categoriesReducer";
-import { ReducersStateType } from "../redux/reducers";
-import { ProductType } from "../redux/reducers/productsReducer";
-import { Link } from "react-router-dom";
-import ProductCard from "../components/product/ProductCard";
-import { prices } from "../helpers/fixedPrices";
-import ProductEsqueleton from "../components/skeletons/ProductEsqueleton";
+import ProductCard from "../../components/product/ProductCard";
+import { CategoryType } from "../../redux/reducers/categoriesReducer";
+import { prices } from "../../helpers/fixedPrices";
+import ProductEsqueleton from "../../components/skeletons/ProductEsqueleton";
+import {
+  get_products,
+  get_filter_products,
+  get_search_products,
+} from "../../redux/actions/product";
+import { get_categories } from "../../redux/actions/caegories";
+
 interface Props {
   get_categories?: Function;
   get_products?: Function;
@@ -21,15 +24,17 @@ interface Props {
   categories?: CategoryType[] | null;
   all_products?: ProductType[] | null;
   filtered_products: ProductType[] | null;
+  search_products?: ProductType[] | null;
 }
 
-const Shop: FC<Props> = ({
+const SearchPage: FC<Props> = ({
   get_categories,
   categories,
-  all_products,
   get_products,
   filtered_products,
   get_filter_products,
+  search_products,
+  all_products,
 }) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filtered, setFiltered] = useState(false);
@@ -41,73 +46,99 @@ const Shop: FC<Props> = ({
   });
   useEffect(() => {
     window.scrollTo(0, 0);
-    get_categories && get_categories();
-    get_products && get_products();
+    get_categories?.();
+    get_products?.();
   }, []);
   useEffect(() => {
-    get_filter_products &&
-      get_filter_products(category_id, price_range, sort_by, order);
-    setFiltered(true);
+    if (search_products?.length === 0) {
+      setFiltered(true);
+    } else {
+      setFiltered(false);
+    }
+  }, [search_products]);
+  useEffect(() => {
+    get_filter_products?.(category_id, price_range, sort_by, order);
   }, [formData]);
 
   const { category_id, price_range, sort_by, order } = formData;
   const onSubmit = (e: any) => {
     e.preventDefault();
-    console.log(formData);
-    get_filter_products &&
-      get_filter_products(category_id, price_range, sort_by, order);
-    setFiltered(true);
-  };
-  const onSubmit2 = (e: any) => {
-    e.preventDefault();
-    console.log(formData);
-    get_filter_products &&
-      get_filter_products(category_id, price_range, sort_by, order);
-    setFiltered(true);
+    get_filter_products?.(category_id, price_range, sort_by, order);
   };
 
   const onChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFiltered(true);
   };
+
   const ShowProducts = () => {
     let results = [];
     let display: any[] = [];
-    if (
-      filtered_products &&
+
+    if (filtered) {
       filtered_products !== null &&
-      filtered_products !== undefined
-    ) {
-      filtered_products.map((product: ProductType, index: number) => {
-        return display.push(
-          <div key={index} className="">
-            <ProductCard product={product} />
-          </div>
-        );
-      });
-    } else if (
-      !filtered &&
-      all_products &&
-      all_products !== null &&
-      all_products !== undefined
-    ) {
-      all_products.map((product: ProductType, index: number) => {
-        return display.push(
-          <div key={index} className="">
-            <ProductCard product={product} />
-          </div>
-        );
-      });
+        filtered_products !== undefined &&
+        filtered_products.map((product: ProductType, index: number) => {
+          return display.push(
+            <div key={index} className="">
+              <ProductCard product={product} />
+            </div>
+          );
+        });
     }
+
+    if (!filtered && search_products?.length === 0) {
+      all_products !== null &&
+        all_products !== undefined &&
+        all_products.map((product: ProductType, index: number) => {
+          return display.push(
+            <div key={index} className="">
+              <ProductCard product={product} />
+            </div>
+          );
+        });
+    }
+
     for (let i = 0; i < display.length; i += 3) {
       results.push(
         <div key={i} className="grid md:grid-cols-3 gap-x-8 mt-10">
           {display[i] ? display[i] : <div className=""></div>}
-          {display[i + 1] ? display[i + 1] : <div className=""></div>}
-          {display[i + 2] ? display[i + 2] : <div className=""></div>}
+          {display[i + 1] ? display[i + 1] : <div></div>}
+          {display[i + 2] ? display[i + 2] : <div></div>}
         </div>
       );
     }
+
     return results;
+  };
+
+  const ShowProductsSearch = () => {
+    let results_searchs = [];
+    let display_search: any[] = [];
+    if (
+      search_products &&
+      search_products !== null &&
+      search_products !== undefined
+    ) {
+      search_products.map((product: ProductType, index: number) => {
+        return display_search.push(
+          <div key={index} className="">
+            <ProductCard product={product} />
+          </div>
+        );
+      });
+    }
+
+    for (let i = 0; i < display_search.length; i += 3) {
+      results_searchs.push(
+        <div key={i} className="grid md:grid-cols-3 gap-x-8 mt-10">
+          {display_search[i] ? display_search[i] : <div className=""></div>}
+          {display_search[i + 1] ? display_search[i + 1] : <div></div>}
+          {display_search[i + 2] ? display_search[i + 2] : <div></div>}
+        </div>
+      );
+    }
+    return results_searchs;
   };
 
   const FormOptions = (
@@ -361,7 +392,7 @@ const Shop: FC<Props> = ({
 
                   {/* Mobile Filters */}
                   <form
-                    onSubmit={onSubmit2}
+                    onSubmit={onSubmit}
                     className="mt-4 border-t border-gray-200"
                   >
                     <div>{FormOptions}</div>
@@ -374,7 +405,9 @@ const Shop: FC<Props> = ({
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
               <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">
-                New Arrivals
+                Productos (
+                {filtered ? filtered_products?.length : search_products?.length}
+                )
               </h1>
 
               <div className="flex items-center">
@@ -419,7 +452,8 @@ const Shop: FC<Props> = ({
                 {/* Product grid */}
                 <div className="lg:col-span-3">
                   {!filtered_products && <ProductEsqueleton />}
-                  {ShowProducts && ShowProducts()}
+
+                  {filtered ? ShowProducts?.() : ShowProductsSearch?.()}
                 </div>
               </div>
             </section>
@@ -434,10 +468,12 @@ const mapStateToProps = (state: ReducersStateType) => ({
   categories: state.Categories.categories,
   all_products: state.Products.products,
   filtered_products: state.Products.filtered_products,
+  search_products: state.Products.search_products,
 });
 
 export default connect(mapStateToProps, {
   get_categories,
   get_products,
   get_filter_products,
-})(Shop);
+  get_search_products,
+})(SearchPage);

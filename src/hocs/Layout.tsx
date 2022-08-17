@@ -9,12 +9,14 @@ type Props = {
   check_authenticated?: Function;
   load_user?: Function;
   refresh?: Function;
+  isRedirect?: boolean;
 };
 const Layout: FC<Props> = ({
   children,
   check_authenticated,
   load_user,
   refresh,
+  isRedirect,
 }) => {
   useEffect(() => {
     if (check_authenticated && load_user && refresh) {

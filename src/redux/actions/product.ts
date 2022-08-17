@@ -121,7 +121,7 @@ export const get_product =
     };
     try {
       const res = await axios.get(
-        `${URL_BASE}/${PRODUCT_DETAIL_URL}/${productId}¨¨¨¨`,
+        `${URL_BASE}/${PRODUCT_DETAIL_URL}/${String(productId)}`,
         config
       );
       if (res.status === 200) {
@@ -150,7 +150,7 @@ export const get_related_products =
     };
     try {
       const res = await axios.get(
-        `${URL_BASE}/${RELATED_PRODUCTS_URL}/${productId}¨¨¨¨`,
+        `${URL_BASE}/${RELATED_PRODUCTS_URL}/${String(productId)}¨¨¨¨`,
         config
       );
       if (res.status === 200 && !res.data.error) {
@@ -188,16 +188,18 @@ export const get_filter_products =
     });
     try {
       const res = await axios.post(
-        `${URL_BASE}/${FILTER_PRODUCTS_URL}¨¨¨¨`,
+        `${URL_BASE}/${FILTER_PRODUCTS_URL}`,
         body,
         config
       );
-      if (res.status === 200 && !res.data.error) {
+      if (res.status === 200 && !res.data.empty) {
+        console.log(res.data);
         dispatch({
           type: FILTER_PRODUCTS_SUCCESS,
           payload: res.data,
         });
       } else {
+        alert("no encontrado");
         dispatch({
           type: FILTER_PRODUCTS_FAIL,
         });
@@ -225,7 +227,7 @@ export const get_search_products =
     });
     try {
       const res = await axios.post(
-        `${URL_BASE}/${SEARCH_PRODUCTS_URL}¨¨¨¨`,
+        `${URL_BASE}/${SEARCH_PRODUCTS_URL}`,
         body,
         config
       );

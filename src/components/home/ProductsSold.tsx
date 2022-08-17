@@ -3,13 +3,12 @@ import { Link } from "react-router-dom";
 import { ProductType } from "../../redux/reducers/productsReducer";
 
 interface Props {
-  products_sold: any;
+  products: any;
 }
-const ProductsSold: FC<Props> = ({ products_sold }) => {
-  console.log(products_sold);
+const ProductsSold: FC<Props> = ({ products }) => {
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-0 px-4 sm:py-8 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-baseline sm:justify-between">
           <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
             Lo mas vendidos
@@ -23,9 +22,10 @@ const ProductsSold: FC<Props> = ({ products_sold }) => {
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-y-0 sm:gap-x-6 lg:gap-x-8">
-          {products_sold !== null &&
-            products_sold !== undefined &&
-            products_sold.map((product: ProductType) => (
+          {products &&
+            products !== null &&
+            products !== undefined &&
+            products.map((product: ProductType) => (
               <div key={product.id} className="group relative">
                 <div className="w-full h-96 rounded-lg overflow-hidden group-hover:opacity-75 sm:h-auto sm:aspect-w-2 sm:aspect-h-3">
                   <img

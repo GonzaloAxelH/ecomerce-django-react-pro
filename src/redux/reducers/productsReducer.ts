@@ -43,7 +43,7 @@ const initialState: StateTypesProducts = {
   products_arrival: null,
   products_sold: null,
   product: null,
-  search_products: null,
+  search_products: [],
   related_products: null,
   filtered_products: null,
 };
@@ -124,9 +124,9 @@ export default function Products(
     case SEARCH_PRODUCTS_FAIL:
       return {
         ...state,
-        search_products: null,
+        search_products: [],
       };
     default:
-      return state;
+      return { ...state };
   }
 }

@@ -13,14 +13,14 @@ import ProductsSold from "../components/home/ProductsSold";
 interface Props {
   get_products_by_arrival?: Function;
   get_products_by_sold?: Function;
-  products_sold?: ProductType[] | null;
+  products_by_sold?: ProductType[] | null;
   products_arrival?: ProductType[] | null;
 }
 
 const Home: FC<Props> = ({
   get_products_by_arrival,
   get_products_by_sold,
-  products_sold,
+  products_by_sold,
   products_arrival,
 }) => {
   useEffect(() => {
@@ -31,10 +31,8 @@ const Home: FC<Props> = ({
   return (
     <Layout>
       <Banner />
-
-      <ProductsArrival products_arrival={products_arrival} />
-
-      <ProductsSold products_sold={products_sold} />
+      <ProductsArrival products={products_arrival} />
+      <ProductsSold products={products_by_sold} />
     </Layout>
   );
 };
@@ -44,6 +42,6 @@ const mapStateToProps = (state: ReducersStateType) => ({
   products_by_sold: state.Products.products_sold,
 });
 export default connect(mapStateToProps, {
-  get_products_by_arrival,
   get_products_by_sold,
+  get_products_by_arrival,
 })(Home);

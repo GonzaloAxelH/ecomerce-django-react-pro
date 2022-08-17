@@ -186,44 +186,33 @@ class ListBySearchView(APIView):
 
     def post(self, request, format=None):
         data = self.request.data
-        try:
-            category_id = int(data["category_id"])
-        except:
-            return Response({
-                "error": "Category ID must be a integer"
-            }, status=status.HTTP_404_NOT_FOUND)
-        try:
-            sort_by = data["sort_by"]
-        except:
-            return Response({
-                "error": "Sort by is not defined"
-            }, status=status.HTTP_404_NOT_FOUND)
-        try:
-            sort_by = data["price_range"]
-        except:
-            return Response({
-                "error": "Price range is not defined"
-            }, status=status.HTTP_404_NOT_FOUND)
-        try:
-            sort_by = data["order"]
-        except:
-            return Response({
-                "error": "ordern is not defined"
-            }, status=status.HTTP_404_NOT_FOUND)
-        price_range = data["price_range"]
-        sort_by = data["sort_by"]
-        if not (sort_by == "date_created" or sort_by == "price" or sort_by == "sold" or sort_by == "name"):
-            sort_by = "date_created"
-        order = data["order"]
 
+        try:
+            category_id = int(data['category_id'])
+        except:
+            return Response(
+                {'error': 'Category ID must be an integer'},
+                status=status.HTTP_404_NOT_FOUND)
+
+        price_range = data['price_range']
+        sort_by = data['sort_by']
+
+        if not (sort_by == 'date_created' or sort_by == 'price' or sort_by == 'sold' or sort_by == 'name'):
+            sort_by = 'date_created'
+
+        order = data['order']
+
+        # Si categoryID es = 0, filtrar todas las categorias
         if category_id == 0:
             product_results = Product.objects.all()
         elif not Category.objects.filter(id=category_id).exists():
-            return Response({"error": "Category no existe"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {'error': 'This category does not exist'},
+                status=status.HTTP_404_NOT_FOUND)
         else:
-            # filtrar por categorias
             category = Category.objects.get(id=category_id)
             if category.parent:
+                # Si la categoria tiene padrem filtrar solo por la categoria y no el padre tambien
                 product_results = Product.objects.filter(category=category)
             else:
                 if not Category.objects.filter(parent=category).exists():
@@ -231,41 +220,46 @@ class ListBySearchView(APIView):
                 else:
                     categories = Category.objects.filter(parent=category)
                     filtered_categories = [category]
+
                     for cat in categories:
                         filtered_categories.append(cat)
+
                     filtered_categories = tuple(filtered_categories)
                     product_results = Product.objects.filter(
                         category__in=filtered_categories)
+
         # Filtrar por precio
-        if price_range == "1-19":
+        if price_range == '1-19':
             product_results = product_results.filter(price__gte=1)
             product_results = product_results.filter(price__lt=20)
-        if price_range == "20-39":
+        elif price_range == '20-39':
             product_results = product_results.filter(price__gte=20)
             product_results = product_results.filter(price__lt=40)
-        if price_range == "40-59":
+        elif price_range == '40-59':
             product_results = product_results.filter(price__gte=40)
             product_results = product_results.filter(price__lt=60)
-        if price_range == "60-79":
+        elif price_range == '60-79':
             product_results = product_results.filter(price__gte=60)
             product_results = product_results.filter(price__lt=80)
-        if price_range == "More than 80":
+        elif price_range == 'More than 80':
             product_results = product_results.filter(price__gte=80)
 
-        # filtrar producto por Sort_by
-        if order == "desc":
-            sort_by = "-" + sort_by
+        # Filtrar producto por sort_by
+        if order == 'desc':
+            sort_by = '-' + sort_by
             product_results = product_results.order_by(sort_by)
-        elif order == "asc":
+        elif order == 'asc':
             product_results = product_results.order_by(sort_by)
         else:
             product_results = product_results.order_by(sort_by)
+
         product_results = ProductSerializer(product_results, many=True)
+
         if len(product_results.data) > 0:
-            return Response({
-                "filtered_products": product_results.data
-            }, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {'filtered_products': product_results.data},
+                status=status.HTTP_200_OK)
         else:
-            return Response({
-                "empty": "No products found"
-            }, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {'empty': 'No products found'},
+                status=status.HTTP_200_OK)
