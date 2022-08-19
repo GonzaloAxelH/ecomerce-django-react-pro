@@ -41,31 +41,21 @@ const Shop: FC<Props> = ({
   });
   useEffect(() => {
     window.scrollTo(0, 0);
-    get_categories && get_categories();
-    get_products && get_products();
+    get_categories?.();
+    get_products?.();
   }, []);
   useEffect(() => {
-    get_filter_products &&
-      get_filter_products(category_id, price_range, sort_by, order);
+    get_filter_products?.(category_id, price_range, sort_by, order);
     setFiltered(true);
   }, [formData]);
 
   const { category_id, price_range, sort_by, order } = formData;
   const onSubmit = (e: any) => {
     e.preventDefault();
-    console.log(formData);
-    get_filter_products &&
-      get_filter_products(category_id, price_range, sort_by, order);
-    setFiltered(true);
-  };
-  const onSubmit2 = (e: any) => {
-    e.preventDefault();
-    console.log(formData);
-    get_filter_products &&
-      get_filter_products(category_id, price_range, sort_by, order);
-    setFiltered(true);
-  };
 
+    get_filter_products?.(category_id, price_range, sort_by, order);
+    setFiltered(true);
+  };
   const onChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -361,7 +351,7 @@ const Shop: FC<Props> = ({
 
                   {/* Mobile Filters */}
                   <form
-                    onSubmit={onSubmit2}
+                    onSubmit={onSubmit}
                     className="mt-4 border-t border-gray-200"
                   >
                     <div>{FormOptions}</div>
@@ -417,7 +407,7 @@ const Shop: FC<Props> = ({
                 </form>
 
                 {/* Product grid */}
-                <div className="lg:col-span-3">
+                <div className="lg:col-span-3  overflow-hidden">
                   {!filtered_products && <ProductEsqueleton />}
                   {ShowProducts && ShowProducts()}
                 </div>

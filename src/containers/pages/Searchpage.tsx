@@ -450,7 +450,7 @@ const SearchPage: FC<Props> = ({
                 </form>
 
                 {/* Product grid */}
-                <div className="lg:col-span-3">
+                <div className="lg:col-span-3 overflow-hidden">
                   {!filtered_products && <ProductEsqueleton />}
 
                   {filtered ? ShowProducts?.() : ShowProductsSearch?.()}

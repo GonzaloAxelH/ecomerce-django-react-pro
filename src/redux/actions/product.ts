@@ -193,7 +193,7 @@ export const get_filter_products =
         config
       );
       if (res.status === 200 && !res.data.empty) {
-        console.log(res.data);
+        
         dispatch({
           type: FILTER_PRODUCTS_SUCCESS,
           payload: res.data,
