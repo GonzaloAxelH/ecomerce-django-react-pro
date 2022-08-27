@@ -3,7 +3,7 @@ import { ActionType } from "../../interfaces";
 import { SET_ALERT, REMOVE_ALERT } from "./types";
 
 export const setAlert =
-  (mensaje: string, type: string, timeout = 5000) =>
+  (mensaje: string, type: string, timeout = 3000) =>
   (dispatch: Dispatch<ActionType>) => {
     dispatch({
       type: SET_ALERT,

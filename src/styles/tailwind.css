@@ -60,3 +60,73 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
+
+/* borrar luego :V*/
+.gradient{
+
+  background:linear-gradient(50deg, #fff, #999);
+  
+}
+.button {
+  position: relative;
+  color: #555;
+  background:linear-gradient(50deg, #fff, #999);
+  border-radius: 80px;
+  text-align: center;
+  margin: 10px;
+  font-size: 30px;
+  box-shadow: 
+    .5px -.5px 1px 1px #fff,
+    -1px 1px 1px 1px #999,
+    -5px 8px 15px 1px #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  user-select: none;
+}
+
+.button.sm {
+  width: 60px;
+  height: 60px;
+
+}
+
+.button.md {
+  width: 240px;
+  height: 80px;
+}
+
+.button.lg {
+  width: 400px;
+  height: 80px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button:active {
+  font-size: 26px;
+  box-shadow: 
+    .5px -.5px 1px .5px #fff,
+    -1px 1px 1px .5px #999,
+    -1px 4px 10px 1px #999;
+}
+
+.check {
+  position: absolute;
+  left: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  opacity: 0;
+  cursor: pointer;
+  
+}
+.check-toggle:active ~ svg {
+  color: #1eabbe;
+}
+.check:checked ~ svg {
+  color: #1eabbe;
+}

@@ -29,7 +29,7 @@ const Layout: FC<Props> = ({
     <div>
       <Navbar />
       <Alert />
-      {children}
+      <div id="page-content-layout-div">{children}</div>
       <Footer />
     </div>
   );

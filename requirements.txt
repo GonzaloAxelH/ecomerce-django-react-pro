@@ -1,5 +1,5 @@
 Django==3.1.7
-
+pyserial==3.5
 django-cors-headers==3.7.0
 django-environ==0.4.5
 djangorestframework==3.12.4

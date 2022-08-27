@@ -4,50 +4,59 @@ import { ReducersStateType } from "../redux/reducers";
 import { CheckCircleIcon, XIcon } from "@heroicons/react/solid";
 import { AlertType } from "../redux/reducers/alertReducer";
 type Props = {
-  alert?: AlertType;
+  alert?: any;
 };
 
 const Alert: FC<Props> = ({ alert }) => {
   const displayAlert = () => {
     if (alert !== null) {
-      return (
-        <div className="shadow bg-white rounded-full m-5" role="alert">
-          {" "}
-          <div className="p-1 flex">
-            {" "}
-            <div
-              className={`w-24 bg-${alert?.type}-500 flex items-center text-white rounded-full justify-center`}
+      if (alert.type === "green") {
+        return (
+          <div
+            className={`flex bg-green-100 rounded-lg p-4 m-4 text-sm text-green-700`}
+            style={{ transition: "0.2s all" }}
+            role="alert"
+          >
+            <svg
+              className="w-5 h-5 inline mr-3"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              {" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>{" "}
-            </div>{" "}
-            <div className="pl-2 text-gray-600">
-              {" "}
-              <p className="font-bold">
-                {alert?.type === "red" ? "Error" : "Success"}
-              </p>{" "}
-              <p>
-                {alert?.mensaje}
-                <span className="text-gray-500"></span>
-              </p>{" "}
-            </div>{" "}
+              <path
+                fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <div>
+              <span className="font-medium">Success!!</span> {alert?.mensaje}
+            </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        <div
+          className={`flex bg-red-100 rounded-lg p-4 m-4 text-sm text-red-700`}
+          style={{ transition: "0.2s all" }}
+          role="alert"
+        >
+          <svg
+            className="w-5 h-5 inline mr-3"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <div>
+            <span className="font-medium">Danger!!</span> {alert?.mensaje}
+          </div>
+        </div>;
+      }
     } else {
       return <Fragment></Fragment>;
     }

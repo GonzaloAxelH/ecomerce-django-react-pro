@@ -10,7 +10,7 @@ function classNames(...classes: string[]) {
 }
 const AuthLinks: FC<Props> = ({ logout }) => {
   const logoutHandler = () => {
-    logout && logout();
+    logout?.();
   };
   return (
     <Menu as="div" className="relative inline-block text-left ">

@@ -2,11 +2,48 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
-
 from apps.product.models import Product
 from apps.category.models import Category
 from apps.product.serializers import ProductSerializer
 from django.db.models import Q
+import serial
+
+
+class ArduinoSerialView(APIView):
+
+    permission_classes = (permissions.AllowAny, )
+
+    def post(self, request, format=None):
+        puerto = "COM5"
+        serialArduino = serial.Serial(puerto, 9600)
+        data = self.request.data
+        try:
+            cadena = data['cadena']
+        except:
+            return Response({"error": "error encadena "}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+
+            cadena = data['cadena']
+            print({"cadena": cadena})
+            serialArduino.write(cadena.encode("ascii"))
+            r = serialArduino.readline().decode("utf8")
+            print({"serial_arduino": r})
+            return Response({"message": "Successfly", "cadena": cadena, "cadena_encode": cadena.encode(), "serial": r},
+                            status=status.HTTP_200_OK)
+        except:
+            return Response({"error": "error cadena no enviada"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ResetSerial(APIView):
+    def get(self, request, format=None):
+        try:
+            serialArduino.close()
+            serialArduino.open()
+            return Response({"message": "Reset Port successfly"}, status=status.HTTP_200_OK)
+
+        except:
+            return Response({"error": "Arduino no conectado"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProductDetailView(APIView):

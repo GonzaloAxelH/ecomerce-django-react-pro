@@ -36,6 +36,7 @@ export interface StateTypesProducts {
   search_products: ProductType[] | null;
   related_products: ProductType[] | null;
   filtered_products: ProductType[] | null;
+  cadena: string | null;
 }
 
 const initialState: StateTypesProducts = {
@@ -46,9 +47,10 @@ const initialState: StateTypesProducts = {
   search_products: [],
   related_products: null,
   filtered_products: null,
+  cadena: null,
 };
 
-export default function Products(
+export default function Cart(
   state: StateTypesProducts = initialState,
   action: ActionType
 ): StateTypesProducts {
@@ -56,6 +58,21 @@ export default function Products(
   const payload: StateTypesProducts = action.payload;
 
   switch (type) {
+    case "SEND_ARDUINO_FAIL":
+      return {
+        ...state,
+        cadena: null,
+      };
+    case "SEND_ARDUINO_SUCCESS":
+      return {
+        ...state,
+        cadena: payload.cadena,
+      };
+    case "SERIAL_RESET_SUCCESS":
+    case "SERIAL_RESET_FAIL":
+      return {
+        ...state,
+      };
     case GET_PRODUCTS_SUCCESS:
       return {
         ...state,

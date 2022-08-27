@@ -27,6 +27,67 @@ import {
   PRODUCT_DETAIL_URL,
   RELATED_PRODUCTS_URL,
 } from "./urlsApi";
+export const sendDataToArduino =
+  (cadena: string) => async (dispatch: Dispatch<ActionType>) => {
+    const config = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = JSON.stringify({
+      cadena: cadena,
+    });
+    try {
+      const res = await axios.post(
+        `${URL_BASE}/api/product/arduino`,
+        body,
+        config
+      );
+      if (res.status === 200 && !res.data.error) {
+        dispatch({
+          type: "SEND_ARDUINO_SUCCESS",
+          payload: {
+            cadena,
+          },
+        });
+      } else {
+        dispatch({
+          type: "SEND_ARDUINO_FAIL",
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: "SEND_ARDUINO_FAIL",
+      });
+    }
+  };
+
+export const reset_serial = () => async (dispatch: Dispatch<ActionType>) => {
+  const config = {
+    headers: {
+      Accept: "application/json",
+    },
+  };
+  try {
+    const res = await axios.get(`${URL_BASE}/api/product/reset-serial`, config);
+    if (res.status === 200) {
+      dispatch({
+        type: "SERIAL_RESET_SUCCESS",
+      });
+    } else {
+      dispatch({
+        type: "SERIAL_RESET_FAIL",
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: "SERIAL_RESET_FAIL",
+    });
+  }
+};
+
 export const get_products = () => async (dispatch: Dispatch<ActionType>) => {
   const config = {
     headers: {
@@ -150,7 +211,7 @@ export const get_related_products =
     };
     try {
       const res = await axios.get(
-        `${URL_BASE}/${RELATED_PRODUCTS_URL}/${String(productId)}¨¨¨¨`,
+        `${URL_BASE}/${RELATED_PRODUCTS_URL}/${String(productId)}`,
         config
       );
       if (res.status === 200 && !res.data.error) {
@@ -193,7 +254,6 @@ export const get_filter_products =
         config
       );
       if (res.status === 200 && !res.data.empty) {
-        
         dispatch({
           type: FILTER_PRODUCTS_SUCCESS,
           payload: res.data,
