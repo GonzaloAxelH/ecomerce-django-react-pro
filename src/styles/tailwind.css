@@ -130,3 +130,14 @@ input:-webkit-autofill:active{
 .check:checked ~ svg {
   color: #1eabbe;
 }
+
+
+/*alert*/
+
+.fixed-alert {
+  position:absolute;
+  right: 0%;
+  top:10%;
+  margin:0.75rem;
+  z-index: 9999999;
+}

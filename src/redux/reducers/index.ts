@@ -6,6 +6,8 @@ import Categories, { StateTypesCategories } from "./categoriesReducer";
 import Products, { StateTypesProducts } from "./productsReducer";
 import Cart, { StateTypesCartItems } from "./cartReducer";
 import Shipping, { StateTypesShipping } from "./reducerShipping";
+import Payment, { StateTypesPayment } from "./reducerPayment";
+import Orders, { StateTypesOrders } from "./reducerOrders";
 export interface ReducersStateType {
   Auth: StateTypesAuth;
   Alert: StateTypeAlert;
@@ -13,13 +15,17 @@ export interface ReducersStateType {
   Products: StateTypesProducts;
   Cart: StateTypesCartItems;
   Shipping: StateTypesShipping;
+  Payment: StateTypesPayment;
+  Orders: StateTypesOrders;
 }
 
 export default combineReducers<ReducersStateType>({
   Auth,
+  Payment,
   Categories,
   Alert,
   Products,
   Cart,
   Shipping,
+  Orders,
 });

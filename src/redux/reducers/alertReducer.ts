@@ -7,11 +7,15 @@ export interface AlertType {
 }
 
 export interface StateTypeAlert {
-  alert: AlertType | null;
+  showAlert: boolean;
+  message: string;
+  color: string;
 }
 
-const initialState = {
-  alert: null,
+const initialState: StateTypeAlert = {
+  showAlert: false,
+  message: "",
+  color: "",
 };
 
 export default function Alert(
@@ -23,12 +27,16 @@ export default function Alert(
     case SET_ALERT:
       return {
         ...state,
-        alert: payload,
+        showAlert: true,
+        message: payload.message,
+        color: payload.color,
       };
     case REMOVE_ALERT:
       return {
         ...state,
-        alert: null,
+        showAlert: false,
+        message: "",
+        color: "",
       };
     default:
       return state;

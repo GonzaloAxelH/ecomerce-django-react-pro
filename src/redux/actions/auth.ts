@@ -139,7 +139,6 @@ export const signup =
             "green"
           )
         );
-        console.log("Cuenta registrada correctmente");
       } else {
         dispatch({ type: SIGNUP_FAIL });
         dispatch(setAlert("Error al activar la cuenta", "red"));
@@ -149,8 +148,8 @@ export const signup =
     } catch (err: any) {
       dispatch({ type: SIGNUP_FAIL });
       dispatch({ type: REMOVE_AUTH_LOADING });
-
-      dispatch(setAlert("Error al conectar con el servidor", "red"));
+      console.log(err);
+      dispatch(setAlert("error", "red"));
     }
   };
 

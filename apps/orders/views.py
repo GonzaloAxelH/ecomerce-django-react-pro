@@ -1,18 +1,16 @@
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from apps.orders.models import Order, OrderItem
-
-# Create your views here.
 
 
 class ListOrdersView(APIView):
     def get(self, request, format=None):
         user = self.request.user
         try:
-            orders = Order.objects.order_by("-date_issued").filter(user=user)
+            orders = Order.objects.order_by('-date_issued').filter(user=user)
             result = []
+
             for order in orders:
                 item = {}
                 item['status'] = order.status
@@ -22,7 +20,9 @@ class ListOrdersView(APIView):
                 item['date_issued'] = order.date_issued
                 item['address_line_1'] = order.address_line_1
                 item['address_line_2'] = order.address_line_2
+
                 result.append(item)
+            
             return Response(
                 {'orders': result},
                 status=status.HTTP_200_OK
@@ -37,10 +37,10 @@ class ListOrdersView(APIView):
 class ListOrderDetailView(APIView):
     def get(self, request, transactionId, format=None):
         user = self.request.user
+
         try:
             if Order.objects.filter(user=user, transaction_id=transactionId).exists():
-                order = Order.objects.get(
-                    user=user, transaction_id=transactionId)
+                order = Order.objects.get(user=user, transaction_id=transactionId)
                 result = {}
                 result['status'] = order.status
                 result['transaction_id'] = order.transaction_id
@@ -57,9 +57,9 @@ class ListOrderDetailView(APIView):
                 result['shipping_time'] = order.shipping_time
                 result['shipping_price'] = order.shipping_price
                 result['date_issued'] = order.date_issued
-                order_items = OrderItem.objects.order_by(
-                    '-date_added').filter(order=order)
-                result["order_items"] = []
+
+                order_items = OrderItem.objects.order_by('-date_added').filter(order=order)
+                result['order_items'] = []
 
                 for order_item in order_items:
                     sub_item = {}
@@ -69,7 +69,6 @@ class ListOrderDetailView(APIView):
                     sub_item['count'] = order_item.count
 
                     result['order_items'].append(sub_item)
-
                 return Response(
                     {'order': result},
                     status=status.HTTP_200_OK

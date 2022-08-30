@@ -1,17 +1,22 @@
 import React, { FC, useEffect, useState } from "react";
 import { connect } from "react-redux";
+
+import DropIn from "braintree-web-drop-in-react";
 import { Link, Navigate } from "react-router-dom";
 import Layout from "../../hocs/Layout";
 import { ReducersStateType } from "../../redux/reducers";
 import { get_shipping_options } from "../../redux/actions/shipping";
+import { refresh } from "../../redux/actions/auth";
 import {
-  CheckIcon,
-  ClockIcon,
-  QuestionMarkCircleIcon,
-  XIcon,
-} from "@heroicons/react/solid";
+  get_payment_total,
+  get_client_token,
+  process_payment,
+} from "../../redux/actions/payment";
+import { CheckIcon, QuestionMarkCircleIcon } from "@heroicons/react/solid";
 import { ItemCart } from "../../redux/reducers/cartReducer";
 import { ShippingType } from "../../redux/reducers/reducerShipping";
+import { countries } from "../../helpers/fixCountries";
+import ShippingForm from "../../components/checkout/ShippingForm";
 
 interface Props {
   isAuthenticated?: boolean;
@@ -19,30 +24,174 @@ interface Props {
   total_items?: number;
   get_shipping_options?: Function;
   shipping_inputs?: any[] | null;
+  refresh?: Function;
+  get_client_token?: Function;
+  get_payment_total?: Function;
+  process_payment?: Function;
+  user?: any;
+  client_token?: string | null;
+  made_payment?: any;
+  loading?: boolean;
+  original_price?: number;
+  total_amount?: number;
+  total_compare_amount?: number;
+  estimated_tax?: number;
+  shipping_cost?: number;
 }
 
 const Checkout: FC<Props> = ({
   isAuthenticated,
   items,
-  total_items,
   get_shipping_options,
   shipping_inputs,
+  total_items,
+  refresh,
+  get_client_token,
+  get_payment_total,
+  process_payment,
+  user,
+  client_token,
+  made_payment,
+  loading,
+  original_price,
+  total_amount,
+  total_compare_amount,
+  estimated_tax,
+  shipping_cost,
 }) => {
+  const [data, setData] = useState<any>({
+    instance: {},
+  });
+
   const [formData, setFormData] = useState({
     shipping_id: 0,
+    full_name: "gonzalo",
+    address_line_1: "Alto Chiribaya ",
+    address_line_2: "Alto Ilo",
+    city: "Ilo",
+    state_province_region: "MKoquegua/Ilo",
+    postal_zip_code: "1806",
+    country_region: "Peru",
+    telephone_number: "98765431",
+    coupon_name: "FAFFFFAA",
   });
-  const { shipping_id } = formData;
+
+  const {
+    full_name,
+    address_line_1,
+    address_line_2,
+    city,
+    state_province_region,
+    postal_zip_code,
+    country_region,
+    telephone_number,
+    shipping_id,
+  } = formData;
   useEffect(() => {
     get_shipping_options?.();
+    get_payment_total?.();
   }, []);
+
+  useEffect(() => {
+    get_client_token?.();
+  }, [user]);
+
+  useEffect(() => {
+    get_payment_total?.(shipping_id);
+  }, [shipping_id]);
   if (!isAuthenticated && isAuthenticated !== null) {
     return <Navigate to="/" />;
   }
   const onChange = (e: any) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmit = (e: any) => {
+
+  const buy = async (e: any) => {
     e.preventDefault();
+
+    const nonce = await data.instance.requestPaymentMethod();
+
+    process_payment?.(
+      nonce,
+      shipping_id,
+      full_name,
+      address_line_1,
+      address_line_2,
+      city,
+      state_province_region,
+      postal_zip_code,
+      country_region,
+      telephone_number
+    );
+    console.log({
+      nonce,
+      shipping_id,
+      full_name,
+      address_line_1,
+      address_line_2,
+      city,
+      state_province_region,
+      postal_zip_code,
+      country_region,
+      telephone_number,
+    });
   };
+
+  const renderPaymentInfo = () => {
+    if (!client_token && client_token === null) {
+      if (!isAuthenticated && isAuthenticated === null) {
+        return (
+          <Link
+            to="/login"
+            className="w-full bg-gray-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
+          >
+            Login
+          </Link>
+        );
+      } else {
+        return (
+          <button className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">
+            <div id="circle5"></div>
+          </button>
+        );
+      }
+    } else {
+      return (
+        <>
+          <DropIn
+            options={{
+              authorization: client_token,
+              paypal: {
+                flow: "vault",
+              },
+            }}
+            onInstance={(instance) => (data.instance = instance)}
+          />
+
+          <div className="mt-6">
+            {loading ? (
+              <button
+                type="button"
+                className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+              >
+                <div id="circle5"></div>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-green-500"
+              >
+                Place Order
+              </button>
+            )}
+          </div>
+        </>
+      );
+    }
+  };
+
+  if (made_payment) {
+    window.location.href = "/thankyou";
+  }
   return (
     <Layout>
       <div className="bg-white">
@@ -50,13 +199,10 @@ const Checkout: FC<Props> = ({
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             Checkout
           </h1>
-          <form
-            className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16"
-            onSubmit={onSubmit}
-          >
+          <div className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
             <section aria-labelledby="cart-heading" className="lg:col-span-7">
               <h2 id="cart-heading" className="sr-only">
-                Items in your shopping cart
+                Items in your shopping cart {total_items}
               </h2>
 
               <ul
@@ -107,7 +253,7 @@ const Checkout: FC<Props> = ({
                     </li>
                   ))}
                 <Link to="/cart">
-                  <button className="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-green-500">
+                  <button className="w-full border bg-gray-100 border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-dark  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 ">
                     Editar en el carrito
                   </button>
                 </Link>
@@ -115,100 +261,27 @@ const Checkout: FC<Props> = ({
             </section>
 
             {/* Order summary */}
-            <section
-              aria-labelledby="summary-heading"
-              className="mt-16 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5"
-            >
-              <h2
-                id="summary-heading"
-                className="text-lg font-medium text-gray-900"
-              >
-                Order summary
-              </h2>
-
-              <dl className="mt-6 space-y-4">
-                <div className="flex items-center justify-between">
-                  <dt className="text-sm text-gray-600">
-                    {shipping_inputs &&
-                      shipping_inputs.map(
-                        (shipping_option: ShippingType, index: number) => {
-                          return (
-                            <div key={index}>
-                              <input
-                                className="cursor-pointer"
-                                onChange={(e) => onChange(e)}
-                                value={shipping_option.id}
-                                name="shipping_id"
-                                type="radio"
-                                required
-                              />
-                              <label className="ml-4">
-                                {shipping_option.name} - $
-                                {shipping_option.price} (
-                                {shipping_option.time_to_delivery})
-                              </label>
-                            </div>
-                          );
-                        }
-                      )}
-                  </dt>
-                </div>
-                <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                  <dt className="flex items-center text-sm text-gray-600">
-                    <span>Sub Total</span>
-                    <a
-                      href="#"
-                      className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                    >
-                      <span className="sr-only">
-                        Learn more about how shipping is calculated
-                      </span>
-                      <QuestionMarkCircleIcon
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </dt>
-                  <dd className="text-sm font-medium text-gray-900">$5.00</dd>
-                </div>
-                <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                  <dt className="flex text-sm text-gray-600">
-                    <span>Tax estimate</span>
-                    <a
-                      href="#"
-                      className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                    >
-                      <span className="sr-only">
-                        Learn more about how tax is calculated
-                      </span>
-                      <QuestionMarkCircleIcon
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </dt>
-                  <dd className="text-sm font-medium text-gray-900">$8.32</dd>
-                </div>
-                <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                  <dt className="text-base font-medium text-gray-900">
-                    Order total
-                  </dt>
-                  <dd className="text-base font-medium text-gray-900">
-                    $112.32
-                  </dd>
-                </div>
-              </dl>
-
-              <div className="mt-6">
-                <button
-                  type="submit"
-                  className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
-                >
-                  Checkout
-                </button>
-              </div>
-            </section>
-          </form>
+            <ShippingForm
+              full_name={full_name}
+              address_line_1={address_line_1}
+              address_line_2={address_line_2}
+              city={city}
+              state_province_region={state_province_region}
+              postal_zip_code={postal_zip_code}
+              telephone_number={telephone_number}
+              countries={countries}
+              onChange={onChange}
+              buy={buy}
+              user={user}
+              total_amount={total_amount}
+              total_compare_amount={total_compare_amount}
+              estimated_tax={estimated_tax}
+              shipping_cost={shipping_cost}
+              shipping_id={shipping_id}
+              shipping_inputs={shipping_inputs}
+              renderPaymentInfo={renderPaymentInfo}
+            />
+          </div>
         </div>
       </div>
     </Layout>
@@ -219,7 +292,20 @@ const mapStateToProps = (state: ReducersStateType) => ({
   items: state.Cart.items,
   total_items: state.Cart.total_items,
   shipping_inputs: state.Shipping.shipping,
+  user: state.Auth.user,
+  client_token: state.Payment.clientToken,
+  made_payment: state.Payment.made_payment,
+  loading: state.Payment.loading,
+  original_price: state.Payment.original_price,
+  total_amount: state.Payment.total_amount,
+  total_compare_amount: state.Payment.total_compare_amount,
+  estimated_tax: state.Payment.estimated_tax,
+  shipping_cost: state.Payment.shipping_cost,
 });
 export default connect(mapStateToProps, {
   get_shipping_options,
+  refresh,
+  get_client_token,
+  get_payment_total,
+  process_payment,
 })(Checkout);

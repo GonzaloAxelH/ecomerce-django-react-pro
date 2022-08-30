@@ -1,27 +1,32 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from apps.cart.models import Cart
-
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError("Use must have an email adress")
+            raise ValueError('Users must have an email address')
+        
         email = self.normalize_email(email)
-
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)
 
+        user.set_password(password)
         user.save()
-        shopping_cart = Cart.objects.create()
+
+        shopping_cart = Cart.objects.create(user=user)
         shopping_cart.save()
+      
+
         return user
 
+    
     def create_superuser(self, email, password, **extra_fields):
         user = self.create_user(email, password, **extra_fields)
+
         user.is_superuser = True
         user.is_staff = True
         user.save()
+
         return user
 
 
@@ -34,8 +39,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     objects = UserAccountManager()
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name"]
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name

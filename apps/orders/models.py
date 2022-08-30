@@ -1,22 +1,20 @@
 from django.db import models
-from django.db import models
 from apps.product.models import Product
 from apps.orders.countries import Countries
 from datetime import datetime
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-User = get_user_model()
-
 
 class Order(models.Model):
+    
     class OrderStatus(models.TextChoices):
         not_processed = 'not_processed'
         processed = 'processed'
         shipping = 'shipped'
         delivered = 'delivered'
         cancelled = 'cancelled'
-
+    
     status = models.CharField(
         max_length=50, choices=OrderStatus.choices, default=OrderStatus.not_processed)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

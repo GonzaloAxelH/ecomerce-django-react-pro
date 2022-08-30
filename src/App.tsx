@@ -16,15 +16,28 @@ import ArduinoPage from "./containers/pages/ArduinoPage";
 import CartPage from "./containers/pages/CartPage";
 import Checkout from "./containers/pages/Checkout";
 import PrivateRoute from "./PrivateRoute";
+import ThankYou from "./containers/pages/ThankYou";
+import Dashboard from "./containers/pages/Dashboard";
+import DashboardPayments from "./containers/pages/DashboardPayments";
+import DashboardPaymentsDetail from "./containers/pages/DashboardPaymentsDetail";
 const App: React.FC = (): JSX.Element => {
   return (
     <Provider store={store}>
       <Routes>
         <Route path="*" element={<Error404 />} />
         <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/dashboard/payments" element={<DashboardPayments />} />
+
+        <Route
+          path="/dashboard/payment/:transaction_id"
+          element={<DashboardPaymentsDetail />}
+        />
+
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<Checkout />} />
-
+        <Route path="/thankyou" element={<ThankYou />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/activate/:uid/:token" element={<Activate />} />

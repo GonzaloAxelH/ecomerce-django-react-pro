@@ -11,17 +11,17 @@ import { Link } from "react-router-dom";
 import { get_items, get_item_total, get_total } from "../../redux/actions/cart";
 
 interface Props {
-  amount?: any;
-  compare_amount?: any;
+  amount?: number;
+  compare_amount?: number;
   total_items?: number;
-  items?: ItemCart[];
-  isAuthenticated?: any;
+  items?: ItemCart[] | null;
+  isAuthenticated?: boolean | null;
   get_items?: Function;
   get_total?: Function;
   get_item_total?: Function;
 }
 
-const CartPage: FC<any> = ({
+const CartPage: FC<Props> = ({
   isAuthenticated,
   items,
   amount,

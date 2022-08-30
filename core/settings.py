@@ -1,3 +1,9 @@
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
+#SECRET_KEY = 'django-insecure-9p3^#9%#e*zp%a@ol6y9mq#)#%m5bn=d!!%m8)vzsn%$v33lhn'
+
+
 from datetime import timedelta
 from pathlib import Path
 import os
@@ -40,6 +46,7 @@ ECOMMERCE_APPS = [
     "apps.product",
     "apps.cart",
     "apps.shipping",
+    "apps.orders",
     "apps.payment"
 ]
 THIRD_PARTY_APPS = [
@@ -150,7 +157,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Lima'
 
 USE_I18N = True
 
@@ -238,3 +245,4 @@ if not mode_development:
     EMAIL_HOST = PASSWORD = env("EMAIL_HOST_PASSWORD")
     EMAIL_PORT = env("EMAIL_POST")
     EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+

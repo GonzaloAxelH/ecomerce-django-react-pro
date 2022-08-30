@@ -36,7 +36,8 @@ const Signup: FC<SignupProps> = ({ signup, loading }) => {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    signup && signup(first_name, last_name, email, password, re_password);
+    signup?.(first_name, last_name, email, password, re_password);
+    console.log(formData);
     setAccountCreated(true);
   };
   if (!loading && accountCreated) {

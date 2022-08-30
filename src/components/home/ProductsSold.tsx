@@ -26,22 +26,24 @@ const ProductsSold: FC<Props> = ({ products }) => {
             products !== null &&
             products !== undefined &&
             products.map((product: ProductType) => (
-              <div key={product.id} className="group relative">
-                <div className="w-full h-96 rounded-lg overflow-hidden group-hover:opacity-75 sm:h-auto sm:aspect-w-2 sm:aspect-h-3">
-                  <img
-                    src={`${process.env.REACT_APP_API_URL}${product.photo}`}
-                    alt={product.name}
-                    className="w-full h-full object-center object-cover"
-                  />
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-gray-900">
-                  <Link to="/">
+              <Link to={`/product/${product.id}`} key={product.id}>
+                <div className="group relative">
+                  <div className="w-full h-96 rounded-lg overflow-hidden group-hover:opacity-75 sm:h-auto sm:aspect-w-2 sm:aspect-h-3">
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}${product.photo}`}
+                      alt={product.name}
+                      className="w-full h-full object-center object-cover"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-base font-semibold text-gray-900">
                     <span className="absolute inset-0" />
                     {product.name}
-                  </Link>
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">$ {product.price}</p>
-              </div>
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-500">
+                    $ {product.price}
+                  </p>
+                </div>
+              </Link>
             ))}
         </div>
 

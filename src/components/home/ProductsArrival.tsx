@@ -17,31 +17,31 @@ const ProductsArrival: FC<Props> = ({ products }) => {
           {products !== null &&
             products !== undefined &&
             products.map((product: ProductType) => (
-              <div key={product.id} className="group relative">
-                <div className="border w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                  <img
-                    src={`${process.env.REACT_APP_API_URL}${product.photo}`}
-                    alt={`${process.env.REACT_APP_API_URL}${product.photo}`}
-                    className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700">
-                      <Link to="/">
+              <Link to={`/product/${product.id}`} key={product.id}>
+                <div className="group relative">
+                  <div className="border w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}${product.photo}`}
+                      alt={`${process.env.REACT_APP_API_URL}${product.photo}`}
+                      className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    <div>
+                      <h3 className="text-sm text-gray-700">
                         <span
                           aria-hidden="true"
                           className="absolute inset-0 "
                         />
                         {product.name}
-                      </Link>
-                    </h3>
+                      </h3>
+                    </div>
+                    <p className="text-lg font-medium text-gray-900">
+                      $ {product.price}
+                    </p>
                   </div>
-                  <p className="text-lg font-medium text-gray-900">
-                    $ {product.price}
-                  </p>
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>
