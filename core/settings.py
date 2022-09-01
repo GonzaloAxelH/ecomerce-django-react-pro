@@ -9,16 +9,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-#RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')if RENDER_EXTERNAL_HOSTNAME: ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost"
+    "localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+    "localhost",
     "https://ecomerce-gonzalo.onrender.com",
     ".ecomerce-gonzalo.onrender.com",
     "www.ecomerce-gonzalo.onrender.com",
+    "ecomerce-gonzalo.onrender.com",
 ]
 
 
@@ -163,13 +165,19 @@ USE_TZ = True
 
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'static')
+
+STATIC_ROOT  =   os.path.join(PROJECT_ROOT, "static")
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [
+     os.path.join(PROJECT_ROOT, 'build/static'),
+]
 
 
 
