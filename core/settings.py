@@ -16,7 +16,7 @@ ALLOWED_HOSTS = ["¨*"]
 ALLOWED_HOSTS = [
 
     "127.0.0.1",
-    "localhost",
+    "https://ecomerce-gonzalo.onrender.com",
 ]
 
 
@@ -111,6 +111,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
+    'https://ecomerce-gonzalo.onrender.com'
 
 ]
 
@@ -119,6 +120,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
+    'https://ecomerce-gonzalo.onrender.com'
 ]
 
 
