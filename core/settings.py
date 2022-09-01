@@ -17,6 +17,7 @@ ALLOWED_HOSTS = [
     "http://127.0.0.1:8000",
     "http://localhost:8000",
     "localhost",
+    "127.0.0.1",
     "https://ecomerce-gonzalo.onrender.com",
     ".ecomerce-gonzalo.onrender.com",
     "www.ecomerce-gonzalo.onrender.com",
