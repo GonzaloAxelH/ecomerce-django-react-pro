@@ -28,6 +28,7 @@ boto3==1.18.63
 django-storages==1.12.2 
 
 markdown==3.3.4
+gunicorn==19.0.0
 whitenoise==5.3.0
 
 requests==2.26.0
