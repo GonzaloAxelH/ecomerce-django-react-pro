@@ -8,11 +8,18 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { CreditCardIcon, SearchIcon, UserIcon } from "@heroicons/react/solid";
-import { check_authenticated, load_user, refresh } from "../redux/actions/auth";
+import {
+  check_authenticated,
+  load_user,
+  logout,
+  refresh,
+} from "../redux/actions/auth";
 import Alert from "../components/Alert";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { get_items, get_item_total, get_total } from "../redux/actions/cart";
 import { list_orders } from "../redux/actions/order";
+import { get_categories } from "../redux/actions/caegories";
+import { ReducersStateType } from "../redux/reducers";
 
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -33,6 +40,9 @@ type Props = {
   get_items?: any | null;
   get_total?: any | null;
   get_item_total?: any | null;
+  logout?: Function;
+  get_categories?: Function;
+  isAuthenticated?: boolean | null;
 };
 const LayoutDashboard: FC<Props> = ({
   children,
@@ -43,6 +53,9 @@ const LayoutDashboard: FC<Props> = ({
   get_items,
   get_total,
   get_item_total,
+  logout,
+  get_categories,
+  isAuthenticated,
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   useEffect(() => {
@@ -51,11 +64,14 @@ const LayoutDashboard: FC<Props> = ({
       load_user();
       refresh();
     }
-    get_items?.();
     get_total?.();
     get_item_total?.();
     list_orders?.();
+    get_items?.();
   }, []);
+  if (!isAuthenticated && isAuthenticated !== null) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div>
       <Alert />
@@ -220,21 +236,19 @@ const LayoutDashboard: FC<Props> = ({
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {userNavigation.map((item) => (
-                          <Menu.Item key={item.name}>
-                            {({ active }) => (
-                              <a
-                                href={item.href}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                {item.name}
-                              </a>
-                            )}
-                          </Menu.Item>
-                        ))}
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={() => logout?.()}
+                              className={classNames(
+                                active ? "bg-gray-100 cursor-pointer" : "",
+                                "block px-4 py-2 text-sm cursor-pointer text-gray-700"
+                              )}
+                            >
+                              Log Out
+                            </a>
+                          )}
+                        </Menu.Item>
                       </Menu.Items>
                     </Transition>
                   </Menu>
@@ -305,8 +319,10 @@ function DashboardLink() {
     </>
   );
 }
-
-export default connect(null, {
+const mapStateToProps = (state: ReducersStateType) => ({
+  isAuthenticated: state.Auth.isAuthenticated,
+});
+export default connect(mapStateToProps, {
   check_authenticated,
   load_user,
   refresh,
@@ -314,4 +330,6 @@ export default connect(null, {
   get_items,
   get_total,
   get_item_total,
+  logout,
+  get_categories,
 })(LayoutDashboard);

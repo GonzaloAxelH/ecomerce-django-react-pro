@@ -70,98 +70,129 @@ const DashboardPaymentDetail: FC<Props> = ({ order, get_order_detail }) => {
 
                         <div className="space-y-24">
                           {order &&
-                            order?.order_items?.map((product: any) => (
-                              <div
-                                key={product.id}
-                                className="grid grid-cols-1 text-sm sm:grid-rows-1 sm:grid-cols-12 sm:gap-x-6 md:gap-x-8 lg:gap-x-8"
-                              >
-                                <div className="mt-6 sm:col-span-7 sm:mt-0 md:row-end-1">
-                                  <h3 className="text-lg font-medium text-gray-900">
-                                    <Link to={`/product/${product.id}`}>
-                                      {product.name}
-                                    </Link>
-                                  </h3>
-                                  <p className="font-medium text-gray-900 mt-1">
-                                    Transaction ID: {order.transaction_id}
-                                  </p>
-                                  <p className="text-gray-500 mt-3">Desc</p>
-                                </div>
-                                <div className="sm:col-span-12 md:col-span-7">
-                                  <dl className="grid grid-cols-1 gap-y-8 border-b py-8 border-gray-200 sm:grid-cols-2 sm:gap-x-6 sm:py-6 md:py-10">
-                                    <div>
-                                      <dt className="font-medium text-gray-900">
-                                        Delivery address
-                                      </dt>
-                                      <dd className="mt-3 text-gray-500">
-                                        <span className="block">
-                                          {order.address_line_1}
-                                        </span>
-                                        <span className="block">
-                                          {order.address_line_2}
-                                        </span>
-                                      </dd>
-                                    </div>
-                                    <div>
-                                      <dt className="font-medium text-gray-900">
-                                        Shipping
-                                      </dt>
-                                      <dd className="mt-3 text-gray-500 space-y-3">
-                                        <p>$ {order.shipping_price}</p>
-                                        <p>$ {order.amount} Total Cost</p>
-                                      </dd>
-                                    </div>
-                                  </dl>
-                                  <p className="font-medium text-gray-900 mt-6 md:mt-10">
-                                    Status: {order.status}
-                                  </p>
-                                  <div className="mt-6">
-                                    <div className="bg-gray-200 rounded-full overflow-hidden">
-                                      <div
-                                        className="h-2 bg-indigo-600 rounded-full"
-                                        style={{
-                                          width: `calc((${product.step} * 2 + 1) / 8 * 100%)`,
-                                        }}
-                                      />
-                                    </div>
-                                    <div className="hidden sm:grid grid-cols-4 font-medium text-gray-600 mt-6">
-                                      <div className="text-indigo-600">
-                                        Order placed
-                                      </div>
-                                      <div
-                                        className={classNames(
-                                          product.step > 0
-                                            ? "text-indigo-600"
-                                            : "",
-                                          "text-center"
-                                        )}
+                            order?.order_items?.map(
+                              (order_producrt_item: any) => (
+                                <div
+                                  key={order_producrt_item.id}
+                                  className="grid grid-cols-1 text-sm sm:grid-rows-1 sm:grid-cols-12 sm:gap-x-6 md:gap-x-8 lg:gap-x-8"
+                                >
+                                  <div className="mt-6 sm:col-span-7 sm:mt-0 md:row-end-1">
+                                    <h3 className="text-lg font-medium text-gray-900">
+                                      <Link
+                                        to={`/product/${order_producrt_item.id}`}
                                       >
-                                        Processing
+                                        {order_producrt_item.name}
+                                      </Link>
+                                    </h3>
+                                    <p className="font-medium text-gray-900 mt-1">
+                                      Transaction ID: {order.transaction_id}
+                                    </p>
+                                    <p className="text-gray-500 mt-3">Desc</p>
+                                  </div>
+                                  <div className="sm:col-span-12 md:col-span-7">
+                                    <dl className="grid grid-cols-1 gap-y-8 border-b py-8 border-gray-200 sm:grid-cols-2 sm:gap-x-6 sm:py-6 md:py-10">
+                                      <div>
+                                        <dt className="font-medium text-gray-900">
+                                          Delivery address
+                                        </dt>
+                                        <dd className="mt-3 text-gray-500">
+                                          <span className="block">
+                                            {order.address_line_1}
+                                          </span>
+                                          <span className="block">
+                                            {order.address_line_2}
+                                          </span>
+                                        </dd>
                                       </div>
-                                      <div
-                                        className={classNames(
-                                          product.step > 1
-                                            ? "text-indigo-600"
-                                            : "",
-                                          "text-center"
-                                        )}
-                                      >
-                                        Shipped
+                                      <div>
+                                        <dt className="font-medium text-gray-900">
+                                          Shipping
+                                        </dt>
+                                        <dd className="mt-3 text-gray-500 space-y-3">
+                                          <p>$ {order.shipping_price}</p>
+                                          <p>$ {order.amount} Total Cost</p>
+                                        </dd>
                                       </div>
-                                      <div
-                                        className={classNames(
-                                          product.step > 2
-                                            ? "text-indigo-600"
-                                            : "",
-                                          "text-right"
-                                        )}
-                                      >
-                                        Delivered
+                                    </dl>
+                                    <p className="font-medium text-gray-900 mt-6 md:mt-10">
+                                      Status: {order.status}
+                                    </p>
+                                    <div className="mt-6">
+                                      {order.status !== "canceled" ? (
+                                        <div className="bg-gray-200 rounded-full overflow-hidden">
+                                          <div
+                                            className={`h-2 bg-${
+                                              order.status === "delivered"
+                                                ? "green"
+                                                : "indigo"
+                                            }-600 rounded-full`}
+                                            style={{
+                                              width: `calc((${
+                                                order.status === "not_processed"
+                                                  ? 0
+                                                  : order.status === "processed"
+                                                  ? 1.1
+                                                  : order.status === "shipped"
+                                                  ? 2
+                                                  : order.status === "delivered"
+                                                  ? 4
+                                                  : 100
+                                              } * 2 + 1) / 8 * 100%)`,
+                                            }}
+                                          />
+                                        </div>
+                                      ) : (
+                                        <h2 className="text-lg text-red-600">
+                                          Order Canceled{" "}
+                                        </h2>
+                                      )}
+                                      <div className="hidden sm:grid grid-cols-4 font-medium text-gray-600 mt-6">
+                                        <div
+                                          className={classNames(
+                                            order.status === "not_processed"
+                                              ? "text-indigo-600"
+                                              : "",
+                                            "text-center"
+                                          )}
+                                        >
+                                          Order placed
+                                        </div>
+                                        <div
+                                          className={classNames(
+                                            order.status === "processed"
+                                              ? "text-indigo-600"
+                                              : "",
+                                            "text-center"
+                                          )}
+                                        >
+                                          Processing
+                                        </div>
+                                        <div
+                                          className={classNames(
+                                            order.status === "shipped"
+                                              ? "text-indigo-600"
+                                              : "",
+                                            "text-center"
+                                          )}
+                                        >
+                                          Shipped
+                                        </div>
+                                        <div
+                                          className={classNames(
+                                            order.status === "delivered"
+                                              ? "text-green-600"
+                                              : "",
+                                            "text-right"
+                                          )}
+                                        >
+                                          Delivered
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            ))}
+                              )
+                            )}
                         </div>
                       </div>
                     </div>

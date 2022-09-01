@@ -6,6 +6,7 @@ from apps.cart.models import Cart, CartItem
 from apps.orders.models import Order, OrderItem
 from apps.product.models import Product
 from apps.shipping.models import Shipping
+from apps.coupons.models import FixedPriceCoupon, PercentageCoupon
 from django.core.mail import send_mail
 import braintree
 
@@ -43,7 +44,9 @@ class GetPaymentTotalView(APIView):
         shipping_id = request.query_params.get('shipping_id')
         shipping_id = str(shipping_id)
 
-        
+        coupon_name = request.query_params.get('coupon_name')
+        coupon_name = str(coupon_name)
+
 
         try:
             cart = Cart.objects.get(user=user)
@@ -83,6 +86,35 @@ class GetPaymentTotalView(APIView):
 
                 # Cupones
                          
+                
+                total_after_coupon = total_amount
+    
+                if coupon_name != "DEFAULT":
+                    #Revisar si cupon de precio fijo es valido
+                    if FixedPriceCoupon.objects.filter(name__iexact=coupon_name).exists():
+                        fixed_price_coupon = FixedPriceCoupon.objects.get(
+                        name=coupon_name
+                    )
+                    discount_amount = float(fixed_price_coupon.discount_price)
+
+                    if discount_amount < total_amount:
+                        total_amount -= discount_amount
+                        total_after_coupon = total_amount
+
+                    elif PercentageCoupon.objects.filter(name__iexact=coupon_name).exists():
+                        percentage_coupon = PercentageCoupon.objects.get(
+                            name=coupon_name
+                        )
+                        discount_percentage = float(
+                            percentage_coupon.discount_percentage)
+
+                        if discount_percentage > 1 and discount_percentage < 100:
+                            total_amount -= (total_amount *
+                                            (discount_percentage / 100))
+                            total_after_coupon = total_amount
+
+                #Total despues del cupon 
+                total_after_coupon = round(total_after_coupon, 2)
 
                 # Impuesto estimado
                 estimated_tax = round(total_amount * tax, 2)
@@ -102,7 +134,7 @@ class GetPaymentTotalView(APIView):
 
                 return Response({
                     'original_price': f'{original_price:.2f}',
-                    
+                    'total_after_coupon': f'{total_after_coupon:.2f}',
                     'total_amount': f'{total_amount:.2f}',
                     'total_compare_amount': f'{total_compare_amount:.2f}',
                     'estimated_tax': f'{estimated_tax:.2f}',
@@ -127,7 +159,7 @@ class ProcessPaymentView(APIView):
 
         nonce = data['nonce']
         shipping_id = str(data['shipping_id'])
-
+        coupon_name = str(data['coupon_name'])
 
         full_name = data['full_name']
         address_line_1 = data['address_line_1']
@@ -176,8 +208,29 @@ class ProcessPaymentView(APIView):
             total_amount += (float(cart_item.product.price)
                              * float(cart_item.count))
         
-        # Cupones
-     
+
+         # Cupones
+        if coupon_name != '':
+            if FixedPriceCoupon.objects.filter(name__iexact=coupon_name).exists():
+                fixed_price_coupon = FixedPriceCoupon.objects.get(
+                    name=coupon_name
+                )
+                discount_amount = float(fixed_price_coupon.discount_price)
+
+                if discount_amount < total_amount:
+                    total_amount -= discount_amount
+            
+            elif PercentageCoupon.objects.filter(name__iexact=coupon_name).exists():
+                percentage_coupon = PercentageCoupon.objects.get(
+                    name=coupon_name
+                )
+                discount_percentage = float(
+                    percentage_coupon.discount_percentage)
+
+                if discount_percentage > 1 and discount_percentage < 100:
+                    total_amount -= (total_amount *
+                                     (discount_percentage / 100))
+
         total_amount += (total_amount * tax)
 
         shipping = Shipping.objects.get(id=int(shipping_id))
@@ -221,22 +274,7 @@ class ProcessPaymentView(APIView):
                     quantity=quantity, sold=sold
                 )
             
-            #crear orden -- esta el error
-
-            print("-------------------------------------------------------------")
-            print(newTransaction.transaction.id)
-            print(total_amount)
-            print(full_name)
-            print(address_line_1)
-            print(address_line_2)
-            print(city)
-            print(state_province_region)
-            print(postal_zip_code)
-            print(telephone_number)
-            print(shipping_name)
-            print(shipping_time)
-            print(float(shipping_price))
-            print("-------------------------------------------------------------")
+            #crear orden -- esta el error   
             try:
                 order = Order.objects.create(
                     user=user,

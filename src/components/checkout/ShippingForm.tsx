@@ -20,6 +20,10 @@ interface Props {
   shipping_id: any;
   renderPaymentInfo: any;
   shipping_inputs: any;
+  coupon: any;
+  apply_coupon: any;
+  coupon_name: any;
+  total_after_coupon: any;
 }
 const ShippingForm: FC<Props> = ({
   full_name,
@@ -40,6 +44,10 @@ const ShippingForm: FC<Props> = ({
   shipping_id,
   shipping_inputs,
   renderPaymentInfo,
+  coupon,
+  apply_coupon,
+  coupon_name,
+  total_after_coupon,
 }) => {
   return (
     <section
@@ -74,7 +82,7 @@ const ShippingForm: FC<Props> = ({
 
         {/* form cupon */}
         <div className="flex items-center justify-between">
-          <form>
+          <form onSubmit={(e: any) => apply_coupon(e)}>
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
@@ -87,7 +95,7 @@ const ShippingForm: FC<Props> = ({
                   name="coupon_name"
                   type="text"
                   onChange={(e) => onChange(e)}
-                  value=""
+                  value={coupon_name}
                   className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md pl-4 sm:text-sm border-gray-300"
                   placeholder="Enter Code"
                 />
@@ -106,6 +114,13 @@ const ShippingForm: FC<Props> = ({
           </form>
         </div>
 
+        {coupon && coupon !== null && coupon !== undefined ? (
+          <div className="text-green-500">
+            Coupon: {coupon.name} is applied.
+          </div>
+        ) : (
+          <Fragment></Fragment>
+        )}
         <Fragment></Fragment>
 
         <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
@@ -165,6 +180,34 @@ const ShippingForm: FC<Props> = ({
             ${total_amount}
           </dd>
         </div>
+
+        {coupon && coupon !== null && coupon !== undefined ? (
+          <>
+            <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
+              <dt className="flex text-sm text-gray-600">
+                <span>Discounted Total</span>
+              </dt>
+              <dd className="text-sm font-medium text-gray-900">
+                ${total_after_coupon}
+              </dd>
+            </div>
+            <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
+              <dt className="text-base font-medium text-gray-900">
+                Order Total
+              </dt>
+              <dd className="text-base font-medium text-gray-900">
+                ${total_amount}
+              </dd>
+            </div>
+          </>
+        ) : (
+          <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt className="text-base font-medium text-gray-900">Order total</dt>
+            <dd className="text-base font-medium text-gray-900">
+              ${total_amount}
+            </dd>
+          </div>
+        )}
       </dl>
 
       <form onSubmit={(e) => buy(e)}>

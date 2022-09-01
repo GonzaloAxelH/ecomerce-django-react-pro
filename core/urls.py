@@ -15,7 +15,8 @@ urlpatterns = [
     path("api/cart/", include("apps.cart.urls")),
     path("api/shipping/", include("apps.shipping.urls")),
     path("api/payment/", include("apps.payment.urls")),
-    path("api/orders/",include("apps.orders.urls"))
+    path("api/orders/",include("apps.orders.urls")),
+    path('api/coupons/', include('apps.coupons.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [re_path(r'^.*',

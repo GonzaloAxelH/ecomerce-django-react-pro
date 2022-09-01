@@ -63,7 +63,7 @@ class ListOrderDetailView(APIView):
 
                 for order_item in order_items:
                     sub_item = {}
-
+                    
                     sub_item['name'] = order_item.name
                     sub_item['price'] = order_item.price
                     sub_item['count'] = order_item.count

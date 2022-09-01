@@ -16,7 +16,8 @@ import {
 } from "./types";
 
 export const get_payment_total =
-  (shipping_id: number) => async (dispatch: Dispatch<ActionType>) => {
+  (shipping_id: number, coupon_name: string) =>
+  async (dispatch: Dispatch<ActionType>) => {
     const config = {
       headers: {
         Accept: "application/json",
@@ -25,7 +26,7 @@ export const get_payment_total =
     };
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/payment/get-payment-total?shipping_id=${shipping_id}`,
+        `${process.env.REACT_APP_API_URL}/api/payment/get-payment-total?shipping_id=${shipping_id}&coupon_name=${coupon_name}`,
         config
       );
 
@@ -81,6 +82,7 @@ export const process_payment =
   (
     nonce: any,
     shipping_id: any,
+    coupon_name: any,
     full_name: any,
     address_line_1: any,
     address_line_2: any,
@@ -105,6 +107,7 @@ export const process_payment =
     const body = JSON.stringify({
       nonce,
       shipping_id,
+      coupon_name,
       full_name,
       address_line_1,
       address_line_2,

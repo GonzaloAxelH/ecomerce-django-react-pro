@@ -15,8 +15,6 @@ class UserAccountManager(BaseUserManager):
 
         shopping_cart = Cart.objects.create(user=user)
         shopping_cart.save()
-      
-
         return user
 
     
@@ -26,6 +24,8 @@ class UserAccountManager(BaseUserManager):
         user.is_superuser = True
         user.is_staff = True
         user.save()
+
+        
 
         return user
 

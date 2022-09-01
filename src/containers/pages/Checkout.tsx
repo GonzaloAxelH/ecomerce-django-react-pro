@@ -7,6 +7,7 @@ import Layout from "../../hocs/Layout";
 import { ReducersStateType } from "../../redux/reducers";
 import { get_shipping_options } from "../../redux/actions/shipping";
 import { refresh } from "../../redux/actions/auth";
+import { check_coupon } from "../../redux/actions/coupons";
 import {
   get_payment_total,
   get_client_token,
@@ -28,6 +29,7 @@ interface Props {
   get_client_token?: Function;
   get_payment_total?: Function;
   process_payment?: Function;
+  check_coupon?: Function;
   user?: any;
   client_token?: string | null;
   made_payment?: any;
@@ -37,6 +39,8 @@ interface Props {
   total_compare_amount?: number;
   estimated_tax?: number;
   shipping_cost?: number;
+  coupon?: any;
+  total_after_coupon?: any;
 }
 
 const Checkout: FC<Props> = ({
@@ -58,6 +62,9 @@ const Checkout: FC<Props> = ({
   total_compare_amount,
   estimated_tax,
   shipping_cost,
+  check_coupon,
+  coupon,
+  total_after_coupon,
 }) => {
   const [data, setData] = useState<any>({
     instance: {},
@@ -73,7 +80,7 @@ const Checkout: FC<Props> = ({
     postal_zip_code: "1806",
     country_region: "Peru",
     telephone_number: "98765431",
-    coupon_name: "FAFFFFAA",
+    coupon_name: "",
   });
 
   const {
@@ -86,7 +93,13 @@ const Checkout: FC<Props> = ({
     country_region,
     telephone_number,
     shipping_id,
+    coupon_name,
   } = formData;
+
+  const apply_coupon = async (e: any) => {
+    e.preventDefault();
+    check_coupon?.(coupon_name);
+  };
   useEffect(() => {
     get_shipping_options?.();
     get_payment_total?.();
@@ -97,8 +110,13 @@ const Checkout: FC<Props> = ({
   }, [user]);
 
   useEffect(() => {
-    get_payment_total?.(shipping_id);
-  }, [shipping_id]);
+    if (coupon && coupon !== null) {
+      get_payment_total?.(shipping_id, coupon.name);
+    } else {
+      get_payment_total?.(shipping_id, "DEFAULT");
+    }
+  }, [shipping_id, coupon]);
+
   if (!isAuthenticated && isAuthenticated !== null) {
     return <Navigate to="/" />;
   }
@@ -109,31 +127,35 @@ const Checkout: FC<Props> = ({
     e.preventDefault();
 
     const nonce = await data.instance.requestPaymentMethod();
-
-    process_payment?.(
-      nonce,
-      shipping_id,
-      full_name,
-      address_line_1,
-      address_line_2,
-      city,
-      state_province_region,
-      postal_zip_code,
-      country_region,
-      telephone_number
-    );
-    console.log({
-      nonce,
-      shipping_id,
-      full_name,
-      address_line_1,
-      address_line_2,
-      city,
-      state_province_region,
-      postal_zip_code,
-      country_region,
-      telephone_number,
-    });
+    if (coupon && coupon !== null && coupon !== undefined) {
+      process_payment?.(
+        nonce,
+        shipping_id,
+        coupon.name,
+        full_name,
+        address_line_1,
+        address_line_2,
+        city,
+        state_province_region,
+        postal_zip_code,
+        country_region,
+        telephone_number
+      );
+    } else {
+      process_payment?.(
+        nonce,
+        shipping_id,
+        "",
+        full_name,
+        address_line_1,
+        address_line_2,
+        city,
+        state_province_region,
+        postal_zip_code,
+        country_region,
+        telephone_number
+      );
+    }
   };
 
   const renderPaymentInfo = () => {
@@ -280,6 +302,10 @@ const Checkout: FC<Props> = ({
               shipping_id={shipping_id}
               shipping_inputs={shipping_inputs}
               renderPaymentInfo={renderPaymentInfo}
+              coupon={coupon}
+              apply_coupon={apply_coupon}
+              coupon_name={coupon_name}
+              total_after_coupon={total_after_coupon}
             />
           </div>
         </div>
@@ -301,6 +327,8 @@ const mapStateToProps = (state: ReducersStateType) => ({
   total_compare_amount: state.Payment.total_compare_amount,
   estimated_tax: state.Payment.estimated_tax,
   shipping_cost: state.Payment.shipping_cost,
+  coupon: state.Coupons.coupon,
+  total_after_coupon: state.Payment.total_after_coupon,
 });
 export default connect(mapStateToProps, {
   get_shipping_options,
@@ -308,4 +336,5 @@ export default connect(mapStateToProps, {
   get_client_token,
   get_payment_total,
   process_payment,
+  check_coupon,
 })(Checkout);

@@ -1,9 +1,3 @@
-
-
-# SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-9p3^#9%#e*zp%a@ol6y9mq#)#%m5bn=d!!%m8)vzsn%$v33lhn'
-
-
 from datetime import timedelta
 from pathlib import Path
 import os
@@ -11,13 +5,12 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 ENVIRONMENT = env
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["¨*"]
 ALLOWED_HOSTS = [
@@ -30,7 +23,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 DJANGO_APPS = [
-    'django.contrib.admin',
+    'django.contrib.admin', 
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -47,7 +40,8 @@ ECOMMERCE_APPS = [
     "apps.cart",
     "apps.shipping",
     "apps.orders",
-    "apps.payment"
+    "apps.payment",
+    "apps.coupons"
 ]
 THIRD_PARTY_APPS = [
     "corsheaders",
@@ -57,7 +51,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "ckeditor",
-    "ckeditor_uploader"
+    "ckeditor_uploader",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + ECOMMERCE_APPS + THIRD_PARTY_APPS
@@ -233,8 +227,32 @@ BT_ENVIRONMENT = os.environ.get("BT_ENVIRONMENT")
 AUTH_USER_MODEL = "user.UserAccount"
 
 
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'gonzaloaxelh@gmail.com'
+EMAIL_HOST_PASSWORD = 'fjsjfbbwlaxplddg'
+
+'''
 # conectart el envio de correos electronicos
+DEFAULT_FROM_EMAIL = "Ecomerce - Plataforma de cursos <gonzaloaxelh@gmail.com>"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS ")
+'''
+
+
+
+'''
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    
 
 mode_development = DEBUG
 if not mode_development:
@@ -246,3 +264,5 @@ if not mode_development:
     EMAIL_PORT = env("EMAIL_POST")
     EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 
+
+'''
