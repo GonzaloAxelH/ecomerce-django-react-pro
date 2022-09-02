@@ -1,10 +1,11 @@
 from datetime import datetime
 from django.db import models
 from apps.category.models import Category
-
+from django.conf import settings
+domain = settings.DOMAIN
 
 class Product(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=254)
     photo = models.ImageField(upload_to='photo/%Y/%m')
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -14,5 +15,9 @@ class Product(models.Model):
     sold = models.IntegerField(default=0)
     date_created = models.DateTimeField(default=datetime.now)
 
+    def get_thumbnail(self):
+        if self.photo:
+            return domain + self.photo.url
+        return ""
     def __str__(self):
         return self.name

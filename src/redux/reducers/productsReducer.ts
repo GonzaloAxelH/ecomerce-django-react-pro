@@ -27,6 +27,7 @@ export interface ProductType {
   sold: number;
   date_created: string;
   category: number;
+  get_thumbnail?: string;
 }
 export interface StateTypesProducts {
   products: ProductType[] | null;
@@ -47,6 +48,7 @@ const initialState: StateTypesProducts = {
   search_products: [],
   related_products: null,
   filtered_products: null,
+
   cadena: null,
 };
 

@@ -11,7 +11,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 DEBUG = False
-
+DOMAIN =os.environ.get("DOMAIN")
 ALLOWED_HOSTS = [
     "localhost:8000",
     "http://127.0.0.1:8000",

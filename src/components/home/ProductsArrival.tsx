@@ -21,8 +21,8 @@ const ProductsArrival: FC<Props> = ({ products }) => {
                 <div className="group relative">
                   <div className="border w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                     <img
-                      src={`${process.env.REACT_APP_API_URL}${product.photo}`}
-                      alt={`${process.env.REACT_APP_API_URL}${product.photo}`}
+                      src={product.get_thumbnail}
+                      alt=""
                       className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                     />
                   </div>

@@ -237,7 +237,7 @@ const Checkout: FC<Props> = ({
                       <Link to={`/product/${cart_item.product.id}`}>
                         <div className="flex-shrink-0">
                           <img
-                            src={`${process.env.REACT_APP_API_URL}${cart_item.product.photo}`}
+                            src={cart_item.product.get_thumbnail}
                             alt=""
                             className="w-24 h-24 rounded-md object-center object-cover sm:w-48 sm:h-48"
                           />
