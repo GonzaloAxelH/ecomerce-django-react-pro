@@ -36,6 +36,7 @@ import { setAlert } from "./alert";
 import { Dispatch } from "redux";
 
 import { ActionType } from "../../interfaces";
+import { set_error } from "./errors";
 
 export const check_authenticated =
   () => async (dispatch: Dispatch<ActionType | any>) => {
@@ -142,14 +143,29 @@ export const signup =
       } else {
         dispatch({ type: SIGNUP_FAIL });
         dispatch(setAlert("Error al activar la cuenta", "red"));
+        console.log(res);
       }
 
       dispatch({ type: REMOVE_AUTH_LOADING });
     } catch (err: any) {
       dispatch({ type: SIGNUP_FAIL });
       dispatch({ type: REMOVE_AUTH_LOADING });
+      dispatch(
+        set_error(
+          err.response.data?.email,
+          err.response.data?.password,
+          err.response.data?.non_field_errors
+        )
+      );
+      if (err.response.status === 500) {
+        dispatch(setAlert("ALgo fallo 500", "red"));
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+      }
       console.log(err);
-      dispatch(setAlert("error", "red"));
     }
   };
 
@@ -182,6 +198,7 @@ export const login =
         dispatch(setAlert("Inicio de sesion con exito", "green"));
       } else {
         dispatch({ type: LOGIN_FAIL });
+        console.log(res);
         dispatch(setAlert("Error al iniciar sesion datos incorrectos", "red"));
       }
 
@@ -190,6 +207,7 @@ export const login =
       dispatch({ type: LOGIN_FAIL });
       dispatch({ type: REMOVE_AUTH_LOADING });
 
+      console.log(err);
       dispatch(
         setAlert("Error al conectar con el servidor.Intenta mas tarde", "red")
       );

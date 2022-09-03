@@ -36,7 +36,7 @@ const Login: FC<SignupProps> = ({ login, loading, isAuthenticated }) => {
     setLogged(true);
   };
 
-  if (logged && !loading && isAuthenticated) return <Navigate to="/" />;
+  //if (logged && !loading && isAuthenticated) return <Navigate to="/" />;
   return (
     <Layout>
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">

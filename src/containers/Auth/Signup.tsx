@@ -5,6 +5,7 @@ import { signup } from "../../redux/actions/auth";
 import { ReducersStateType } from "../../redux/reducers";
 
 import { Link, Navigate } from "react-router-dom";
+import { load_error } from "../../redux/actions/errors";
 type FormDataType = {
   first_name: string;
   last_name: string;
@@ -16,9 +17,20 @@ type FormDataType = {
 type SignupProps = {
   signup?: Function;
   loading?: boolean;
+  email_errors?: string[];
+  passwords_errors?: string[];
+  load_error?: Function;
+  non_field_errors?: string[];
 };
 
-const Signup: FC<SignupProps> = ({ signup, loading }) => {
+const Signup: FC<SignupProps> = ({
+  signup,
+  loading,
+  email_errors,
+  passwords_errors,
+  load_error,
+  non_field_errors,
+}) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -37,12 +49,12 @@ const Signup: FC<SignupProps> = ({ signup, loading }) => {
   const onSubmit = (e: any) => {
     e.preventDefault();
     signup?.(first_name, last_name, email, password, re_password);
-    console.log(formData);
     setAccountCreated(true);
   };
-  if (!loading && accountCreated) {
-    return <Navigate to="/login" />;
-  }
+
+  //if (!loading && accountCreated) {
+  //return <Navigate to="/login" />;
+  //}
   return (
     <Layout>
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -87,6 +99,22 @@ const Signup: FC<SignupProps> = ({ signup, loading }) => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
+              </div>
+              <div className="email-errors m-0">
+                {email_errors?.length === 0 ? (
+                  <></>
+                ) : (
+                  email_errors?.map((err, index) => {
+                    return (
+                      <p
+                        className="text-red-400 m-1 text-sm bold italic"
+                        key={index}
+                      >
+                        <b>{err}</b>
+                      </p>
+                    );
+                  })
+                )}
               </div>
               <div>
                 <label
@@ -141,7 +169,25 @@ const Signup: FC<SignupProps> = ({ signup, loading }) => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
+
+                <div className="password-errors ">
+                  {passwords_errors?.length === 0 ? (
+                    <></>
+                  ) : (
+                    passwords_errors?.map((err, index) => {
+                      return (
+                        <p
+                          className="text-red-400 m-1 text-sm bold italic"
+                          key={index}
+                        >
+                          <b>{err}</b>
+                        </p>
+                      );
+                    })
+                  )}
+                </div>
               </div>
+
               <div>
                 <label
                   htmlFor="re_password"
@@ -158,6 +204,22 @@ const Signup: FC<SignupProps> = ({ signup, loading }) => {
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
+                </div>
+                <div className="password-errors ">
+                  {non_field_errors?.length === 0 ? (
+                    <></>
+                  ) : (
+                    non_field_errors?.map((err, index) => {
+                      return (
+                        <p
+                          className="text-red-400 m-1 text-sm bold italic"
+                          key={index}
+                        >
+                          <b>{err}</b>
+                        </p>
+                      );
+                    })
+                  )}
                 </div>
               </div>
 
@@ -266,8 +328,12 @@ const Signup: FC<SignupProps> = ({ signup, loading }) => {
 
 const mapStateToProps = (state: ReducersStateType) => ({
   loading: state.Auth.loading,
+  email_errors: state.Errors.email_errors,
+  passwords_errors: state.Errors.passwords_errors,
+  non_field_errors: state.Errors.non_field_errors,
 });
 
 export default connect(mapStateToProps, {
   signup,
+  load_error,
 })(Signup);

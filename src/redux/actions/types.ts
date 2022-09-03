@@ -115,3 +115,7 @@ export const UPDATE_USER_PROFILE_FAIL = "UPDATE_USER_PROFILE_FAIL";
 // Coupons
 export const GET_COUPON_SUCCESS = "GET_COUPON_SUCCESS";
 export const GET_COUPON_FAIL = "GET_COUPON_FAIL";
+//
+
+export const SET_ERROR = "SET_ERROR";
+export const LOAD_ERROR = "LOAD_ERROR";
