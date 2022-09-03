@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
-DEBUG = False
+DEBUG = True
 DOMAIN =os.environ.get("DOMAIN")
 ALLOWED_HOSTS = [
     "localhost:8000",
@@ -173,8 +173,8 @@ STATIC_ROOT  =   os.path.join(PROJECT_ROOT, "static")
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = 'media/'
 
 STATICFILES_DIRS = [
      os.path.join(PROJECT_ROOT, 'build/static'),
