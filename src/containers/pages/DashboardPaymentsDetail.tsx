@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { ReducersStateType } from "../../redux/reducers";
 import LayoutDashboard from "../../hocs/LayoutDashboard";
 import { ProductType } from "../../redux/reducers/productsReducer";
+import ProductEsqueleton from "../../components/skeletons/ProductEsqueleton";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -69,14 +70,23 @@ const DashboardPaymentDetail: FC<Props> = ({ order, get_order_detail }) => {
                         <h2 className="sr-only">Products purchased</h2>
 
                         <div className="space-y-24">
-                          {order &&
-                            order?.order_items?.map(
+                          {order ? (
+                            order.order_items.map(
                               (order_producrt_item: any) => (
                                 <div
                                   key={order_producrt_item.id}
                                   className="grid grid-cols-1 text-sm sm:grid-rows-1 sm:grid-cols-12 sm:gap-x-6 md:gap-x-8 lg:gap-x-8"
                                 >
                                   <div className="mt-6 sm:col-span-7 sm:mt-0 md:row-end-1">
+                                    <div className="group relative">
+                                      <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                                        <img
+                                          src="http://localhost:8000/media/photo/2022/09/Receptor-de-Audio-por-Bluetooth-5-0-con-Volumen-Controlable_Electromania-P_nFcOpHo.jpg"
+                                          alt=""
+                                          className="w-full h-full object-center object-cover lg:w-full lg:h-full  border"
+                                        />
+                                      </div>
+                                    </div>
                                     <h3 className="text-lg font-medium text-gray-900">
                                       <Link
                                         to={`/product/${order_producrt_item.id}`}
@@ -192,7 +202,10 @@ const DashboardPaymentDetail: FC<Props> = ({ order, get_order_detail }) => {
                                   </div>
                                 </div>
                               )
-                            )}
+                            )
+                          ) : (
+                            <ProductEsqueleton />
+                          )}
                         </div>
                       </div>
                     </div>

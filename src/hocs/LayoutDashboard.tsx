@@ -1,10 +1,11 @@
 import React, { FC, Fragment, ReactNode, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Menu, Popover, Transition } from "@headlessui/react";
 import {
   BellIcon,
   CalendarIcon,
   MenuAlt2Icon,
+  MenuIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import { CreditCardIcon, SearchIcon, UserIcon } from "@heroicons/react/solid";
@@ -20,13 +21,7 @@ import { get_items, get_item_total, get_total } from "../redux/actions/cart";
 import { list_orders } from "../redux/actions/order";
 import { get_categories } from "../redux/actions/caegories";
 import { ReducersStateType } from "../redux/reducers";
-
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
-
+import { solutions } from "../components/navigation/Navbar";
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
@@ -64,19 +59,18 @@ const LayoutDashboard: FC<Props> = ({
       load_user();
       refresh();
     }
-    get_total?.();
-    get_item_total?.();
+
     list_orders?.();
-    get_items?.();
   }, []);
+
   if (!isAuthenticated && isAuthenticated !== null) {
     return <Navigate to="/login" />;
   }
   return (
     <div>
-      <Alert />
+      <Popover className="relative bg-white">
+        <Alert />
 
-      <>
         <div>
           <Transition.Root show={sidebarOpen} as={Fragment}>
             <Dialog
@@ -155,18 +149,7 @@ const LayoutDashboard: FC<Props> = ({
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex flex-col flex-grow border-r border-gray-200 pt-5 bg-white overflow-y-auto">
               <div className="flex items-center flex-shrink-0 px-4">
-                <Link
-                  to="/"
-                  className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Regresar
-                </Link>
-
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                  alt="Workflow"
-                />
+                <img className="h-8 w-auto" src="/logo192.png" alt="Workflow" />
               </div>
               <div className="mt-5 flex-grow flex flex-col">
                 <nav className="flex-1 px-2 pb-4 space-y-1">
@@ -239,7 +222,10 @@ const LayoutDashboard: FC<Props> = ({
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              onClick={() => logout?.()}
+                              onClick={() => {
+                                logout?.();
+                                window.location.href = "/login";
+                              }}
                               className={classNames(
                                 active ? "bg-gray-100 cursor-pointer" : "",
                                 "block px-4 py-2 text-sm cursor-pointer text-gray-700"
@@ -252,6 +238,12 @@ const LayoutDashboard: FC<Props> = ({
                       </Menu.Items>
                     </Transition>
                   </Menu>
+                  <div className="-mr-2 -my-2 md:hidden flex items-center">
+                    <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                      <span className="sr-only">Open menu</span>
+                      <MenuIcon className="h-6 w-6" aria-hidden="true" />
+                    </Popover.Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -261,7 +253,113 @@ const LayoutDashboard: FC<Props> = ({
             {/* */}
           </div>
         </div>
-      </>
+
+        <Transition
+          as={Fragment}
+          enter="duration-200 ease-out"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="duration-100 ease-in"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
+        >
+          <Popover.Panel
+            focus
+            className="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+          >
+            <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+              <div className="pt-5 pb-6 px-5 sm:pb-8">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <img
+                      className="h-8 w-auto"
+                      src="/logo192.png"
+                      alt="Workflow"
+                    />
+                  </div>
+                  <div className="-mr-2">
+                    <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                      <span className="sr-only">Close menu</span>
+                      <XIcon className="h-6 w-6" aria-hidden="true" />
+                    </Popover.Button>
+                  </div>
+                </div>
+                <div className="mt-6 sm:mt-8">
+                  <nav>
+                    <div className="grid gap-7 sm:grid-cols-2 sm:gap-y-8 sm:gap-x-4">
+                      {solutions.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="-m-3 flex items-center p-3 rounded-lg hover:bg-gray-50"
+                        >
+                          <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
+                            <item.icon className="h-6 w-6" aria-hidden="true" />
+                          </div>
+                          <div className="ml-4 text-base font-medium text-gray-900">
+                            {item.name}
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                    <div className="mt-8 text-base"></div>
+                  </nav>
+                </div>
+              </div>
+              <div className="py-6 px-5">
+                <div className="grid grid-cols-2 gap-4">
+                  <a
+                    href="#"
+                    className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
+                  >
+                    Orders
+                  </a>
+
+                  <a
+                    href="#"
+                    className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
+                  >
+                    Dashboard
+                  </a>
+                </div>
+                <div className="mt-6">
+                  {!isAuthenticated && (
+                    <>
+                      <a
+                        href="/login"
+                        className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                      >
+                        Login
+                      </a>
+                      <p className="mt-6 text-center text-base font-medium text-gray-500">
+                        Or create account{" "}
+                        <a
+                          href="/signup"
+                          className="text-indigo-600 hover:text-indigo-500"
+                        >
+                          Register
+                        </a>
+                      </p>
+                    </>
+                  )}
+                  {isAuthenticated && (
+                    <a
+                      onClick={() => {
+                        logout?.();
+                        window.location.href = "/login";
+                      }}
+                      href="#"
+                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      SignOut
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Popover.Panel>
+        </Transition>
+      </Popover>
     </div>
   );
 };

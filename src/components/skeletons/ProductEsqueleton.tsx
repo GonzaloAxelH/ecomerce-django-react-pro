@@ -1,8 +1,9 @@
 import React from "react";
+//@ts-ignore
 import ContentLoader from "react-content-loader";
 
 const ProductEsqueleton = (props: any) => (
-  <ContentLoader viewBox="0 0 1300 500" height={500} width={1300} {...props}>
+  <ContentLoader viewBox="0 0 1300 500" height={500} width="100%" {...props}>
     <rect x="20" y="15" rx="20" ry="20" width="300" height="320" />
     <rect x="92" y="347" rx="5" ry="5" width="45" height="45" />
     <rect x="148" y="347" rx="5" ry="5" width="45" height="45" />

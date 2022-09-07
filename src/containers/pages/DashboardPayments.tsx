@@ -22,9 +22,7 @@ interface Props {
   orders?: any | null;
 }
 const DashboardPayments: FC<Props> = ({ list_orders, orders }) => {
-  useEffect(() => {
-    list_orders?.();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <LayoutDashboard>

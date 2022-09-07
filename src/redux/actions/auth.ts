@@ -134,12 +134,21 @@ export const signup =
       );
       if (res.status === 201) {
         dispatch({ type: SIGNUP_SUCCESS });
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
         dispatch(
           setAlert(
             "Te enviamos un correo, por favor activa tu cuenta. Revisa",
             "green"
           )
         );
+
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 2000);
       } else {
         dispatch({ type: SIGNUP_FAIL });
         dispatch(setAlert("Error al activar la cuenta", "red"));
@@ -196,6 +205,9 @@ export const login =
         dispatch({ type: LOGIN_SUCCESS, payload: res.data });
         dispatch(load_user());
         dispatch(setAlert("Inicio de sesion con exito", "green"));
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
       } else {
         dispatch({ type: LOGIN_FAIL });
         console.log(res);
@@ -209,7 +221,7 @@ export const login =
 
       console.log(err);
       dispatch(
-        setAlert("Error al conectar con el servidor.Intenta mas tarde", "red")
+        setAlert("Datos Incorrectos (me falta agregar errores xd)", "red")
       );
     }
   };

@@ -7,11 +7,12 @@ const Banner = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
           <div className="sm:max-w-lg">
             <h1 className="text-4xl font font-extrabold tracking-tight text-gray-900 sm:text-6xl">
-              Summer styles are finally here
+              Electronic shop
             </h1>
             <p className="mt-4 text-xl text-gray-500">
-              This year, our new summer collection will shelter you from the
-              harsh elements of a world that doesn't care if you live or die.
+              Somos la solución que necesitabas brindándote los mejores
+              productos y accesorios al mejor precio al alcance de tus manos de
+              manera rápida.
             </p>
           </div>
           <div>
@@ -26,37 +27,14 @@ const Banner = () => {
                     <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="w-44 h-64 rounded-lg overflow-hidden sm:opacity-0 lg:opacity-100">
                         <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
+                          src="https://www.todoelectronica.com/235137-large_default/kit-de-alarma-ajax-profesional-con-camara-ip-ethernet-y-gprs-grado-ii.jpg"
                           alt=""
                           className="w-full h-full object-center object-cover"
                         />
                       </div>
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
-                          alt=""
-                          className="w-full h-full object-center object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
-                          alt=""
-                          className="w-full h-full object-center object-cover"
-                        />
-                      </div>
-                      <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-                          alt=""
-                          className="w-full h-full object-center object-cover"
-                        />
-                      </div>
-                      <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
+                          src="https://www.todoelectronica.com/237022-large_default/control-de-accesos-y-presencia-facial-zkteco-con-software-incluido.jpg"
                           alt=""
                           className="w-full h-full object-center object-cover"
                         />
@@ -65,14 +43,37 @@ const Banner = () => {
                     <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
+                          src="https://www.todoelectronica.com/225200-large_default/control-de-accesos-ac105-por-tarjeta-em-rfid-apto-para-exterior.jpg"
                           alt=""
                           className="w-full h-full object-center object-cover"
                         />
                       </div>
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
+                          src="https://www.todoelectronica.com/236986-large_default/mini-camara-espia-4g-2mpx-full-hd-y-vision-nocturna.jpg"
+                          alt=""
+                          className="w-full h-full object-center object-cover"
+                        />
+                      </div>
+                      <div className="w-44 h-64 rounded-lg overflow-hidden">
+                        <img
+                          src="https://www.todoelectronica.com/236987-large_default/mini-camara-espia-4g-2mpx-full-hd-y-vision-nocturna.jpg"
+                          alt=""
+                          className="w-full h-full object-center object-cover"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
+                      <div className="w-44 h-64 rounded-lg overflow-hidden">
+                        <img
+                          src="https://www.todoelectronica.com/img/cms/Camaras%20Espia/camara%20espia%204g.JPG"
+                          alt=""
+                          className="w-full h-full object-center object-cover"
+                        />
+                      </div>
+                      <div className="w-44 h-64 rounded-lg overflow-hidden">
+                        <img
+                          src="https://www.todoelectronica.com/235503-home_default/medidor-de-ambiente-multifuncion-peaktech-p-5035.jpg"
                           alt=""
                           className="w-full h-full object-center object-cover"
                         />
