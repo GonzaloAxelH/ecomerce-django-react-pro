@@ -46,7 +46,8 @@ ECOMMERCE_APPS = [
     "apps.shipping",
     "apps.orders",
     "apps.payment",
-    "apps.coupons"
+    "apps.coupons",
+    "apps.reviews"
 ]
 THIRD_PARTY_APPS = [
     "corsheaders",

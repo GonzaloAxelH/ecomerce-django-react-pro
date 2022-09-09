@@ -318,9 +318,9 @@ const Navbar: FC<Props> = ({
                 <nav>
                   <div className="grid gap-7 sm:grid-cols-2 sm:gap-y-8 sm:gap-x-4">
                     {solutions.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className="-m-3 flex items-center p-3 rounded-lg hover:bg-gray-50"
                       >
                         <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
@@ -329,7 +329,7 @@ const Navbar: FC<Props> = ({
                         <div className="ml-4 text-base font-medium text-gray-900">
                           {item.name}
                         </div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                   <div className="mt-8 text-base"></div>
@@ -338,51 +338,51 @@ const Navbar: FC<Props> = ({
             </div>
             <div className="py-6 px-5">
               <div className="grid grid-cols-2 gap-4">
-                <a
-                  href="/dashboard/payments"
+                <Link
+                  to="/dashboard/payments"
                   className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
                 >
                   Orders
-                </a>
+                </Link>
 
-                <a
-                  href="/dashboard"
+                <Link
+                  to="/dashboard"
                   className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
                 >
                   Dashboard
-                </a>
+                </Link>
               </div>
               <div className="mt-6">
                 {!isAuthenticated && (
                   <>
-                    <a
-                      href="/login"
+                    <Link
+                      to="/login"
                       className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                     >
                       Login
-                    </a>
+                    </Link>
                     <p className="mt-6 text-center text-base font-medium text-gray-500">
                       Or create account{" "}
-                      <a
-                        href="/signup"
+                      <Link
+                        to="/signup"
                         className="text-indigo-600 hover:text-indigo-500"
                       >
                         Register
-                      </a>
+                      </Link>
                     </p>
                   </>
                 )}
                 {isAuthenticated && (
-                  <a
+                  <Link
                     onClick={() => {
                       logout?.();
                       window.location.href = "/login";
                     }}
-                    href="#"
+                    to="#"
                     className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                   >
                     SignOut
-                  </a>
+                  </Link>
                 )}
               </div>
             </div>

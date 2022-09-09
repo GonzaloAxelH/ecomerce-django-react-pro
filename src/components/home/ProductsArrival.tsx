@@ -37,7 +37,7 @@ const ProductsArrival: FC<Props> = ({ products }) => {
                       </h3>
                     </div>
                     <p className="text-lg font-medium text-gray-900">
-                      $ {product.price}
+                      ${product.price}
                     </p>
                   </div>
                 </div>

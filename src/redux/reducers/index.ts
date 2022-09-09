@@ -10,6 +10,7 @@ import Payment, { StateTypesPayment } from "./reducerPayment";
 import Orders, { StateTypesOrders } from "./reducerOrders";
 import Coupons, { StateTypesCoupons } from "./reducerCoupon";
 import Errors, { StateTypesErrors } from "./errorsReducers";
+import Reviews, { StateTypesReviews } from "./reviewsReducer";
 export interface ReducersStateType {
   Auth: StateTypesAuth;
   Alert: StateTypeAlert;
@@ -21,6 +22,7 @@ export interface ReducersStateType {
   Orders: StateTypesOrders;
   Coupons: StateTypesCoupons;
   Errors: StateTypesErrors;
+  Reviews: StateTypesReviews;
 }
 
 export default combineReducers<ReducersStateType>({
@@ -34,4 +36,5 @@ export default combineReducers<ReducersStateType>({
   Orders,
   Coupons,
   Errors,
+  Reviews,
 });

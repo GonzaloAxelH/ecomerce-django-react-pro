@@ -18,6 +18,8 @@ import ProductEsqueleton from "../../components/skeletons/ProductEsqueleton";
 import { ItemCart } from "../../redux/reducers/cartReducer";
 import { Link } from "react-router-dom";
 import { count } from "console";
+import { get_reviews } from "../../redux/actions/reviews";
+import Stars from "../../components/product/Stars";
 interface Props {
   get_product?: Function;
   get_related_products?: Function;
@@ -29,6 +31,8 @@ interface Props {
   get_item_total?: Function;
   cart_items?: ItemCart[] | any;
   remove_item?: Function;
+  get_reviews?: Function;
+  reviews?: any | null;
 }
 
 const ProductDetail: FC<Props> = ({
@@ -42,18 +46,39 @@ const ProductDetail: FC<Props> = ({
   get_item_total,
   cart_items,
   remove_item,
+  get_reviews,
+  reviews,
 }) => {
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [thisProductInCart, setThisProductInCart] = useState(true);
+  const [esqueletonLoading, setEsqueletonLoading] = useState(false);
   const productId = params.productId;
   useEffect(() => {
     window.scrollTo(0, 0);
     get_item_total?.();
     get_product?.(productId);
-    //get_related_products?.(productId);
+    get_related_products?.(productId);
   }, []);
+  useEffect(() => {
+    const fetch = async () => {
+      setEsqueletonLoading(true);
+      await get_reviews?.(productId);
+      await get_product?.(productId);
+      setEsqueletonLoading(false);
+    };
+    fetch();
+    window.scrollTo(0, 0);
+  }, [productId]);
 
+  if (esqueletonLoading)
+    return (
+      <Layout>
+        <div>
+          <ProductEsqueleton />
+        </div>
+      </Layout>
+    );
   if (product_one == null)
     return (
       <Layout>
@@ -94,9 +119,8 @@ const ProductDetail: FC<Props> = ({
       await get_items?.();
       await get_total?.();
       await get_item_total?.();
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+
+      setLoading(false);
     }
   };
 
@@ -213,6 +237,78 @@ const ProductDetail: FC<Props> = ({
                 </h2>
               </section>
             </div>
+
+            <div className="bg-white mt-12 mb-12">
+              <div className="max-w-2xl mx-auto py-0 px-4 sm:py-0 sm:px-6 lg:max-w-7xl lg:px-8">
+                <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 mb-10">
+                  Reviews ({reviews && reviews.length})
+                </h2>
+                <div>
+                  {reviews &&
+                    reviews.map((review: any, index: number) => (
+                      <>
+                        <div className="flex">
+                          <div className="mx-4 flex-shrink-0">
+                            <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
+                              <svg
+                                className="h-full w-full text-gray-300"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                              </svg>
+                            </span>
+                          </div>
+                          <div>
+                            <Stars rating={review.rating} />
+                            <h4 className="text-lg font-bold">{review.user}</h4>
+                            <p className="mt-1">{review.comment}</p>
+                          </div>
+                        </div>
+                      </>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white mb-10">
+            <div className="max-w-2xl mx-auto py-0 px-4 sm:py-0 sm:px-6 lg:max-w-7xl lg:px-8">
+              <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
+                Productos relacionados
+              </h2>
+
+              <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                {related_products !== null &&
+                  related_products !== undefined &&
+                  related_products?.map((product: any) => (
+                    <Link to={`/product/${product.id}`} key={product.id}>
+                      <div className="group relative">
+                        <div className="border w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                          <img
+                            src={product.get_thumbnail}
+                            alt=""
+                            className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                          />
+                        </div>
+                        <div className="mt-4 flex justify-between">
+                          <div>
+                            <h3 className="text-sm text-gray-700">
+                              <span
+                                aria-hidden="true"
+                                className="absolute inset-0 "
+                              />
+                              {product.name}
+                            </h3>
+                          </div>
+                          <p className="text-lg font-medium text-gray-900">
+                            ${product.price}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -224,6 +320,7 @@ const mapStateToProps = (state: ReducersStateType) => ({
   product_one: state.Products.product,
   related_products: state.Products.related_products,
   cart_items: state.Cart.items,
+  reviews: state.Reviews.reviews,
 });
 
 export default connect(mapStateToProps, {
@@ -234,4 +331,5 @@ export default connect(mapStateToProps, {
   get_total,
   get_item_total,
   remove_item,
+  get_reviews,
 })(ProductDetail);

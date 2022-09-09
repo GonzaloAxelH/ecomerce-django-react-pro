@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const navigation = {
   solutions: [
     { name: "Marketing", href: "#" },
@@ -105,12 +107,12 @@ function Footer() {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.solutions.map((item) => (
                     <li key={item.name}>
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         className="text-base text-gray-500 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -122,12 +124,12 @@ function Footer() {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.support.map((item) => (
                     <li key={item.name}>
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         className="text-base text-gray-500 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -141,12 +143,12 @@ function Footer() {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.company.map((item) => (
                     <li key={item.name}>
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         className="text-base text-gray-500 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -158,12 +160,12 @@ function Footer() {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         className="text-base text-gray-500 hover:text-gray-900"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -205,14 +207,14 @@ function Footer() {
         <div className="mt-8 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between">
           <div className="flex space-x-6 md:order-2">
             {navigation.social.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="text-gray-400 hover:text-gray-500"
               >
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="h-6 w-6" aria-hidden="true" />
-              </a>
+              </Link>
             ))}
           </div>
           <p className="mt-8 text-base text-gray-400 md:mt-0 md:order-1">

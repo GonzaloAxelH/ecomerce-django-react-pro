@@ -39,9 +39,7 @@ const ProductsSold: FC<Props> = ({ products }) => {
                     <span className="absolute inset-0" />
                     {product.name}
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    $ {product.price}
-                  </p>
+                  <p className="mt-1 text-sm text-gray-500">${product.price}</p>
                 </div>
               </Link>
             ))}
