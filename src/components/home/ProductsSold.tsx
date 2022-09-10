@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { ProductType } from "../../redux/reducers/productsReducer";
+import CardElqueleton from "../skeletons/CardElqueleton";
 
 interface Props {
   products: any;
@@ -21,29 +22,39 @@ const ProductsSold: FC<Props> = ({ products }) => {
           </a>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-y-0 sm:gap-x-6 lg:gap-x-8">
-          {products &&
-            products !== null &&
-            products !== undefined &&
-            products.map((product: ProductType) => (
-              <Link to={`/product/${product.id}`} key={product.id}>
-                <div className="group relative">
-                  <div className="w-full h-96 rounded-lg overflow-hidden group-hover:opacity-75 sm:h-auto sm:aspect-w-2 sm:aspect-h-3">
-                    <img
-                      src={product.get_thumbnail}
-                      alt=""
-                      className="w-full h-full object-center object-cover"
-                    />
+        {products === null || products === undefined || !products ? (
+          <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-y-0 sm:gap-x-6 lg:gap-x-8">
+            {[1, 2, 3].map((e: number) => {
+              return <CardElqueleton key={e} />;
+            })}
+          </div>
+        ) : (
+          <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-y-0 sm:gap-x-6 lg:gap-x-8">
+            {products &&
+              products !== null &&
+              products !== undefined &&
+              products.map((product: ProductType) => (
+                <Link to={`/product/${product.id}`} key={product.id}>
+                  <div className="group relative">
+                    <div className="w-full h-96 rounded-lg overflow-hidden group-hover:opacity-75 sm:h-auto sm:aspect-w-2 sm:aspect-h-3">
+                      <img
+                        src={product.get_thumbnail}
+                        alt=""
+                        className="w-full h-full object-center object-cover"
+                      />
+                    </div>
+                    <h3 className="mt-4 text-base font-semibold text-gray-900">
+                      <span className="absolute inset-0" />
+                      {product.name}
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-500">
+                      ${product.price}
+                    </p>
                   </div>
-                  <h3 className="mt-4 text-base font-semibold text-gray-900">
-                    <span className="absolute inset-0" />
-                    {product.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">${product.price}</p>
-                </div>
-              </Link>
-            ))}
-        </div>
+                </Link>
+              ))}
+          </div>
+        )}
 
         <div className="mt-6 sm:hidden">
           <Link

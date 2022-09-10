@@ -12,7 +12,7 @@
   border-bottom: 2px transparent solid;
   border-radius: 50%;
   -webkit-animation: spin5 0.4s infinite linear;
-          animation: spin5 0.4s infinite linear;
+  animation: spin5 0.4s infinite linear;
 }
 #circle5big {
   display: block;
@@ -24,60 +24,136 @@
   border-bottom: 2px transparent solid;
   border-radius: 50%;
   -webkit-animation: spin5 0.4s infinite linear;
-          animation: spin5 0.4s infinite linear;
+  animation: spin5 0.4s infinite linear;
 }
 @-webkit-keyframes spin5 {
   from {
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
     -webkit-transform: rotate(359deg);
-            transform: rotate(359deg);
+    transform: rotate(359deg);
   }
 }
 @keyframes spin5 {
   from {
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
     -webkit-transform: rotate(359deg);
-            transform: rotate(359deg);
+    transform: rotate(359deg);
     -webkit-transform: rotate(359deg);
-            transform: rotate(359deg);
+    transform: rotate(359deg);
   }
 }
 /** END of circle5 */
 
+/*Loader card*/
+
+.esqueleton_card .card {
+  width: auto;
+  padding: 0px;
+  background-color: #fafafa;
+  font-family: "@microsoft yahei light", sans-serif;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.esqueleton_card .cover {
+  height: 270px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.esqueleton_card .cover img {
+  display: block;
+  width: 100%;
+  opacity: 0.95;
+}
+
+/* add to img on load event */
+.esqueleton_card .animate {
+  animation: animate 1s ease;
+}
+@keyframes animate {
+  from {
+    transform: rotateX(20deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.esqueleton_card .content {
+  position: relative;
+  color: #333;
+  margin-top: 8px;
+}
+.esqueleton_card .content small {
+  display: block;
+  margin: 8px 0;
+  color: grey;
+}
+
+/* sleleton elements */
+.esqueleton_card .skeleton {
+  background: linear-gradient(
+    90deg,
+    hsl(210, 15%, 88%),
+    hsl(210, 15%, 95%),
+    hsl(210, 15%, 88%)
+  );
+  background-size: 200%;
+  animation: loader_card_esqueleton 1s infinite reverse;
+}
+.esqueleton_card h2.skeleton {
+  width: 10%;
+  height: 1em;
+}
+.esqueleton_card small.skeleton {
+  height: 1rem;
+  width: 4rem;
+}
+.esqueleton_card p.skeleton {
+  height: 3em;
+}
+
+/* skeleton animation */
+@keyframes loader_card_esqueleton {
+  from {
+    background-position: -100% 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
 
 /* Change the white to any color */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 /* borrar luego :V*/
-.gradient{
-
-  background:linear-gradient(50deg, #fff, #999);
-  
+.gradient {
+  background: linear-gradient(50deg, #fff, #999);
 }
 .button {
   position: relative;
   color: #555;
-  background:linear-gradient(50deg, #fff, #999);
+  background: linear-gradient(50deg, #fff, #999);
   border-radius: 80px;
   text-align: center;
   margin: 10px;
   font-size: 30px;
-  box-shadow: 
-    .5px -.5px 1px 1px #fff,
-    -1px 1px 1px 1px #999,
+  box-shadow: 0.5px -0.5px 1px 1px #fff, -1px 1px 1px 1px #999,
     -5px 8px 15px 1px #999;
   display: flex;
   align-items: center;
@@ -89,7 +165,6 @@ input:-webkit-autofill:active{
 .button.sm {
   width: 60px;
   height: 60px;
-
 }
 
 .button.md {
@@ -108,9 +183,7 @@ input:-webkit-autofill:active{
 
 .button:active {
   font-size: 26px;
-  box-shadow: 
-    .5px -.5px 1px .5px #fff,
-    -1px 1px 1px .5px #999,
+  box-shadow: 0.5px -0.5px 1px 0.5px #fff, -1px 1px 1px 0.5px #999,
     -1px 4px 10px 1px #999;
 }
 
@@ -122,7 +195,6 @@ input:-webkit-autofill:active{
   border-radius: 50%;
   opacity: 0;
   cursor: pointer;
-  
 }
 .check-toggle:active ~ svg {
   color: #1eabbe;
@@ -131,13 +203,12 @@ input:-webkit-autofill:active{
   color: #1eabbe;
 }
 
-
 /*alert*/
 
 .fixed-alert {
-  position:absolute;
+  position: absolute;
   right: 0%;
-  top:10%;
-  margin:0.75rem;
+  top: 10%;
+  margin: 0.75rem;
   z-index: 9999999;
 }

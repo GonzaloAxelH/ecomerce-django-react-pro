@@ -71,7 +71,7 @@ const ImageGalery: FC<Props> = ({ photo }) => {
                     <span className="sr-only">{image.name}</span>
                     <span className="absolute inset-0 rounded-md overflow-hidden">
                       <img
-                        src={`${process.env.REACT_APP_API_URL}${photo}`}
+                        src={photo}
                         alt=""
                         className="w-full h-full object-center object-cover hola "
                       />
@@ -94,7 +94,7 @@ const ImageGalery: FC<Props> = ({ photo }) => {
           {product.images.map((image: any) => (
             <Tab.Panel key={image.id}>
               <img
-                src={`${process.env.REACT_APP_API_URL}${photo}`}
+                src={photo}
                 alt=""
                 className="w-full h-full object-center object-cover sm:rounded-lg"
               />

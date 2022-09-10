@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import ProductCard from "../components/product/ProductCard";
 import { prices } from "../helpers/fixedPrices";
 import ProductEsqueleton from "../components/skeletons/ProductEsqueleton";
+import CardElqueleton from "../components/skeletons/CardElqueleton";
 interface Props {
   get_categories?: Function;
   get_products?: Function;
@@ -33,6 +34,7 @@ const Shop: FC<Props> = ({
 }) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filtered, setFiltered] = useState(false);
+  const [changeFilter, setChangeFilter] = useState(false);
   const [formData, setFormData] = useState({
     category_id: "0",
     price_range: "1 - 19",
@@ -45,18 +47,25 @@ const Shop: FC<Props> = ({
     get_products?.();
   }, []);
   useEffect(() => {
-    get_filter_products?.(category_id, price_range, sort_by, order);
-    setFiltered(true);
+    const fetch = async () => {
+      setChangeFilter(true);
+      setFiltered(true);
+      await get_filter_products?.(category_id, price_range, sort_by, order);
+      setChangeFilter(false);
+    };
+    fetch();
   }, [formData]);
 
   const { category_id, price_range, sort_by, order } = formData;
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
-
-    get_filter_products?.(category_id, price_range, sort_by, order);
+    setChangeFilter(true);
+    await get_filter_products?.(category_id, price_range, sort_by, order);
+    setChangeFilter(false);
     setFiltered(true);
   };
   const onChange = (e: any) => {
+    setChangeFilter(true);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const ShowProducts = () => {
@@ -406,11 +415,19 @@ const Shop: FC<Props> = ({
                   <div>{FormOptions}</div>
                 </form>
 
-                {/* Product grid */}
-                <div className="lg:col-span-3  overflow-hidden">
-                  {!filtered_products && <ProductEsqueleton />}
-                  {ShowProducts && ShowProducts()}
-                </div>
+                {!filtered_products || changeFilter ? (
+                  <div className="lg:col-span-3">
+                    <div className="grid md:grid-cols-3 gap-x-8 mt-10">
+                      {[1, 2, 3].map((e: number) => {
+                        return <CardElqueleton key={e} />;
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="lg:col-span-3  overflow-hidden">
+                    {filtered_products && ShowProducts?.()}
+                  </div>
+                )}
               </div>
             </section>
           </main>

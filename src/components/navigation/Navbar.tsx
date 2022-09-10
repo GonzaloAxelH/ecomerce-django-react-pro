@@ -71,7 +71,7 @@ const Navbar: FC<Props> = ({
   get_items,
   get_total,
 }) => {
-  const [redirectToLogin, setRedirectToLogin] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [redirectToSearch, setRedirectToSearch] = useState(false);
   const [formData, setFormData] = useState({
     category_id: 0,
@@ -88,30 +88,41 @@ const Navbar: FC<Props> = ({
   const onChange = (e: any) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
+    setSearchLoading(true);
+    localStorage.setItem("search_term", search);
+    await get_search_products?.(search, category_id);
+    setFormData({
+      search: "",
+      category_id: 0,
+    });
     if (window.location.pathname === "/search") {
       setRedirectToSearch(false);
     } else {
       setRedirectToSearch(true);
     }
-    get_search_products?.(search, category_id);
+    setSearchLoading(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setSearchLoading(true);
+    localStorage.setItem("search_term", search);
+    await get_search_products?.(search, category_id);
+    setFormData({
+      search: "",
+      category_id: 0,
+    });
     if (window.location.pathname === "/search") {
       setRedirectToSearch(false);
     } else {
       setRedirectToSearch(true);
     }
-    get_search_products?.(search, category_id);
+    setSearchLoading(false);
   };
-  if (redirectToLogin) {
-    setRedirectToLogin(true);
-    //return <Navigate to="/login" />;
-  }
+
   if (redirectToSearch) {
-    return <Navigate to="/search" />;
+    return <Navigate to={`/search`} />;
   }
 
   return (
@@ -132,23 +143,11 @@ const Navbar: FC<Props> = ({
             <form
               onSubmit={(e: any) => onSubmit(e)}
               className="w-full flex md:ml-0 ml-4"
-              action="#"
-              method="GET"
             >
               <label htmlFor="search-field" className="sr-only">
                 Search
               </label>
-              <div
-                onClick={handleSubmit}
-                className="relative w-full flex text-gray-400 focus-within:text-gray-600"
-              >
-                <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none cursor-pointer">
-                  <SearchIcon
-                    className="h-5 w-5 cursor-pointer"
-                    aria-hidden="true"
-                  />
-                </div>
-
+              <div className="relative w-full flex items-center text-gray-400 focus-within:text-gray-600">
                 <input
                   id="search-field"
                   className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
@@ -158,6 +157,18 @@ const Navbar: FC<Props> = ({
                   name="search"
                   placeholder="Que buscas hoy ..."
                 />
+                <span onClick={handleSubmit} className="cursor-pointer">
+                  {searchLoading ? (
+                    <span>
+                      <div id="circle5"></div>
+                    </span>
+                  ) : (
+                    <SearchIcon
+                      className="h-5 w-5 cursor-pointer"
+                      aria-hidden="true"
+                    />
+                  )}
+                </span>
                 <div className="mt-1 mx-1 px-2 py-1">
                   <select
                     name="category_id"
