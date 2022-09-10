@@ -1,10 +1,13 @@
 from datetime import timedelta
-from pathlib import Path
 import os
+
+from pathlib import Path
 import environ
 env = environ.Env()
 environ.Env.read_env()
 ENVIRONMENT = env
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -167,21 +170,16 @@ USE_I18N = True
 USE_TZ = True
 
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-STATIC_ROOT  =   os.path.join(PROJECT_ROOT, "static")
-
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
-MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
-     os.path.join(PROJECT_ROOT, 'build/static'),
+    os.path.join(BASE_DIR, 'build/static')
 ]
-
 
 
 

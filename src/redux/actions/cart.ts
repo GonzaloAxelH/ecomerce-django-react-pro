@@ -87,9 +87,12 @@ export const add_item =
       if (sholudAddItem) {
         cart.push(order_item);
       }
+      localStorage.setItem("cart", JSON.stringify(cart));
       dispatch({
         type: ADD_ITEM,
-        payload: cart,
+      });
+      dispatch({
+        type: GET_ITEMS,
       });
     }
   };
@@ -154,25 +157,24 @@ export const get_total = () => async (dispatch: Dispatch<ActionType>) => {
       });
     }
   } else {
-    let total = 0.0;
+    let ammout = 0.0;
     let compare_total = 0.0;
     let cart: any = [];
-
     if (existsCartLocal) {
       cart = JSON.parse(cartLocal);
       cart.map((item: any) => {
-        total += parseFloat(item.product.price) * parseFloat(item.count);
+        ammout += parseFloat(item.product.price) * parseFloat(item.count);
         compare_total +=
           parseFloat(item.product.compare_price) * parseFloat(item.count);
       });
     }
-
+    localStorage.setItem("amount", ammout.toFixed());
+    localStorage.setItem("compare_amount", compare_total.toFixed(2));
     dispatch({
       type: GET_TOTAL,
-      payload: [
-        parseFloat(total.toFixed(2)),
-        parseFloat(compare_total.toFixed(2)),
-      ],
+    });
+    dispatch({
+      type: GET_ITEMS,
     });
   }
 };
@@ -203,14 +205,11 @@ export const get_item_total = () => async (dispatch: Dispatch<ActionType>) => {
       });
     }
   } else {
-    let total = 0;
-    if (existsCartLocal) {
-      total = await JSON.parse(cartLocal).length;
-    }
-
     dispatch({
       type: GET_ITEM_TOTAL,
-      payload: total,
+    });
+    dispatch({
+      type: GET_ITEMS,
     });
   }
 };
@@ -253,20 +252,27 @@ export const update_item =
         });
       }
     } else {
-      let cart: any[] = [];
+      let cartUpdated: any = [];
 
       if (existsCartLocal) {
-        cart = JSON.parse(cartLocal);
-        cart.map((cart_item: any, index: number) => {
+        JSON.parse(cartLocal).map((cart_item: any, index: number) => {
           if (cart_item.product.id.toString() === item.product.id.toString()) {
-            cart[index].count = parseInt(count);
+            cartUpdated.push({
+              ...cart_item,
+              count: count,
+            });
+          } else {
+            cartUpdated.push({ ...cart_item });
           }
         });
       }
+      localStorage.setItem("cart", cartUpdated);
 
       dispatch({
         type: UPDATE_ITEM,
-        payload: cart,
+      });
+      dispatch({
+        type: GET_ITEMS,
       });
     }
   };
@@ -305,16 +311,18 @@ export const remove_item =
         });
       }
     } else {
-      let cart: any = [];
-      let newCart: any = [];
-      if (existsCartLocal) {
-        cart = JSON.parse(cartLocal);
-        newCart = cart.filter((el: any) => el.product.id !== item.product.id);
-      }
-
+      let updatedCart: any = [];
+      let cart = JSON.parse(cartLocal).map((cartItem: any) => {
+        if (cartItem.product.id !== item.product.id) {
+          updatedCart.push(cartItem);
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       dispatch({
         type: REMOVE_ITEM,
-        payload: newCart,
+      });
+      dispatch({
+        type: GET_ITEMS,
       });
     }
   };
@@ -346,8 +354,12 @@ export const empty_cart = () => async (dispatch: Dispatch<ActionType>) => {
       });
     }
   } else {
+    localStorage.removeItem("cart");
     dispatch({
       type: EMPTY_CART,
+    });
+    dispatch({
+      type: GET_ITEMS,
     });
   }
 };
@@ -380,6 +392,7 @@ export const synch_cart = () => async (dispatch: Dispatch<ActionType>) => {
     const res = await axios.put(`${api}/api/cart/synch`, body, config);
 
     if (res.status === 201) {
+      localStorage.removeItem("cart");
       dispatch({
         type: SYNCH_CART_SUCCESS,
       });

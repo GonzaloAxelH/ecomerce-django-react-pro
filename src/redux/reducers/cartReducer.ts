@@ -65,7 +65,6 @@ export default function Products(
         items: null,
       };
     case ADD_ITEM:
-      localStorage.setItem("cart", JSON.stringify(payload));
       return {
         ...state,
         items: JSON.parse(localStorage.getItem("cart") || "[]"),
@@ -100,8 +99,10 @@ export default function Products(
     case GET_TOTAL:
       return {
         ...state,
-        amount: payload[0],
-        compare_amount: payload[1],
+        amount: parseFloat(localStorage.getItem("amount") || "0.0"),
+        compare_amount: parseFloat(
+          localStorage.getItem("compare_amount") || "0.0"
+        ),
       };
     case GET_ITEM_TOTAL_SUCCESS:
       return {
@@ -114,17 +115,11 @@ export default function Products(
         total_items: 0,
       };
     case GET_ITEM_TOTAL:
-      if (localStorage.getItem("access")) {
-        return {
-          ...state,
-          total_items: payload,
-        };
-      } else {
-        return {
-          ...state,
-          total_items: JSON.parse(localStorage.getItem("cart") || "[]").length,
-        };
-      }
+      return {
+        ...state,
+        total_items: JSON.parse(localStorage.getItem("cart") || "[]").length,
+      };
+
     case UPDATE_ITEM_SUCCESS:
       return {
         ...state,
@@ -135,7 +130,6 @@ export default function Products(
         ...state,
       };
     case UPDATE_ITEM:
-      localStorage.setItem("cart", JSON.stringify(payload));
       return {
         ...state,
         items: JSON.parse(localStorage.getItem("cart") || "[]"),
@@ -150,7 +144,6 @@ export default function Products(
         ...state,
       };
     case REMOVE_ITEM:
-      localStorage.setItem("cart", JSON.stringify(payload));
       return {
         ...state,
         items: JSON.parse(localStorage.getItem("cart") || "[]"),
@@ -165,7 +158,6 @@ export default function Products(
         total_items: 0,
       };
     case EMPTY_CART:
-      localStorage.removeItem("cart");
       return {
         items: null,
         amount: 0.0,
@@ -174,7 +166,6 @@ export default function Products(
       };
     case SYNCH_CART_SUCCESS:
     case SYNCH_CART_FAIL:
-      localStorage.removeItem("cart");
       return {
         ...state,
       };
