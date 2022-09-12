@@ -6,6 +6,7 @@ import {
   CalendarIcon,
   MenuAlt2Icon,
   MenuIcon,
+  ShoppingCartIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import { CreditCardIcon, SearchIcon, UserIcon } from "@heroicons/react/solid";
@@ -22,6 +23,7 @@ import { list_orders } from "../redux/actions/order";
 import { get_categories } from "../redux/actions/caegories";
 import { ReducersStateType } from "../redux/reducers";
 import { solutions } from "../components/navigation/Navbar";
+import { get_user_profile } from "../redux/actions/profile";
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
@@ -38,6 +40,7 @@ type Props = {
   logout?: Function;
   get_categories?: Function;
   isAuthenticated?: boolean | null;
+  get_user_profile?: Function;
 };
 const LayoutDashboard: FC<Props> = ({
   children,
@@ -51,6 +54,7 @@ const LayoutDashboard: FC<Props> = ({
   logout,
   get_categories,
   isAuthenticated,
+  get_user_profile,
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   useEffect(() => {
@@ -61,6 +65,7 @@ const LayoutDashboard: FC<Props> = ({
     }
 
     list_orders?.();
+    get_user_profile?.();
   }, []);
 
   if (!isAuthenticated && isAuthenticated !== null) {
@@ -382,7 +387,6 @@ function DashboardLink() {
         />
         Dashboard
       </Link>
-
       <Link
         to="/dashboard/payments"
         className={classNames(
@@ -398,7 +402,6 @@ function DashboardLink() {
         />
         Payment History
       </Link>
-
       <Link
         to="/dashboard/profile"
         className={classNames(
@@ -413,6 +416,21 @@ function DashboardLink() {
           aria-hidden="true"
         />
         Profile
+      </Link>{" "}
+      <Link
+        to="/shop"
+        className={classNames(
+          "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+          "group flex items-center px-2 py-2 text-base font-medium rounded-md"
+        )}
+      >
+        <ShoppingCartIcon
+          className={classNames(
+            "mr-4 flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
+          )}
+          aria-hidden="true"
+        />
+        Shop
       </Link>
     </>
   );
@@ -430,4 +448,5 @@ export default connect(mapStateToProps, {
   get_item_total,
   logout,
   get_categories,
+  get_user_profile,
 })(LayoutDashboard);

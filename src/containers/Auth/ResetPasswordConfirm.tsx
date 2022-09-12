@@ -34,8 +34,7 @@ const ResetPasswordConfirm: FC<SignupProps> = ({
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    reset_password_confirm &&
-      reset_password_confirm(uid, token, password, re_password);
+    reset_password_confirm?.(uid, token, password, re_password);
     setIsResetPassword(true);
   };
   if (!loading && isResetPassword) {

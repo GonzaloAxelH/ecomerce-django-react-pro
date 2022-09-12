@@ -28,31 +28,27 @@ const Alert: FC<Props> = ({ showAlert, color, message }) => {
 function Fail(props: any) {
   return (
     <div
-      className="fixed-alert  flex justify-center p-8"
-      style={{ animationDelay: " .1s" }}
+      className="bg-red-500 border-t-4 border-teal rounded-b text-teal-darkest px-4 py-3 shadow-md my-2"
+      role="alert"
     >
-      <div className=" w-64 items-center rounded-lg shadow-lg mb-4 flex bg-red-500 p-4 text-white">
-        <div className="w-64">
-          <h4 className="mb-2 font-bold">Fail</h4>
-          <p>{props.message} </p>{" "}
-        </div>
-        <div className="w-12">
-          <div className="text-2xl p-2 bg-red-600 rounded-full">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
+      <div className="flex">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <div className="ml-4">
+          <p className="font-bold text-md">Fail xd !!</p>
+          <p className="text-md">{props.message}</p>
         </div>
       </div>
     </div>
@@ -96,31 +92,27 @@ function Updated(props: any) {
 function Success(props: any) {
   return (
     <div
-      className="fixed-alert  flex justify-center p-8"
-      style={{ animationDelay: " .1s" }}
+      className="bg-green-500 border-t-4 border-teal rounded-b text-teal-darkest px-4 py-3 shadow-md my-2"
+      role="alert"
     >
-      <div className=" w-64 items-center rounded-lg shadow-lg mb-4 flex bg-green-500 p-4 text-white">
-        <div className="w-64">
-          <h4 className="mb-2 font-bold">Success</h4>
-          <p>{props.message} </p>{" "}
-        </div>
-        <div className="w-12">
-          <div className="text-2xl p-2 bg-green-600 rounded-full">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
+      <div className="flex">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <div className="ml-4">
+          <p className="font-bold text-md">Success !!</p>
+          <p className="text-md">{props.message}</p>
         </div>
       </div>
     </div>

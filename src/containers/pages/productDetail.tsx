@@ -24,6 +24,10 @@ import CardElqueleton, {
   BoxEsqueleton,
   ContentEsqueleton,
 } from "../../components/skeletons/CardElqueleton";
+import {
+  add_wishlist_item,
+  remove_wishlist_item,
+} from "../../redux/actions/wishlist";
 interface Props {
   get_product?: Function;
   get_related_products?: Function;
@@ -37,6 +41,9 @@ interface Props {
   remove_item?: Function;
   get_reviews?: Function;
   reviews?: any | null;
+  add_wishlist_item?: Function;
+  remove_wishlist_item?: Function;
+  whishlist_items?: any;
 }
 
 const ProductDetail: FC<Props> = ({
@@ -52,11 +59,17 @@ const ProductDetail: FC<Props> = ({
   remove_item,
   get_reviews,
   reviews,
+  remove_wishlist_item,
+  add_wishlist_item,
+  whishlist_items,
 }) => {
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [thisProductInCart, setThisProductInCart] = useState(true);
   const [esqueletonLoading, setEsqueletonLoading] = useState(false);
+  const [toggleHeart, setToggleHeart] = useState(false);
+
+  const [loadingToogle, setLoadingToogle] = useState(false);
   const productId = params.productId;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -99,7 +112,24 @@ const ProductDetail: FC<Props> = ({
       return cant;
     }
   };
-
+  const verifyPRoductInWhislist = () => {
+    let cant = true;
+    if (
+      whishlist_items &&
+      whishlist_items !== null &&
+      whishlist_items !== undefined &&
+      product_one &&
+      product_one !== undefined &&
+      product_one !== null
+    ) {
+      whishlist_items.map((item: any) => {
+        if (parseInt(item.product.id) === parseInt(product_one.id)) {
+          cant = false;
+        }
+      });
+      return cant;
+    }
+  };
   const addToCart = async () => {
     if (
       product_one &&
@@ -132,6 +162,17 @@ const ProductDetail: FC<Props> = ({
     }
   };
 
+  const setWhishListToggle = async () => {
+    setLoadingToogle(true);
+    if (verifyPRoductInWhislist()) {
+      await add_wishlist_item?.(product_one.id);
+      setToggleHeart(true);
+    } else {
+      await remove_wishlist_item?.(product_one.id);
+      setToggleHeart(false);
+    }
+    setLoadingToogle(false);
+  };
   return (
     <Layout>
       <div className="bg-white">
@@ -182,6 +223,7 @@ const ProductDetail: FC<Props> = ({
                   <div className="mt-10 flex sm:flex-col1">
                     {verifyPRoductInCart() && thisProductInCart ? (
                       <button
+                        disabled={loading}
                         type="button"
                         onClick={addToCart}
                         className="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
@@ -192,6 +234,7 @@ const ProductDetail: FC<Props> = ({
                       <div className="flex flex-col">
                         <span className="flex">
                           <button
+                            disabled={loading}
                             type="button"
                             className="pl-5 pr-5 border rounded-md mr-3"
                             onClick={removeItemToCart}
@@ -221,23 +264,35 @@ const ProductDetail: FC<Props> = ({
                             </button>
                           </Link>
                         </span>
-                        <span>
-                          <b>*</b>
-                          <i className="text-sm text-bold">
-                            {" "}
-                            El producto ya se agrego al carrito
-                          </i>
-                        </span>
+                        <span></span>
                       </div>
                     )}
                     <button
+                      onClick={setWhishListToggle}
                       type="button"
+                      disabled={loadingToogle}
                       className="ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                     >
-                      <HeartIcon
-                        className="h-6 w-6 flex-shrink-0"
-                        aria-hidden="true"
-                      />
+                      {loadingToogle ? (
+                        <div id="circle5"></div>
+                      ) : (
+                        <>
+                          {!verifyPRoductInWhislist() ? (
+                            <HeartIcon
+                              className="h-6 w-6 flex-shrink-0"
+                              aria-hidden="true"
+                              color="red"
+                              fill="red"
+                            />
+                          ) : (
+                            <HeartIcon
+                              className="h-6 w-6 flex-shrink-0"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </>
+                      )}
+
                       <span className="sr-only">Add to favorites</span>
                     </button>
                   </div>
@@ -348,6 +403,7 @@ const mapStateToProps = (state: ReducersStateType) => ({
   related_products: state.Products.related_products,
   cart_items: state.Cart.items,
   reviews: state.Reviews.reviews,
+  whishlist_items: state.Whishlist.items,
 });
 
 export default connect(mapStateToProps, {
@@ -359,4 +415,6 @@ export default connect(mapStateToProps, {
   get_item_total,
   remove_item,
   get_reviews,
+  add_wishlist_item,
+  remove_wishlist_item,
 })(ProductDetail);

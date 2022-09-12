@@ -14,6 +14,7 @@ import {
   ViewListIcon,
   ShoppingBagIcon,
   SearchIcon,
+  HeartIcon,
 } from "@heroicons/react/outline";
 
 import { ReducersStateType } from "../../redux/reducers";
@@ -22,6 +23,10 @@ import GuestLinks from "./GuestLinks";
 import AuthLinks from "./AuthLinks";
 
 import { get_items, get_item_total, get_total } from "../../redux/actions/cart";
+import {
+  get_wishlist_items,
+  get_wishlist_item_total,
+} from "../../redux/actions/wishlist";
 export const solutions = [
   {
     name: "Store",
@@ -57,6 +62,9 @@ interface Props {
   get_search_products?: Function;
   get_items?: Function;
   get_total?: Function;
+  get_wishlist_items?: Function;
+  get_wishlist_item_total?: Function;
+  total_items_wishlist?: any;
 }
 
 const Navbar: FC<Props> = ({
@@ -70,6 +78,9 @@ const Navbar: FC<Props> = ({
   get_item_total,
   get_items,
   get_total,
+  get_wishlist_items,
+  get_wishlist_item_total,
+  total_items_wishlist,
 }) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [redirectToSearch, setRedirectToSearch] = useState(false);
@@ -83,6 +94,8 @@ const Navbar: FC<Props> = ({
     get_categories?.();
     get_item_total?.();
     get_total?.();
+    get_wishlist_items?.();
+    get_wishlist_item_total?.();
   }, []);
 
   const onChange = (e: any) =>
@@ -232,7 +245,32 @@ const Navbar: FC<Props> = ({
                 </span>
               </div>
             </Link>
+            {!isAuthenticated && isAuthenticated !== null ? (
+              <></>
+            ) : (
+              <Link
+                to="/wishlist"
+                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              >
+                <span className="sr-only">Open menu</span>
 
+                <div className="cursor-pointer relative">
+                  <HeartIcon
+                    className="h-7 w-7 flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                  <span
+                    style={{
+                      backgroundColor: "#6b7280",
+                      fontSize: "12px",
+                    }}
+                    className="absolute right-0 top-0 rounded-full w-4 h-4 top right p-0 m-0 text-white  leading-tight text-center"
+                  >
+                    {total_items_wishlist}
+                  </span>
+                </div>
+              </Link>
+            )}
             <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
               <span className="sr-only">Open menu</span>
               <MenuIcon className="h-6 w-6" aria-hidden="true" />
@@ -288,6 +326,32 @@ const Navbar: FC<Props> = ({
                   </span>
                 </div>
               </Link>
+              {!isAuthenticated && isAuthenticated !== null ? (
+                <></>
+              ) : (
+                <Link
+                  to="/wishlist"
+                  className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                >
+                  <span className="sr-only">Open menu</span>
+
+                  <div className="cursor-pointer relative">
+                    <HeartIcon
+                      className="h-7 w-7 flex-shrink-0"
+                      aria-hidden="true"
+                    />
+                    <span
+                      style={{
+                        backgroundColor: "#6b7280",
+                        fontSize: "12px",
+                      }}
+                      className="absolute right-0 top-0 rounded-full w-4 h-4 top right p-0 m-0 text-white  leading-tight text-center"
+                    >
+                      {total_items_wishlist}
+                    </span>
+                  </div>
+                </Link>
+              )}
 
               {isAuthenticated ? <AuthLinks logout={logout} /> : <GuestLinks />}
             </div>
@@ -408,6 +472,7 @@ const mapStateToProps = (state: ReducersStateType) => ({
   user: state.Auth.user,
   categories: state.Categories.categories,
   total_items_cart: state.Cart.total_items,
+  total_items_wishlist: state.Whishlist.total_items,
 });
 
 export default connect(mapStateToProps, {
@@ -417,4 +482,6 @@ export default connect(mapStateToProps, {
   get_item_total,
   get_items,
   get_total,
+  get_wishlist_items,
+  get_wishlist_item_total,
 })(Navbar);

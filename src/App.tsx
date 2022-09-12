@@ -20,6 +20,8 @@ import ThankYou from "./containers/pages/ThankYou";
 import Dashboard from "./containers/pages/Dashboard";
 import DashboardPayments from "./containers/pages/DashboardPayments";
 import DashboardPaymentsDetail from "./containers/pages/DashboardPaymentsDetail";
+import WhislistPage from "./containers/pages/WhislistPage";
+import DashboardProfile from "./containers/pages/DashboardProfile";
 const App: React.FC = (): JSX.Element => {
   return (
     <Provider store={store}>
@@ -52,6 +54,9 @@ const App: React.FC = (): JSX.Element => {
 
         {/* remove */}
         <Route path="/arduino" element={<ArduinoPage />} />
+        <Route path="/wishlist" element={<WhislistPage />} />
+
+        <Route path="/dashboard/profile" element={<DashboardProfile />} />
       </Routes>
     </Provider>
   );

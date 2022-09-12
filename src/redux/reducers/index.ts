@@ -11,6 +11,8 @@ import Orders, { StateTypesOrders } from "./reducerOrders";
 import Coupons, { StateTypesCoupons } from "./reducerCoupon";
 import Errors, { StateTypesErrors } from "./errorsReducers";
 import Reviews, { StateTypesReviews } from "./reviewsReducer";
+import Whishlist, { StateTypesWhislist } from "./wishlistReducer";
+import Profile, { StateTypesProfile } from "./profileReducer";
 export interface ReducersStateType {
   Auth: StateTypesAuth;
   Alert: StateTypeAlert;
@@ -23,6 +25,8 @@ export interface ReducersStateType {
   Coupons: StateTypesCoupons;
   Errors: StateTypesErrors;
   Reviews: StateTypesReviews;
+  Whishlist: StateTypesWhislist;
+  Profile: StateTypesProfile;
 }
 
 export default combineReducers<ReducersStateType>({
@@ -37,4 +41,6 @@ export default combineReducers<ReducersStateType>({
   Coupons,
   Errors,
   Reviews,
+  Whishlist,
+  Profile,
 });

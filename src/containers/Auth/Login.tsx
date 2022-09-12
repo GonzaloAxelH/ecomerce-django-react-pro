@@ -33,7 +33,6 @@ const Login: FC<SignupProps> = ({ login, loading, isAuthenticated }) => {
   const onSubmit = (e: any) => {
     e.preventDefault();
     login?.(email, password);
-    setLogged(true);
   };
 
   //if (logged && !loading && isAuthenticated) return <Navigate to="/" />;

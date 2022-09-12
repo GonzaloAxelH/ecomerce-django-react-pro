@@ -19,6 +19,10 @@ import {
   RESET_PASSWORD_FAIL,
   RESET_PASSWORD_SUCCESS,
   LOGOUT,
+  GET_ITEMS_SUCCESS,
+  GET_ITEM_TOTAL_FAIL,
+  GET_ITEM_TOTAL_SUCCESS,
+  GET_TOTAL_SUCCESS,
 } from "./types";
 
 import {
@@ -205,9 +209,10 @@ export const login =
         dispatch({ type: LOGIN_SUCCESS, payload: res.data });
         dispatch(load_user());
         dispatch(setAlert("Inicio de sesion con exito", "green"));
+        localStorage.setItem("cart", JSON.stringify([]));
         setTimeout(() => {
           window.location.href = "/";
-        }, 2000);
+        }, 1000);
       } else {
         dispatch({ type: LOGIN_FAIL });
         console.log(res);
@@ -220,9 +225,7 @@ export const login =
       dispatch({ type: REMOVE_AUTH_LOADING });
 
       console.log(err);
-      dispatch(
-        setAlert("Datos Incorrectos (me falta agregar errores xd)", "red")
-      );
+      dispatch(setAlert(err.response.data.detail, "red"));
     }
   };
 
@@ -355,10 +358,14 @@ export const reset_password_confirm =
   };
 
 export const logout = () => async (dispatch: Dispatch<ActionType | any>) => {
+  localStorage.setItem("cart", JSON.stringify([]));
   dispatch({
     type: LOGOUT,
   });
   dispatch(setAlert("Session terminada con exito", "green"));
+  setTimeout(() => {
+    window.location.href = "/login";
+  }, 1000);
 };
 
 export const reset_password =
