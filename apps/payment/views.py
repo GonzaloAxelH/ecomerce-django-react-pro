@@ -309,7 +309,7 @@ class ProcessPaymentView(APIView):
                         name=product.name,
                         price=cart_item.product.price,
                         count=cart_item.count,
-                        photo=cart_item.product.photo
+                        photo=cart_item.product.get_thumbnail
                     )
                 except:
                     return Response(

@@ -42,7 +42,7 @@ const Login: FC<SignupProps> = ({ login, loading, isAuthenticated }) => {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img
             className="mx-auto h-12 w-auto"
-            src="/logo192.png"
+            src="https://res.cloudinary.com/ddksrkond/image/upload/v1663117504/media/photo/2022/09/logo192_liuecr.png"
             alt="Workflow"
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

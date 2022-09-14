@@ -131,7 +131,7 @@ const LayoutDashboard: FC<Props> = ({
                     <Link to="/">
                       <img
                         className="h-8 w-auto cursor-pointer"
-                        src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
+                        src="https://res.cloudinary.com/ddksrkond/image/upload/v1663117504/media/photo/2022/09/logo192_liuecr.png"
                         alt="Workflow"
                       />
                     </Link>
@@ -154,7 +154,11 @@ const LayoutDashboard: FC<Props> = ({
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex flex-col flex-grow border-r border-gray-200 pt-5 bg-white overflow-y-auto">
               <div className="flex items-center flex-shrink-0 px-4">
-                <img className="h-8 w-auto" src="/logo192.png" alt="Workflow" />
+                <img
+                  className="h-8 w-auto"
+                  src="https://res.cloudinary.com/ddksrkond/image/upload/v1663117504/media/photo/2022/09/logo192_liuecr.png"
+                  alt="Workflow"
+                />
               </div>
               <div className="mt-5 flex-grow flex flex-col">
                 <nav className="flex-1 px-2 pb-4 space-y-1">
@@ -207,11 +211,14 @@ const LayoutDashboard: FC<Props> = ({
                     <div>
                       <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
+
+                        <svg
+                          className="h-8 w-8 text-gray-300 rounded-full"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -278,7 +285,7 @@ const LayoutDashboard: FC<Props> = ({
                   <div>
                     <img
                       className="h-8 w-auto"
-                      src="/logo192.png"
+                      src="https://res.cloudinary.com/ddksrkond/image/upload/v1663117504/media/photo/2022/09/logo192_liuecr.png"
                       alt="Workflow"
                     />
                   </div>

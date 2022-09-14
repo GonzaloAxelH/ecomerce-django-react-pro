@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
-DEBUG = True
+DEBUG = False
 DOMAIN =os.environ.get("DOMAIN")
 ALLOWED_HOSTS = [
     "localhost:8000",
@@ -63,6 +63,8 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "ckeditor",
     "ckeditor_uploader",
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + ECOMMERCE_APPS + THIRD_PARTY_APPS
@@ -171,13 +173,27 @@ USE_I18N = True
 USE_TZ = True
 
 
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#Media and images ,videos etc
+
 MEDIA_URL = '/media/'
 
+DEFAULT_FILE_STORAGE= "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get("CLOUD_NAME"),
+    'API_KEY': os.environ.get("API_KEY_CLOUDINARY"),
+    'API_SECRET': os.environ.get("API_SECRET_CLOUDINARY")
+}
+
+
+
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
 ]
