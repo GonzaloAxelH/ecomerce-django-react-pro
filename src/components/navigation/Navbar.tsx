@@ -27,6 +27,7 @@ import {
   get_wishlist_items,
   get_wishlist_item_total,
 } from "../../redux/actions/wishlist";
+import Switcher from "../Switcher";
 export const solutions = [
   {
     name: "Store",
@@ -139,7 +140,7 @@ const Navbar: FC<Props> = ({
   }
 
   return (
-    <Popover className="relative bg-white">
+    <Popover className="relative bg-white dark:bg-neutral-900">
       <div
         className="absolute inset-0  z-30 pointer-events-none"
         aria-hidden="true"
@@ -150,7 +151,7 @@ const Navbar: FC<Props> = ({
             <Link to="/" className="flex">
               <img
                 className="h-8 w-auto sm:h-10"
-                src="https://res.cloudinary.com/ddksrkond/image/upload/v1663117504/media/photo/2022/09/logo192_liuecr.png"
+                src="https://res.cloudinary.com/ddksrkond/image/upload/v1663683826/media/photo/2022/09/4667ec21-129a-4f83-8e08-9ed47cfd4176_r1nhmg.png"
                 alt=""
               />
             </Link>
@@ -164,10 +165,10 @@ const Navbar: FC<Props> = ({
               <label htmlFor="search-field" className="sr-only">
                 Search
               </label>
-              <div className="relative w-full flex items-center text-gray-400 focus-within:text-gray-600">
+              <div className="relative w-full flex items-center text-gray-400 focus-within:text-gray-600 ">
                 <input
                   id="search-field"
-                  className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
+                  className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm  dark:bg-neutral-900"
                   type="search"
                   value={search}
                   onChange={(e: any) => onChange(e)}
@@ -189,7 +190,7 @@ const Navbar: FC<Props> = ({
                 <div className="mt-1 mx-1 px-2 py-1">
                   <select
                     name="category_id"
-                    className="rounded-full font-medium text-gray-400 outline-0 cursor-pointer"
+                    className="rounded-full font-medium text-gray-400 outline-0 cursor-pointer dark:bg-neutral-900"
                     onChange={(e: any) => onChange(e)}
                   >
                     <option
@@ -219,7 +220,7 @@ const Navbar: FC<Props> = ({
           <div className="-mr-2 -my-2 md:hidden flex items-center">
             <Link
               to="/cart"
-              className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
             >
               <span className="sr-only">Open menu</span>
 
@@ -254,7 +255,7 @@ const Navbar: FC<Props> = ({
             ) : (
               <Link
                 to="/wishlist"
-                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
               >
                 <span className="sr-only">Open menu</span>
 
@@ -275,7 +276,7 @@ const Navbar: FC<Props> = ({
                 </div>
               </Link>
             )}
-            <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+            <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
               <span className="sr-only">Open menu</span>
               <MenuIcon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
@@ -285,7 +286,7 @@ const Navbar: FC<Props> = ({
             <Popover.Group as="nav" className="flex space-x-8">
               <Link
                 to="/shop"
-                className="text-base font-medium text-gray-500 hover:text-gray-900"
+                className="text-base font-medium text-gray-500 hover:text-gray-900 dark:hover:text-gray-400"
               >
                 Store
               </Link>
@@ -293,14 +294,14 @@ const Navbar: FC<Props> = ({
 
             <div className="flex items-center space-x-3">
               <div className="-mr-2 -my-2 md:hidden flex items-center">
-                <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
                   <span className="sr-only">Open menu</span>
                   <MenuIcon className="h-6 w-6" aria-hidden="true" />
                 </Popover.Button>
               </div>
               <Link
                 to="/cart"
-                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 dark:bg-neutral-900"
               >
                 <span className="sr-only">Open menu</span>
 
@@ -335,7 +336,7 @@ const Navbar: FC<Props> = ({
               ) : (
                 <Link
                   to="/wishlist"
-                  className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
                 >
                   <span className="sr-only">Open menu</span>
 
@@ -356,8 +357,10 @@ const Navbar: FC<Props> = ({
                   </div>
                 </Link>
               )}
-
               {isAuthenticated ? <AuthLinks logout={logout} /> : <GuestLinks />}
+              <div>
+                <Switcher />
+              </div>
             </div>
           </div>
         </div>
@@ -387,7 +390,7 @@ const Navbar: FC<Props> = ({
                   />
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
                     <span className="sr-only">Close menu</span>
                     <XIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -402,7 +405,7 @@ const Navbar: FC<Props> = ({
                         to={item.href}
                         className="-m-3 flex items-center p-3 rounded-lg hover:bg-gray-50"
                       >
-                        <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
+                        <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-orange-500 text-white sm:h-12 sm:w-12">
                           <item.icon className="h-6 w-6" aria-hidden="true" />
                         </div>
                         <div className="ml-4 text-base font-medium text-gray-900">
@@ -436,7 +439,7 @@ const Navbar: FC<Props> = ({
                   <>
                     <Link
                       to="/login"
-                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-orange-600 hover:bg-orange-700"
                     >
                       Login
                     </Link>
@@ -444,7 +447,7 @@ const Navbar: FC<Props> = ({
                       Or create account{" "}
                       <Link
                         to="/signup"
-                        className="text-indigo-600 hover:text-indigo-500"
+                        className="text-orange-600 hover:text-orange-500"
                       >
                         Register
                       </Link>
@@ -458,7 +461,7 @@ const Navbar: FC<Props> = ({
                       window.location.href = "/login";
                     }}
                     to="#"
-                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-orange-600 hover:bg-orange-700"
                   >
                     SignOut
                   </Link>

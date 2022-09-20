@@ -57,21 +57,22 @@
 .esqueleton_card .card {
   width: auto;
   padding: 0px;
-  background-color: #fafafa;
+  background-color: transparent;
   font-family: "@microsoft yahei light", sans-serif;
-  border-radius: 3px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
 .esqueleton_card .cover {
   height: 270px;
-  border-radius: 8px;
+  border-radius: 5px;
   overflow: hidden;
 }
 .esqueleton_card .cover img {
   display: block;
   width: 100%;
   opacity: 0.95;
+  border-radius: 5px;
 }
 
 /* add to img on load event */
@@ -93,6 +94,7 @@
   position: relative;
   color: #333;
   margin-top: 8px;
+  border-radius: 8px;
 }
 .esqueleton_card .content small {
   display: block;
@@ -107,6 +109,12 @@
     hsl(210, 15%, 88%),
     hsl(210, 15%, 95%),
     hsl(210, 15%, 88%)
+  );
+  background: linear-gradient(
+    90deg,
+    hsl(0, 0%, 35%),
+    hsl(0, 0%, 21%),
+    hsl(0, 0%, 19%)
   );
   background-size: 200%;
   animation: loader_card_esqueleton 1s infinite reverse;
@@ -138,7 +146,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-box-shadow: 0 0 0 0px transparent inset !important;
 }
 
 /* borrar luego :V*/

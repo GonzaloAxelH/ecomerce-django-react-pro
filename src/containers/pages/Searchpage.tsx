@@ -23,11 +23,11 @@ const SearchPage: FC<Props> = ({ search_products }) => {
 
   return (
     <Layout>
-      <div className="bg-white">
+      <div className="bg-white dark:bg-neutral-900">
         <div>
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
-              <div className="bg-white">
+              <div className="">
                 <div className="max-w-2xl mx-auto py-0 px-4 sm:py-0 sm:px-6 lg:max-w-7xl lg:px-8">
                   <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
                     Busquedas para " <i>{searchTerm}</i> " (

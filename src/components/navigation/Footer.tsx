@@ -92,7 +92,10 @@ const navigation = {
 
 function Footer() {
   return (
-    <footer className="bg-white" aria-labelledby="footer-heading">
+    <footer
+      className="bg-white dark:bg-neutral-900"
+      aria-labelledby="footer-heading"
+    >
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
@@ -190,13 +193,13 @@ function Footer() {
                 id="email-address"
                 autoComplete="email"
                 required
-                className="appearance-none min-w-0 w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:placeholder-gray-400"
+                className="appearance-none min-w-0 w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:placeholder-gray-400"
                 placeholder="Enter your email"
               />
               <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
                 <button
                   type="submit"
-                  className="w-full bg-indigo-600 flex items-center justify-center border border-transparent rounded-md py-2 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-full bg-orange-500 flex items-center justify-center border border-transparent rounded-md py-2 px-4 text-base font-medium text-white hover:bg-orange-600 focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                 >
                   Subscribe
                 </button>
@@ -204,7 +207,7 @@ function Footer() {
             </form>
           </div>
         </div>
-        <div className="mt-8 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between">
+        <div className="mt-8  pt-8 md:flex md:items-center md:justify-between">
           <div className="flex space-x-6 md:order-2">
             {navigation.social.map((item) => (
               <Link
@@ -217,8 +220,8 @@ function Footer() {
               </Link>
             ))}
           </div>
-          <p className="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-            &copy; 2020 Workflow, Inc. All rights reserved.
+          <p className="mt-8 text-base text-gray-400 md:mt-0 md:order-1 ">
+            &copy; 2022 Ecomerce Gonzalo, Inc. All rights reserved.
           </p>
         </div>
       </div>

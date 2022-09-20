@@ -11,9 +11,9 @@ const ProductsArrival: FC<Props> = ({ products }) => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-neutral-900">
       <div className="max-w-2xl mx-auto py-0 px-4 sm:py-0 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
+        <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-zinc-300">
           Lo mas reciente
         </h2>
         {products === null || products === undefined || !products ? (
@@ -38,7 +38,7 @@ const ProductsArrival: FC<Props> = ({ products }) => {
                     </div>
                     <div className="mt-4 flex justify-between">
                       <div>
-                        <h3 className="text-sm text-gray-700">
+                        <h3 className="text-md text-gray-700 dark:text-white">
                           <span
                             aria-hidden="true"
                             className="absolute inset-0 "
@@ -46,8 +46,8 @@ const ProductsArrival: FC<Props> = ({ products }) => {
                           {product.name}
                         </h3>
                       </div>
-                      <p className="text-lg font-medium text-gray-900">
-                        ${product.price}
+                      <p className="text-xl font-medium text-gray-900 dark:text-white">
+                        <b>${product.price}</b>
                       </p>
                     </div>
                   </div>

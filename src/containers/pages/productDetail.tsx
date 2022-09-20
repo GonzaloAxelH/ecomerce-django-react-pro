@@ -175,7 +175,7 @@ const ProductDetail: FC<Props> = ({
   };
   return (
     <Layout>
-      <div className="bg-white">
+      <div className="bg-white dark:bg-neutral-900">
         <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           {product_one === null ||
           product_one === undefined ||
@@ -197,14 +197,16 @@ const ProductDetail: FC<Props> = ({
               <ImageGalery photo={product_one.get_thumbnail} />
               {/* Product info */}
               <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
-                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 ">
                   {product_one.name}
                 </h1>
 
                 <div className="mt-3">
-                  <h2 className="sr-only">Product information</h2>
-                  <p className="text-3xl text-gray-900">
-                    $ {product_one.price}
+                  <h2 className="sr-only dark:bg-neutral-900">
+                    Product information
+                  </h2>
+                  <p className="text-3xl text-gray-900 dark:text-gray-300">
+                    <b>$ {product_one.price}</b>
                   </p>
                 </div>
 
@@ -212,7 +214,7 @@ const ProductDetail: FC<Props> = ({
                   <h3 className="sr-only">Description</h3>
 
                   <div
-                    className="text-base text-gray-700 space-y-6"
+                    className="text-base text-gray-700 space-y-6 dark:text-gray-300"
                     dangerouslySetInnerHTML={{
                       __html: product_one.description,
                     }}
@@ -221,12 +223,12 @@ const ProductDetail: FC<Props> = ({
 
                 <div className="mt-6">
                   <div className="mt-10 flex sm:flex-col1">
-                    {verifyPRoductInCart() && thisProductInCart ? (
+                    {verifyPRoductInCart() ? (
                       <button
                         disabled={loading}
                         type="button"
                         onClick={addToCart}
-                        className="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
+                        className="max-w-xs flex-1 bg-orange-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-orange-500 sm:w-full"
                       >
                         {loading ? <div id="circle5"></div> : "Add to bag"}
                       </button>
@@ -258,7 +260,7 @@ const ProductDetail: FC<Props> = ({
                           <Link to="/cart">
                             <button
                               type="button"
-                              className=" max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
+                              className=" max-w-xs flex-1 bg-orange-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-orange-500 sm:w-full"
                             >
                               Editar en el Carrito
                             </button>
@@ -307,9 +309,9 @@ const ProductDetail: FC<Props> = ({
             </div>
           )}
 
-          <div className="bg-white mt-12 mb-12">
+          <div className="bg-white mt-12 mb-12 dark:bg-neutral-900 ">
             <div className="max-w-2xl mx-auto py-0 px-4 sm:py-0 sm:px-6 lg:max-w-7xl lg:px-8">
-              <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 mb-10">
+              <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 mb-10 dark:text-gray-300">
                 Reviews ({reviews && reviews.length})
               </h2>
 
@@ -322,20 +324,22 @@ const ProductDetail: FC<Props> = ({
                       <>
                         <div className="flex">
                           <div className="mx-4 flex-shrink-0">
-                            <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
-                              <svg
-                                className="h-full w-full text-gray-300"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                              </svg>
+                            <span className="inline-block h-10 w-10 rounded-full overflow-hidden">
+                              <img
+                                className="bg-cover"
+                                src="https://www.infobae.com/new-resizer/2BnLFiG4hnqsldZYPP-KSEN9g4o=/1200x900/filters:format(webp):quality(85)//s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/07/17032128/apple-logo-2.jpg"
+                                alt=""
+                              />
                             </span>
                           </div>
                           <div>
                             <Stars rating={review.rating} />
-                            <h4 className="text-lg font-bold">{review.user}</h4>
-                            <p className="mt-1">{review.comment}</p>
+                            <h4 className="text-lg font-bold dark:text-white">
+                              {review.user}
+                            </h4>
+                            <p className="mt-1 dark:text-white">
+                              {review.comment}
+                            </p>
                           </div>
                         </div>
                       </>
@@ -345,9 +349,9 @@ const ProductDetail: FC<Props> = ({
             </div>
           </div>
 
-          <div className="bg-white mb-10 mt-12">
+          <div className="bg-white mb-10 mt-12 dark:bg-neutral-900">
             <div className="max-w-2xl mx-auto py-0 px-4 sm:py-0 sm:px-6 lg:max-w-7xl lg:px-8">
-              <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
+              <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300">
                 Productos relacionados
               </h2>
 
@@ -364,7 +368,7 @@ const ProductDetail: FC<Props> = ({
                     related_products?.map((product: any) => (
                       <Link to={`/product/${product.id}`} key={product.id}>
                         <div className="group relative">
-                          <div className="border w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                          <div className="border w-full min-h-80  aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                             <img
                               src={product.get_thumbnail}
                               alt=""
@@ -373,7 +377,7 @@ const ProductDetail: FC<Props> = ({
                           </div>
                           <div className="mt-4 flex justify-between">
                             <div>
-                              <h3 className="text-sm text-gray-700">
+                              <h3 className="text-sm text-gray-700 dark:text-white">
                                 <span
                                   aria-hidden="true"
                                   className="absolute inset-0 "
@@ -381,8 +385,8 @@ const ProductDetail: FC<Props> = ({
                                 {product.name}
                               </h3>
                             </div>
-                            <p className="text-lg font-medium text-gray-900">
-                              ${product.price}
+                            <p className="text-lg font-medium text-gray-900 dark:text-white">
+                              <b>${product.price}</b>
                             </p>
                           </div>
                         </div>

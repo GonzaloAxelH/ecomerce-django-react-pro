@@ -8,15 +8,15 @@ interface Props {
 }
 const ProductsSold: FC<Props> = ({ products }) => {
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-neutral-900">
       <div className="max-w-7xl mx-auto py-0 px-4 sm:py-8 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-baseline sm:justify-between">
-          <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
+          <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-zinc-300">
             Lo mas vendidos
           </h2>
           <a
             href="#"
-            className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
+            className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block dark:text-zinc-300 "
           >
             Browse all favorites<span aria-hidden="true"> &rarr;</span>
           </a>
@@ -43,12 +43,12 @@ const ProductsSold: FC<Props> = ({ products }) => {
                         className="w-full h-full object-center object-cover"
                       />
                     </div>
-                    <h3 className="mt-4 text-base font-semibold text-gray-900">
+                    <h3 className="mt-4 text-md text-gray-700 dark:text-gray-800 dark:text-white">
                       <span className="absolute inset-0" />
                       {product.name}
                     </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      ${product.price}
+                    <p className="mt-1 text-xl text-gray-500 dark:text-white">
+                      <b>${product.price}</b>
                     </p>
                   </div>
                 </Link>

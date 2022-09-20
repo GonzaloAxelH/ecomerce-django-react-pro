@@ -120,9 +120,9 @@ const Shop: FC<Props> = ({
             name="category_id"
             type="radio"
             checked={category_id === "0"}
-            className="  cursor-pointer focus:ring-blue h-4 w-4 text-blue-600 border-gray-300 rounded-full"
+            className="  cursor-pointer focus:ring-orange h-4 w-4 accent-orange-600 border-gray-300 rounded-full"
           />
-          <label className="ml-3 min-w-0 flex-1 text-gray-500">All</label>
+          <label className="ml-3 min-w-0 flex-1 text-gray-400">All</label>
         </div>
         {categories &&
           categories !== null &&
@@ -136,9 +136,9 @@ const Shop: FC<Props> = ({
                     value={category.id.toString()}
                     name="category_id"
                     type="radio"
-                    className="focus:ring-blue h-4 w-4 text-blue-600 border-gray-300 rounded-full cursor-pointer"
+                    className="focus:ring-orange h-4 w-4 accent-orange-600 border-gray-300 rounded-full cursor-pointer"
                   />
-                  <label className="ml-3 min-w-0 flex-1 text-gray-500">
+                  <label className="ml-3 min-w-0 flex-1 text-gray-400">
                     {category.name}
                   </label>
                 </div>
@@ -150,11 +150,11 @@ const Shop: FC<Props> = ({
                   <input
                     name="category_id"
                     type="radio"
-                    className="focus:ring-blue h-4 w-4 text-blue-600 border-gray-300 rounded-full cursor-pointer"
+                    className="focus:ring-orange h-4 w-4 accent-orange-600 border-gray-300 rounded-full cursor-pointer"
                     onChange={(e) => onChange(e)}
                     value={category.id.toString()}
                   />
-                  <label className="ml-3 min-w-0 flex-1 text-gray-500">
+                  <label className="ml-3 min-w-0 flex-1 text-gray-400">
                     {category.name}
                   </label>
                 </div>
@@ -171,9 +171,9 @@ const Shop: FC<Props> = ({
                       type="radio"
                       onChange={(e) => onChange(e)}
                       value={subcategory.id.toString()}
-                      className="focus:ring-blue h-4 w-4 text-blue-600 border-gray-300 rounded-full cursor-pointer"
+                      className="focus:ring-orange h-4 w-4 accent-orange-600 border-gray-300 rounded-full cursor-pointer"
                     />
-                    <label className="ml-3 min-w-0 flex-1 text-gray-500">
+                    <label className="ml-3 min-w-0 flex-1 text-gray-400">
                       {subcategory.name}
                     </label>
                   </div>
@@ -184,12 +184,17 @@ const Shop: FC<Props> = ({
           })}
       </ul>
 
-      <Disclosure as="div" className="border-t border-gray-200 px-4 py-6">
+      <Disclosure
+        as="div"
+        className="border-t border-gray-200 dark:border-gray-800 px-4 py-6"
+      >
         {({ open }) => (
           <>
             <h3 className="-mx-2 -my-3 flow-root">
-              <Disclosure.Button className="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500">
-                <span className="font-medium text-gray-900">Precios</span>
+              <Disclosure.Button className="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500 dark:bg-neutral-900">
+                <span className="font-medium text-gray-900 dark:text-gray-400">
+                  Precios
+                </span>
                 <span className="ml-6 flex items-center">
                   {open ? (
                     <MinusSmIcon className="h-5 w-5" aria-hidden="true" />
@@ -211,10 +216,10 @@ const Shop: FC<Props> = ({
                             value={price.name}
                             name="price_range"
                             type="radio"
-                            className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded-full"
+                            className="focus:ring-orange-500 h-4 w-4 text-orange-600 border-gray-300 rounded-full accent-orange-600"
                             defaultChecked
                           />
-                          <label className="ml-3 min-w-0 flex-1 text-gray-500 font-sofiapro-light">
+                          <label className="ml-3 min-w-0 flex-1 text-gray-400 font-sofiapro-light">
                             {price.name}
                           </label>
                         </div>
@@ -227,9 +232,9 @@ const Shop: FC<Props> = ({
                             value={price.name}
                             name="price_range"
                             type="radio"
-                            className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded-full cursor-pointer"
+                            className="focus:ring-orange-500 h-4 w-4 text-orange-600 border-gray-300 rounded-full cursor-pointer accent-orange-600"
                           />
-                          <label className="ml-3 min-w-0 flex-1 text-gray-500 font-sofiapro-light">
+                          <label className="ml-3 min-w-0 flex-1 text-gray-400 font-sofiapro-light">
                             {price.name}
                           </label>
                         </div>
@@ -242,12 +247,17 @@ const Shop: FC<Props> = ({
         )}
       </Disclosure>
 
-      <Disclosure as="div" className="border-t border-gray-200 px-4 py-6">
+      <Disclosure
+        as="div"
+        className="border-t border-gray-200 dark:border-gray-800  px-4 py-6"
+      >
         {({ open }) => (
           <>
             <h3 className="-mx-2 -my-3 flow-root">
-              <Disclosure.Button className="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500">
-                <span className="font-medium text-gray-900">Mas Filtros</span>
+              <Disclosure.Button className="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500 dark:bg-neutral-900">
+                <span className="font-medium text-gray-900 dark:text-gray-400">
+                  Mas Filtros
+                </span>
                 <span className="ml-6 flex items-center">
                   {open ? (
                     <MinusSmIcon className="h-5 w-5" aria-hidden="true" />
@@ -261,12 +271,12 @@ const Shop: FC<Props> = ({
                   <div className="form-group ">
                     <label
                       htmlFor="sort_by"
-                      className="mr-3 min-w-0 flex-1 text-gray-500"
+                      className="mr-3 min-w-0 flex-1 text-gray-500 dark:text-gray-400"
                     >
                       Ver por
                     </label>
                     <select
-                      className="cursor-pointer my-2 font-sofiapro-light inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
+                      className="cursor-pointer my-2 font-sofiapro-light inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-orange-500 dark:bg-neutral-900 dark:border-gray-700 dark:text-gray-400"
                       id="sort_by"
                       name="sort_by"
                       onChange={(e) => onChange(e)}
@@ -281,12 +291,12 @@ const Shop: FC<Props> = ({
                   <div className="form-group">
                     <label
                       htmlFor="order"
-                      className="mr-3 min-w-0 flex-1 text-gray-500"
+                      className="mr-3 min-w-0 flex-1 text-gray-500 dark:text-gray-400"
                     >
                       Orden
                     </label>
                     <select
-                      className=" cursor-pointer my-2 font-sofiapro-light inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
+                      className=" cursor-pointer my-2 font-sofiapro-light inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-orange-500 dark:bg-neutral-900 dark:border-gray-700 dark:text-gray-400"
                       id="order"
                       name="order"
                       onChange={(e) => onChange(e)}
@@ -304,7 +314,7 @@ const Shop: FC<Props> = ({
       </Disclosure>
       <button
         type="submit"
-        className="float-right inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="float-right inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
       >
         Buscar
       </button>
@@ -313,7 +323,7 @@ const Shop: FC<Props> = ({
 
   return (
     <Layout>
-      <div className="bg-white">
+      <div className="bg-white dark:bg-neutral-900">
         <div>
           {/* Mobile filter dialog */}
           <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -371,8 +381,8 @@ const Shop: FC<Props> = ({
           </Transition.Root>
 
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
-              <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">
+            <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 ">
+              <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-400">
                 New Arrivals
               </h1>
 

@@ -15,7 +15,7 @@ class Product(models.Model):
     sold = models.IntegerField(default=0)
     date_created = models.DateTimeField(default=datetime.now)
 
-    
+
     def get_thumbnail(self):
             return self.photo.url
         

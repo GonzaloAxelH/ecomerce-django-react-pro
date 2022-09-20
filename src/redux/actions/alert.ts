@@ -21,3 +21,6 @@ export const setAlert =
       timeout
     );
   };
+export const cancel_alert = () => (dispatch: Dispatch<ActionType>) => {
+  dispatch({ type: REMOVE_ALERT });
+};
