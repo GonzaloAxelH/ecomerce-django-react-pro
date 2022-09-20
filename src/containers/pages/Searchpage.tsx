@@ -26,10 +26,10 @@ const SearchPage: FC<Props> = ({ search_products }) => {
       <div className="bg-white dark:bg-neutral-900">
         <div>
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
+            <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-800">
               <div className="">
                 <div className="max-w-2xl mx-auto py-0 px-4 sm:py-0 sm:px-6 lg:max-w-7xl lg:px-8">
-                  <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
+                  <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-400">
                     Busquedas para " <i>{searchTerm}</i> " (
                     {search_products?.length}) :
                   </h2>
@@ -57,7 +57,7 @@ const SearchPage: FC<Props> = ({ search_products }) => {
                               </div>
                               <div className="mt-4 flex justify-between">
                                 <div>
-                                  <h3 className="text-sm text-gray-700">
+                                  <h3 className="text-sm text-gray-700 dark:text-white">
                                     <span
                                       aria-hidden="true"
                                       className="absolute inset-0 "
@@ -65,8 +65,8 @@ const SearchPage: FC<Props> = ({ search_products }) => {
                                     {product.name}
                                   </h3>
                                 </div>
-                                <p className="text-lg font-medium text-gray-900">
-                                  ${product.price}
+                                <p className="text-lg font-medium text-gray-900 dark:text-white">
+                                  <b>${product.price}</b>
                                 </p>
                               </div>
                             </div>

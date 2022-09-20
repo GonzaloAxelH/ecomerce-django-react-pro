@@ -27,9 +27,6 @@ const Layout: FC<Props> = ({
   }, []);
   return (
     <div>
-      <p className="flex h-8 items-center justify-center bg-orange-500 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-        Aun en desarollo con sistema de recomendaciones con machine learning
-      </p>
       <Navbar />
       <Alert />
       <div id="page-content-layout-div">{children}</div>

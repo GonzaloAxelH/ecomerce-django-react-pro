@@ -93,17 +93,19 @@ const CartItem: FC<Props> = ({
               <h3 className="text-sm">
                 <Link
                   to={`/product/${item.product.id}`}
-                  className="font-medium text-gray-700 hover:text-gray-800"
+                  className="font-medium text-gray-700 hover:text-gray-800 dark:text-white"
                 >
                   {item.product.name}
                 </Link>
               </h3>
             </div>
             <div className="mt-1 flex text-sm">
-              <p className="text-gray-500">{item.product.description}</p>
+              <p className="text-gray-500 dark:text-white">
+                {item.product.description}
+              </p>
             </div>
-            <p className="mt-1 text-sm font-medium text-gray-900">
-              $ {item.product.price}
+            <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
+              <b>$ {item.product.price}</b>
             </p>
           </div>
 
@@ -113,7 +115,7 @@ const CartItem: FC<Props> = ({
                 name="item_count"
                 onChange={(e) => onChange(e)}
                 value={item_count}
-                className="max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm dark:text-white dark:bg-neutral-800 dark:border-gray-700"
               >
                 <option>1</option>
                 <option>2</option>
@@ -149,7 +151,7 @@ const CartItem: FC<Props> = ({
                 className="flex-shrink-0 h-5 w-5 text-green-500"
                 aria-hidden="true"
               />
-              <span>In Stock</span>
+              <span className="dark:text-white">In Stock</span>
             </>
           ) : (
             <>
@@ -157,7 +159,7 @@ const CartItem: FC<Props> = ({
                 className="flex-shrink-0 h-5 w-5 text-gray-300"
                 aria-hidden="true"
               />
-              <span>Out of Stock</span>
+              <span className="dark:text-white">Out of Stock</span>
             </>
           )}
         </p>

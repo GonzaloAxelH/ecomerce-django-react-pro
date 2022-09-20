@@ -141,14 +141,6 @@
   }
 }
 
-/* Change the white to any color */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 0px transparent inset !important;
-}
-
 /* borrar luego :V*/
 .gradient {
   background: linear-gradient(50deg, #fff, #999);

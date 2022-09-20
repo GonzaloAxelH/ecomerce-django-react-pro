@@ -25,6 +25,8 @@ ALLOWED_HOSTS = [
     ".ecomerce-gonzalo.onrender.com",
     "www.ecomerce-gonzalo.onrender.com",
     "ecomerce-gonzalo.onrender.com",
+    "http://192.168.10.100:3000",
+    "192.168.10.100:3000"
 ]
 
 

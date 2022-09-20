@@ -69,16 +69,16 @@ const CartPage: FC<Props> = ({
     <Layout>
       <div className="bg-white dark:bg-neutral-900">
         <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl  dark:text-gray-400">
             Shopping Cart Items ({total_items})
           </h1>
           <div className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
             <section aria-labelledby="cart-heading" className="lg:col-span-7">
-              <h2 id="cart-heading" className="sr-only">
+              <h2 id="cart-heading" className="sr-only ">
                 Items in your shopping cart
               </h2>
 
-              <ul className="border-t border-b border-gray-200 divide-y divide-gray-200">
+              <ul className="">
                 <div>
                   {items &&
                     items !== null &&
@@ -104,25 +104,27 @@ const CartPage: FC<Props> = ({
             {/* Order summary */}
             <section
               aria-labelledby="summary-heading"
-              className="mt-16 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5"
+              className="mt-16 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5 dark:bg-neutral-800"
             >
               <h2
                 id="summary-heading"
-                className="text-lg font-medium text-gray-900"
+                className="text-lg font-medium text-gray-900 dark:text-white"
               >
                 Order summary
               </h2>
 
               <dl className="mt-6 space-y-4">
                 <div className="flex items-center justify-between">
-                  <dt className="text-sm text-gray-600">Subtotal</dt>
-                  <dd className="text-sm font-medium text-gray-900">
+                  <dt className="text-sm text-gray-600 dark:text-gray-400">
+                    Subtotal
+                  </dt>
+                  <dd className="text-sm font-medium text-gray-900 dark:text-white">
                     $ {compare_amount?.toFixed(2)}
                   </dd>
                 </div>
 
-                <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                  <dt className="flex items-center text-sm text-gray-600">
+                <div className="border-t border-gray-200 pt-4 flex items-center justify-between dark:border-neutral-700">
+                  <dt className="flex items-center text-sm text-gray-600 dark:text-gray-400">
                     <span>Shipping estimate</span>
                     <a
                       href="#"
@@ -137,11 +139,13 @@ const CartPage: FC<Props> = ({
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                  <dd className="text-sm font-medium text-gray-900 dark:text-white">
+                    $5.00
+                  </dd>
                 </div>
 
-                <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                  <dt className="flex text-sm text-gray-600">
+                <div className="border-t border-gray-200 pt-4 flex items-center justify-between dark:border-neutral-700">
+                  <dt className="flex text-sm text-gray-600 dark:text-gray-400">
                     <span>Tax estimate</span>
                     <a
                       href="#"
@@ -156,14 +160,16 @@ const CartPage: FC<Props> = ({
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">$8.32</dd>
+                  <dd className="text-sm font-medium text-gray-900 dark:text-white">
+                    $8.32
+                  </dd>
                 </div>
 
-                <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                  <dt className="text-base font-medium text-gray-900">
+                <div className="border-t border-gray-200 pt-4 flex items-center justify-between dark:border-neutral-700">
+                  <dt className="text-base font-medium text-gray-900 dark:text-gray-400">
                     Order total
                   </dt>
-                  <dd className="text-base font-medium text-gray-900">
+                  <dd className="text-base font-medium text-gray-900 dark:text-white">
                     ${amount?.toFixed(2)}
                   </dd>
                 </div>

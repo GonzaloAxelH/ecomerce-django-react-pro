@@ -168,7 +168,7 @@ const Navbar: FC<Props> = ({
               <div className="relative w-full flex items-center text-gray-400 focus-within:text-gray-600 ">
                 <input
                   id="search-field"
-                  className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm  dark:bg-neutral-900"
+                  className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm  dark:bg-neutral-900 dark:text-gray-400"
                   type="search"
                   value={search}
                   onChange={(e: any) => onChange(e)}
@@ -220,7 +220,9 @@ const Navbar: FC<Props> = ({
           <div className="-mr-2 -my-2 md:hidden flex items-center">
             <Link
               to="/cart"
-              className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
+              className="bg-white rounded-md p-2 mr-3 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 first-letter:
+                        dark:bg-neutral-800
+              "
             >
               <span className="sr-only">Open menu</span>
 
@@ -255,7 +257,9 @@ const Navbar: FC<Props> = ({
             ) : (
               <Link
                 to="/wishlist"
-                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
+                className="bg-white mr-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500
+                  dark:bg-neutral-800
+                "
               >
                 <span className="sr-only">Open menu</span>
 
@@ -276,7 +280,11 @@ const Navbar: FC<Props> = ({
                 </div>
               </Link>
             )}
-            <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
+            <Popover.Button
+              className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500
+              dark:bg-neutral-800
+            "
+            >
               <span className="sr-only">Open menu</span>
               <MenuIcon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
@@ -301,7 +309,7 @@ const Navbar: FC<Props> = ({
               </div>
               <Link
                 to="/cart"
-                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 dark:bg-neutral-900"
+                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 dark:bg-neutral-700"
               >
                 <span className="sr-only">Open menu</span>
 
@@ -336,7 +344,7 @@ const Navbar: FC<Props> = ({
               ) : (
                 <Link
                   to="/wishlist"
-                  className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
+                  className="bg-white  rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 dark:bg-neutral-700"
                 >
                   <span className="sr-only">Open menu</span>
 
@@ -379,18 +387,21 @@ const Navbar: FC<Props> = ({
           focus
           className="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
         >
-          <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-            <div className="pt-5 pb-6 px-5 sm:pb-8">
+          <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white  divide-gray-50 dark:bg-neutral-800 ">
+            <div className="pt-5 pb-6 px-5 sm:pb-8 ">
               <div className="flex items-center justify-between">
                 <div>
                   <img
-                    className="h-8 w-auto"
-                    src="/logo192.png"
-                    alt="Workflow"
+                    className="h-8 w-auto sm:h-10"
+                    src="https://res.cloudinary.com/ddksrkond/image/upload/v1663683826/media/photo/2022/09/4667ec21-129a-4f83-8e08-9ed47cfd4176_r1nhmg.png"
+                    alt=""
                   />
                 </div>
+                <div>
+                  <Switcher />
+                </div>
                 <div className="-mr-2">
-                  <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
+                  <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 dark:bg-neutral-700">
                     <span className="sr-only">Close menu</span>
                     <XIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -403,33 +414,32 @@ const Navbar: FC<Props> = ({
                       <Link
                         key={item.name}
                         to={item.href}
-                        className="-m-3 flex items-center p-3 rounded-lg hover:bg-gray-50"
+                        className="-m-3 mr-2 flex items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700"
                       >
-                        <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-orange-500 text-white sm:h-12 sm:w-12">
+                        <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-orange-500 text-white sm:h-12 sm:w-12 ">
                           <item.icon className="h-6 w-6" aria-hidden="true" />
                         </div>
-                        <div className="ml-4 text-base font-medium text-gray-900">
+                        <div className="ml-4 text-base font-medium text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
                           {item.name}
                         </div>
                       </Link>
                     ))}
                   </div>
-                  <div className="mt-8 text-base"></div>
                 </nav>
               </div>
             </div>
-            <div className="py-6 px-5">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="py-6 px-5 ">
+              <div className="grid grid-cols-2 gap-4 ">
                 <Link
                   to="/dashboard/payments"
-                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
+                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700 dark:text-gray-400"
                 >
                   Orders
                 </Link>
 
                 <Link
                   to="/dashboard"
-                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
+                  className="rounded-md text-base font-medium text-gray-900 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                 >
                   Dashboard
                 </Link>
@@ -443,7 +453,7 @@ const Navbar: FC<Props> = ({
                     >
                       Login
                     </Link>
-                    <p className="mt-6 text-center text-base font-medium text-gray-500">
+                    <p className="mt-6 text-center text-base font-medium text-gray-500 dark:text-gray-400 dark:hover:text-gray-300">
                       Or create account{" "}
                       <Link
                         to="/signup"

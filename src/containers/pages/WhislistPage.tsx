@@ -44,7 +44,7 @@ const WhishlistPage: FC<Props> = ({
     <Layout>
       <div className="bg-white dark:bg-neutral-900">
         <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-400">
             WhishList Items ({total_items_whislist})
           </h1>
           <div className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
@@ -53,7 +53,7 @@ const WhishlistPage: FC<Props> = ({
                 Items in your shopping cart
               </h2>
 
-              <ul className="border-t border-b border-gray-200 divide-y divide-gray-200">
+              <ul className=" ">
                 <div>
                   {items_whislist &&
                     items_whislist !== null &&
@@ -79,19 +79,19 @@ const WhishlistPage: FC<Props> = ({
                                     <h3 className="text-sm">
                                       <Link
                                         to={`/product/${item.product.id}`}
-                                        className="font-medium text-gray-700 hover:text-gray-800"
+                                        className="font-medium text-gray-700 hover:text-gray-800 dark:text-white"
                                       >
                                         {item.product.name}
                                       </Link>
                                     </h3>
                                   </div>
                                   <div className="mt-1 flex text-sm">
-                                    <p className="text-gray-500">
+                                    <p className="text-gray-500 dark:text-white">
                                       {item.product.description}
                                     </p>
                                   </div>
-                                  <p className="mt-1 text-sm font-medium text-gray-900">
-                                    $ {item.product.price}
+                                  <p className="mt-1 text-xl font-medium text-gray-900 dark:text-white">
+                                    <b>$ {item.product.price}</b>
                                   </p>
                                 </div>
 
@@ -123,7 +123,9 @@ const WhishlistPage: FC<Props> = ({
                                       className="flex-shrink-0 h-5 w-5 text-green-500"
                                       aria-hidden="true"
                                     />
-                                    <span>In Stock</span>
+                                    <span className="dark:text-white">
+                                      In Stock
+                                    </span>
                                   </>
                                 ) : (
                                   <>

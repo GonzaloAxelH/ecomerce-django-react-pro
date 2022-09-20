@@ -179,15 +179,17 @@ const Checkout: FC<Props> = ({
     } else {
       return (
         <>
-          <DropIn
-            options={{
-              authorization: client_token,
-              paypal: {
-                flow: "vault",
-              },
-            }}
-            onInstance={(instance) => (data.instance = instance)}
-          />
+          <div className="dark:text-gray-400">
+            <DropIn
+              options={{
+                authorization: client_token,
+                paypal: {
+                  flow: "vault",
+                },
+              }}
+              onInstance={(instance) => (data.instance = instance)}
+            />
+          </div>
 
           <div className="mt-6">
             {loading ? (
@@ -218,7 +220,7 @@ const Checkout: FC<Props> = ({
     <Layout>
       <div className="bg-white dark:bg-neutral-900">
         <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-400">
             Checkout
           </h1>
           <div className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
@@ -227,10 +229,7 @@ const Checkout: FC<Props> = ({
                 Items in your shopping cart {total_items}
               </h2>
 
-              <ul
-                role="list"
-                className="border-t border-b border-gray-200 divide-y divide-gray-200"
-              >
+              <ul role="list" className="">
                 {items &&
                   items.map((cart_item: ItemCart, index: number) => (
                     <li key={index} className="flex py-6 sm:py-10">
@@ -251,14 +250,14 @@ const Checkout: FC<Props> = ({
                               <h3 className="text-sm">
                                 <Link
                                   to={`/product/${cart_item.product.id}`}
-                                  className="font-medium text-gray-700 hover:text-gray-800"
+                                  className="font-medium text-gray-700 hover:text-gray-800 dark:text-white"
                                 >
                                   {cart_item.product.name}
                                 </Link>
                               </h3>
                             </div>
 
-                            <p className="mt-1 text-sm font-medium text-gray-900">
+                            <p className=" text-xl mt-3 font-medium text-gray-900 dark:text-white">
                               <b>$ {cart_item.product.price}</b>
                             </p>
                           </div>
@@ -269,14 +268,17 @@ const Checkout: FC<Props> = ({
                             className="flex-shrink-0 h-5 w-5 text-green-500"
                             aria-hidden="true"
                           />
-                          <span>{cart_item.count}</span>
+                          <span className="dark:text-white">
+                            {cart_item.count}
+                          </span>
                         </p>
                       </div>
                     </li>
                   ))}
+
                 <Link to="/cart">
-                  <button className="w-full border bg-gray-100 border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-dark  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 ">
-                    Editar en el carrito
+                  <button className="w-full bg-orange-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-orange-500">
+                    Edit your Cart
                   </button>
                 </Link>
               </ul>
