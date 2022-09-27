@@ -28,6 +28,7 @@ import {
   get_wishlist_item_total,
 } from "../../redux/actions/wishlist";
 import Switcher from "../Switcher";
+import CartSlide from "../CartSlide";
 export const solutions = [
   {
     name: "Store",
@@ -85,6 +86,7 @@ const Navbar: FC<Props> = ({
 }) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [redirectToSearch, setRedirectToSearch] = useState(false);
+  const [openSlideCart, setOpenSlideCart] = useState(false);
   const [formData, setFormData] = useState({
     category_id: 0,
     search: "",
@@ -168,8 +170,8 @@ const Navbar: FC<Props> = ({
               <div className="relative w-full flex items-center text-gray-400 focus-within:text-gray-600 ">
                 <input
                   id="search-field"
-                  className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm  dark:bg-neutral-900 dark:text-gray-400"
-                  type="search"
+                  className="bg-transparent block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm  dark:transparent dark:text-gray-400"
+                  type="text"
                   value={search}
                   onChange={(e: any) => onChange(e)}
                   name="search"
@@ -307,8 +309,10 @@ const Navbar: FC<Props> = ({
                   <MenuIcon className="h-6 w-6" aria-hidden="true" />
                 </Popover.Button>
               </div>
+              <CartSlide open={openSlideCart} setOpen={setOpenSlideCart} />
               <Link
-                to="/cart"
+                to="#"
+                onClick={() => setOpenSlideCart(true)}
                 className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 dark:bg-neutral-700"
               >
                 <span className="sr-only">Open menu</span>

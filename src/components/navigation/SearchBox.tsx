@@ -41,7 +41,7 @@ const SearchBox: FC<PropsSearchBox> = ({
 
           <div className="relative flex items-stretch flex-grow focus-within:z-10">
             <input
-              type="search"
+              type="text"
               name="search"
               onChange={(e) => onChange(e)}
               value={search}

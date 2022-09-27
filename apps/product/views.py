@@ -6,8 +6,10 @@ from apps.product.models import Product
 from apps.category.models import Category
 from apps.product.serializers import ProductSerializer
 from django.db.models import Q
-'''
+
 import serial
+#puerto = "COM3"
+
 puerto = "COM7"
 serialArduino = serial.Serial(puerto, 9600)
 
@@ -16,7 +18,7 @@ class ArduinoSerialView(APIView):
     permission_classes = (permissions.AllowAny, )
 
     def post(self, request, format=None):
-        puerto = "COM5"
+       
         data = self.request.data
         try:
             cadena = data['cadena']
@@ -30,6 +32,7 @@ class ArduinoSerialView(APIView):
             serialArduino.write(cadena.encode("ascii"))
             r = serialArduino.readline().decode("utf8")
             print({"serial_arduino": r})
+            
             return Response({"message": "Successfly", "cadena": cadena, "cadena_encode": cadena.encode(), "serial": r},
                             status=status.HTTP_200_OK)
         except:
@@ -45,7 +48,7 @@ class ResetSerial(APIView):
         except:
             return Response({"error": "Arduino no conectado"}, status=status.HTTP_400_BAD_REQUEST)
 
-'''
+
 class ProductDetailView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
