@@ -6,7 +6,7 @@ from apps.product.models import Product
 from apps.category.models import Category
 from apps.product.serializers import ProductSerializer
 from django.db.models import Q
-
+'''
 import serial
 #puerto = "COM3"
 
@@ -48,7 +48,7 @@ class ResetSerial(APIView):
         except:
             return Response({"error": "Arduino no conectado"}, status=status.HTTP_400_BAD_REQUEST)
 
-
+'''
 class ProductDetailView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
