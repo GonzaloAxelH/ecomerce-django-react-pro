@@ -65,7 +65,7 @@ const LayoutDashboard: FC<Props> = ({
     }
 
     list_orders?.();
-    get_user_profile?.();
+    //get_user_profile?.();
   }, []);
 
   if (!isAuthenticated && isAuthenticated !== null) {
