@@ -14,7 +14,7 @@ pytz==2021.3
 Pillow==9.2.0
 mutagen==1.45.1 
 
-psycopg2==2.9.2 
+psycopg2-binary==2.9.2 
 
 argon2-cffi==21.1.0 
 django-environ==0.4.5
